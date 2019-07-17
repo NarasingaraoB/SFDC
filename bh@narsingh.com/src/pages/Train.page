@@ -1,0 +1,221 @@
+<apex:page sidebar="false" showHeader="false" controller="train_ctrl" docType="html-5.0">
+<apex:includeScript value="{!$Resource.jquery}"/>
+<apex:includeScript value="{!$Resource.slideScript}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+  <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ <style>
+.Advbox {
+   
+    width: 750px;
+    height: 500px;
+   
+   
+}
+.contentbox {
+
+    background-color:#e5eecc;
+    text-align:center;
+   
+    width:750px;
+    height: 500px;
+     float:left;
+   
+}
+#slideshow #slideshowWindow {
+    width: 750px;
+    height: 500px;
+    margin: 0px auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+   
+}
+#slideshow #slideshowWindow .slide {
+    margin: 0;
+    padding: 0;
+    width: 750px;
+    height: 500px;
+    float: left;
+    position: relative;
+}
+.sliderWin{
+    position:relative;
+    width:100%;
+    /*  height:400px; when responsive, comment this out */
+    margin:0 auto;
+}
+.sliderWin-wrapper
+    {
+        max-height:500px;
+        background:#318DBF;
+        float:left;
+    }
+ 
+ a.button {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 6px 25px 0px 20px;
+    margin: 10px 8px 20px 0px;
+    display: inline-block;
+    float: center;
+    text-decoration: none;
+    width: 80px;
+    height: 27px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3a57af;
+    -webkit-box-shadow: 0 3px rgba(58,87,175,.75);
+    -moz-box-shadow: 0 3px rgba(58,87,175,.75);
+    box-shadow: 0 3px rgba(58,87,175,.75);
+    transition: all 0.1s linear 0s;
+    top: 0px;
+    position: relative;
+}
+a.button:hover {
+    top: 3px;
+    background-color: #2e458b;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+ </style>
+ </head>
+  <body>
+  <header id="header" class="clearfix">
+  <!-- <div id="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="top-info hidden-xs col-sm-7 ">
+                    <span><i class="fa fa-phone"></i>phone: (+91) 888-60-73941</span>
+                    <span><i class="fa fa-envelope"></i>Email: narsingbh@gmail.com</span>
+                </div>
+                <div class="top-info col-sm-5">
+                    <ul class="clearfix">
+                        <li><a href="" class="my-tweet"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="" class="my-facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="" class="my-skype"><i class="fa fa-skype"></i></a></li>
+                        <li><a href="" class="my-pint"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="" class="my-rss"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="" class="my-google"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Nav Bar -->
+  <!--  <div id="nav-bar" class="clearfix">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-sm-2">
+                <div id="logo">
+                        <apex:image value="{!$Resource.find_logo}" style="align: left;height:45px" alt="Salesforce" width="70" title="Find@nything"/>
+                </div>
+                </div>
+                
+                
+                <div class="col-sm-10">
+                <apex:panelGroup rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
+                    <nav id="navigation" class="menu">
+                        <ul id="">
+                            <li><a href="/apex/Train" id="current" class="border">Home</a></li>
+                            <li><a href="/apex/Train_Pnr">PNR STATUS</a></li>
+                            <li><a href="/apex/apex/Train_BW_Stations">TRAIN BETWEEN STATIONS</a></li>
+                            <li><a href="/apex/Train_Seat_Availability">SEAT AVAILABILITY</a></li>
+                            <li><a href="/apex/Train_Fare_Enquiry">FARE ENQUIRY</a></li>
+                            
+                        </ul>
+                    </nav>
+                <apex:outputText value="Welcome:{!$User.FirstName}" style="color:white;"></apex:outputText>
+                <apex:outputText value=" | " style="color:white;"/>
+                <apex:outputLink value="/apex/MyProfilePage" style="color:white;">MyProfile</apex:outputLink>
+                <apex:outputText value=" | " style="color:white;"/>
+                <apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}" style="color:white;">{!$Label.site.logout}</apex:outputLink>
+                </apex:panelGroup>
+                </div>
+                
+                
+           </div>
+        </div>
+    </div> -->
+    <apex:insert name="header">
+    <c:findHeader />
+   
+  </apex:insert>
+    <!-- End Nav Bar -->
+ </header>
+ <apex:form >
+<div style="background:#318DBF;margin: 0px 0px 0px 400px;">
+ <!--<div class="sliderWin-wrapper">
+    <div class="Advbox" id="slideshow">
+    <div id="slideshowWindow">
+    
+    
+     <apex:variable value="{!0}" var="in"/>
+    <apex:repeat value="{!links}" var="ln">
+    <div class="slide">
+            <iframe src="{!links[in]}" width="750" height="500">
+            <p>Your browser does not support iframes.</p>
+            </iframe>
+            </div>
+            <apex:variable value="{!in+1}" var="in"/>
+    </apex:repeat>
+              
+            
+    </div>
+    </div> 
+ </div>-->
+ <div class="contentbox">
+    <div style="background-color: #e5eecc;border: solid 1px #c3c3c3;width:100%;text-align:center;margin: 50px 0px 0px 0px;">
+  <apex:outputLabel >Search Trains</apex:outputLabel>
+  <table cellpadding="5" cellspacing="5" width="100%">
+  <tr>
+  <td><table cellpadding="5" cellspacing="5" width="100%"><tr><td>From</td></tr><tr><td><apex:inputText value="{!srcCode}" id="src" style="height:25px;width:100%;">
+ <c:autocomplete_component autocomplete_textbox="{!$Component.src}"></c:autocomplete_component>
+ </apex:inputText></td></tr></table></td>
+  <td><table cellpadding="5" cellspacing="5" width="100%"><tr><td>To</td></tr><tr><td><apex:inputText value="{!destCode}" id="dest" style="height:25px;width:100%;">
+ <c:autocomplete_component autocomplete_textbox="{!$Component.dest}"></c:autocomplete_component>
+ </apex:inputText></td></tr></table></td>
+  </tr>
+  <tr>
+  <td><table cellpadding="5" cellspacing="5" width="100%"><tr><td>Calss</td></tr><tr><td> <apex:selectList Size="1" value="{!selClass}" style="height:25px;width:100%;">
+                                                                      <apex:selectOption itemLabel="ALL CLASSES" itemvalue="ALL"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="FIRST AC" itemvalue="1A"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SECOND AC" itemvalue="2A"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="THIRD AC" itemvalue="3A"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SLEEPER CLASS" itemvalue="SL"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SECOND SEATING" itemvalue="2S"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="AC CHAIR CAR" itemvalue="CC"></apex:selectOption>
+                                                                      
+                                                                      </apex:selectList></td></tr></table></td>
+  <td><table cellpadding="5" cellspacing="5" width="100%"><tr><td>Date</td></tr><tr><td><apex:input type="date" id="subDate" value="{!jrdat}" onchange="changeDate()" style="height:25px;width:100%;"/></td></tr></table></td>
+  </tr>
+  <tr>
+  <td>
+  <apex:commandLink value="Submit" action="{!getSeatAvailability}" rerender="form" styleClass="button"/>
+  </td>
+  <td>
+ <apex:commandLink value="Clear" action="{!getReset}" rerender="form" styleClass="button"/></td>
+  </tr>
+  </table>
+  </div>
+ </div>
+ 
+ <div>
+  
+ </div>     
+  
+ </div>
+   </apex:form>
+   <iframe class="728X90 hideMe" id="iframe" src="http://partners.etravelsmart.com/bus/affiliate/728/index.php?utm_source=Narsingh" style="border: 1px solid #c1c1c1" scrolling="no" height="90" width="728"></iframe>
+
+  </body>
+ 
+</apex:page>

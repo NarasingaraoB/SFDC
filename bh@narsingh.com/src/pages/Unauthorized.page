@@ -1,0 +1,163 @@
+<apex:page showHeader="false" title="{!$Label.site.authorization_required}" id="Unauthorized" cache="false">
+<apex:includeScript value="{!$Resource.jquery}"/>
+<apex:includeScript value="{!$Resource.slideScript}"/>
+
+ 
+<style>
+.title {
+    font-size: larger;
+    font-weight: bold;
+}
+.Advbox {
+    margin-left: 40px ;
+    width: 843px;
+    height: 464px;
+    margin-right:10px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+.Regbox {
+
+    background-color:lightgray;
+    text-align:center;
+    margin-right:40px;
+    
+    height: 464px;
+    
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+   
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow {
+    width: 843px;
+    height: 464px;
+    margin: 0px auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow .slide {
+    margin: 0;
+    padding: 0;
+    width: 843px;
+    height: 464px;
+    float: left;
+    position: relative;
+}
+.sliderWin{
+    position:relative;
+    width:100%;
+    /*  height:400px; when responsive, comment this out */
+    margin:0 auto;
+}
+.sliderWin-wrapper
+    {
+        max-height:464px;
+        background:#318DBF;
+        float:left;
+    }
+</style>
+
+
+ <apex:composition template="{!$Site.Template}">
+    <apex:define name="body">
+<!--
+      <div style="float:left;">
+<div class="Advbox" id="slideshow">
+<div id="slideshowWindow">
+
+<div class="slide" id="s1">
+<img src="http://placehold.it/843x464/e90101&text=Slide+1" />
+</div>
+<div class="slide">
+<img src="http://placehold.it/843x464/e9be3e&text=Slide+2" />
+</div>
+<div class="slide">
+<img src="http://placehold.it/843x464/4890b9&text=Slide+3" />
+</div>
+</div>
+</div>
+</div>
+<div style="width:32.75%;float:left;height:470px;background-color:lightgray;text-align:center">
+<apex:image url="{!URLFOR($Resource.SiteSamples, 'img/unauthorized.png')}"/>
+
+<apex:panelGroup >
+
+                  <apex:outputText styleClass="title" value="{!$Label.site.authorization_required}"/>
+                  <br/>
+                  <br/>
+                  <apex:outputText value="{!$Label.site.login_or_register_first}"/>
+                  <br/>
+                  <apex:outputText value="{!$Label.site.click_forget_password}"/>
+                  <br/>
+                  <br/>
+</apex:panelGroup>
+                <apex:outputText value=""/>
+                <apex:outputText value=""/>
+                <c:SiteLogin rendered="{!$Site.LoginEnabled && ISPICKVAL($User.UserType,'Guest')}" id="siteLogin"/>
+</div>
+       
+    -->
+    
+ <div style="background:#318DBF;">
+ <div class="sliderWin-wrapper">
+    <div class="Advbox" id="slideshow">
+    <div id="slideshowWindow">
+    <div class="slide" id="s1">
+<apex:image value="{!$Resource.wel_img_1}"/>
+</div>
+<div class="slide">
+<apex:image value="{!$Resource.wel_img_2}"/>
+</div>
+<div class="slide">
+<apex:image value="{!$Resource.wel_img_3}"/>
+</div>
+    </div>
+    </div> 
+ </div>
+ <div class="Regbox">
+<!--<apex:image url="{!URLFOR($Resource.SiteSamples, 'img/unauthorized.png')}"/>-->
+
+<apex:panelGroup >
+
+                  <!--<apex:outputText styleClass="title" value="{!$Label.site.authorization_required}"/>-->
+                  <br/>
+                  <br/>
+                  <apex:outputText value="{!$Label.site.login_or_register_first}"/>
+                  <br/>
+                  <apex:outputText value="{!$Label.site.click_forget_password}"/>
+                  <br/>
+                  <br/>
+</apex:panelGroup>
+                <apex:outputText value=""/>
+                <apex:outputText value=""/>
+                <c:SiteLogin rendered="{!$Site.LoginEnabled && ISPICKVAL($User.UserType,'Guest')}" id="siteLogin"/>
+</div>
+       
+    
+ </div>
+
+     </apex:define>
+  </apex:composition>
+  <site:previewAsAdmin />
+  
+</apex:page>

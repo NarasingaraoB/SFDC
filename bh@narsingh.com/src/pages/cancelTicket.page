@@ -1,0 +1,7 @@
+<apex:page sidebar="false" showHeader="false">
+   <apex:form >
+ <div id="main_div" style="background-color:blue;overflow: scroll;">
+  <c:railway_nvgHeader_Menu ></c:railway_nvgHeader_Menu>
+  </div>
+ </apex:form>
+</apex:page>

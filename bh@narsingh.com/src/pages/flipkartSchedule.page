@@ -1,0 +1,3 @@
+<apex:page sidebar="false" showHeader="false" controller="flipkartSchedule_ctrl" action="{!data}">
+  <apex:outputText value="{!jsonOut}"></apex:outputText>
+</apex:page>

@@ -1,0 +1,47 @@
+<apex:page sidebar="false" showHeader="false" controller="train_fares">
+<style>
+th.tStyle{
+         border: 1px solid green;
+         background-color: green;
+         color: white;
+         text-align: center;
+         }
+table.tStyle{
+            table-layout: fixed;
+            border: 1px solid green;
+            font-size:10px;
+            }
+td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+</style>
+  <apex:form id="form">
+  <apex:inputText id="trians" value="{!trName}" html-placeholder="Name">
+                                                <c:autoPopData autocomplete_textbox="{!$Component.trians}" objectname="Train__c"/>
+                                                <apex:actionSupport event="onblur" action="{!GetTrainNos}" reRender="form"/>
+                                                </apex:inputText>
+                                                <apex:selectList value="{!trNo}" size="1">
+                                                <apex:selectOptions value="{!trainNos}"/>
+                                                <apex:actionSupport action="{!GetTrainInfo}" event="onchange" reRender="form"/>
+                                                </apex:selectList>
+   <table class="tStyle">
+     <tr class="tStyle"><th class="tStyle">Class</th><th class="tStyle">Per Km Price</th><th class="tStyle">Base Fare</th><th class="tStyle">Reservation Charges</th><th class="tStyle">Superfast Charges</th><th class="tStyle">Other Charges</th><th class="tStyle">Service Tax</th></tr>
+     <apex:repeat value="{!classes}" var="cls">
+     <tr class="tStyle">
+     <td class="tStyle">{!cls}</td>
+     <td class="tStyle"><apex:inputText value="{!kmPerPrice[cls]}"/></td>
+     <td class="tStyle"><apex:inputText value="{!BaseFare[cls]}"/></td>
+     <td class="tStyle"><apex:inputText value="{!rCharges[cls]}"/></td>
+     <td class="tStyle"><apex:inputText value="{!sCharges[cls]}"/></td>
+     <td class="tStyle"><apex:inputText value="{!oCharges[cls]}"/></td>
+     <td class="tStyle"><apex:inputText value="{!sTaxCharges[cls]}"/></td>
+     </tr>
+     </apex:repeat>
+     
+     </table>
+     <apex:commandButton value="Add" action="{!AddFareDetails}" reRender="form" rendered="{!addView}"/>
+     <apex:commandButton value="Edit" action="{!EditFareDetails}" reRender="form" rendered="{!editView}"/>
+  </apex:form>
+</apex:page>

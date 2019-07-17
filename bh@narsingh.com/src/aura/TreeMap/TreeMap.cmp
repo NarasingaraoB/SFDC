@@ -1,0 +1,32 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="TreeMapController" access="global">
+ <aura:attribute name="tMapNum" type="Integer" default="0" access="global" description="greatter"/>
+    <aura:attribute name="tMapNum1" type="Integer" default="0" access="global" description="less" />
+    <aura:attribute name="boxSize" type="Integer" default="0" access="global" description="size" />
+    <aura:attribute name="chooseColor" type="String" default="Blue" access="global"/>
+    <aura:attribute name="boxSize1" type="Integer" default="0" access="global" description="size" />
+    <aura:attribute name="chooseColor1" type="String" default="Blue" access="global"/>
+    <aura:attribute name="conList" type="Contact[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div>
+   
+    <div>
+       <aura:iteration items="{!v.conList}" var="item">
+       {!if(item.TreeMapNumber__c>v.tMapNum,'200px','100px')}
+           <aura:if isTrue="{!item.TreeMapNumber__c>v.tMapNum}">
+               <!--style="{!'color:' + v.favoriteColors}" -->
+              &nbsp;&nbsp; {!item.TreeMapNumber__c}&nbsp;&nbsp;{!v.tMapNum}&nbsp;&nbsp;{!v.chooseColor}
+               <div style="{!'background-color:' + v.chooseColor}">
+                   {!item.id}
+               </div>
+           <aura:set attribute="else">
+               <div style="width: 100px;border: 5px solid green;padding: 5px;margin: 5px;">
+                   {!item.id}
+               </div>
+           </aura:set>
+           </aura:if>
+
+         <br/>
+    </aura:iteration>
+    </div>
+    </div>
+</aura:component>

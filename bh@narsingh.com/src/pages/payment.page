@@ -1,0 +1,113 @@
+<apex:page sidebar="false" showHeader="false" controller="payment_ctrl" renderas="pdf">
+  <apex:form >
+  
+  
+  <center>Train-Ticketing Service<br/>Electronic Reservation Slip(Personal User)</center>
+  
+  <table cellpadding="20" cellspacing="20" width="100%">
+  <tr>
+  <td width="50%">
+  <ul>
+  <li>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
+  <li>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb<br/>bbbbbbbbbbbbbbbbbbbbbbbbbbbbb</li>
+  <li>cccccccccccccccccccccccccccccccc<br/>ccccccccccccccccccccccccccccccccc</li>
+  <li>ddddddddddddddddddddddddddddddddd<br/>dddddddddddddddddddddddddddddddd</li>
+  </ul>
+  </td>
+  <td width="30%">
+  <apex:outputPanel layout="block" style="border:1px solid black;width:100%;height:100%"><apex:image /></apex:outputPanel>
+  </td>
+  </tr>
+  </table>
+  
+  <table width="100%">
+  <tr>
+  <td>
+              <table width="100%">
+              <tr>
+              <td>
+              <table border="1" width="100%">
+              <tr><td align="left">PNR NO:{!pnrNo}</td></tr>
+              <tr><td align="left">Transaction Id:{!trnsId}</td></tr>
+              <tr><td align="left">From:{!frm}</td></tr>
+              <tr><td align="left">Boarding:</td></tr>
+              <tr><td align="left">Reservation Upto:</td></tr>
+              <tr><td align="left">Passenger Mobile No:{!smsMobNo}</td></tr>
+              </table>
+              </td>
+              <td>
+              <table border="1" width="100%">
+              <tr><td align="left">Train No/Name:{!tName}/{!trNo}</td></tr>
+              <tr><td align="left">Date of Booking:{!bookDate}</td></tr>
+              <tr><td align="left">Date of Journey:{!jrDate}</td></tr>
+              <tr><td align="left">Date of Boarding:</td></tr>
+              <tr><td align="left">Schedule Arrival:{!schArrival}</td></tr>
+              <tr><td align="left">&nbsp;</td></tr>
+              </table>
+              </td>
+              <td>
+              <table border="1" width="100%">
+              <tr><td align="left">Quota:</td></tr>
+              <tr><td align="left">Class:{!classN}</td></tr>
+              <tr><td align="left">To:{!to}</td></tr>
+              <tr><td align="left">Schedule Departure:{!schDeparture}</td></tr>
+              <tr><td align="left">Audlt Child:{!childCnt}</td></tr>
+              <tr><td align="left">Distance:{!dist}</td></tr>
+              </table>
+              </td>
+              </tr>
+              </table>
+  </td>
+  </tr>
+  <tr>
+  <td><table border="1" width="100%"><tr><td align="left">Passenger Address:- 
+
+fkslfkslfkslfkslfskflsfklsklfskfskflskflssfksl</td></tr></table></td></tr> 
+  </table>
+  <div style="color:black;text-align:left;">
+  Fare Details:
+  </div>
+  <table border="1" width="100%">
+  <tr><td>S.No</td><td>Decription</td><td>Amount(In Rupees.)</td><td>Amount(In Words.)</td></tr>
+  <tr><td>1</td><td>Ticket Fare</td><td>Rs {!tFare}</td><td>{!tFareWords}</td></tr>
+  <tr><td>2</td><td width="20%">Service Charge</td><td>Rs {!srCharge}</td><td>{!srChargeWords}</td></tr>
+  <tr><td>3</td><td>Total</td><td>Rs {!tAmt}</td><td>{!tAmtWords}</td></tr>
+  </table>
+  
+  # Service Charges Per e-ticket irrespective of number of passengers on ticket.
+  
+  
+  Passenger Details:
+  
+  <table border="1" width="100%">
+  <tr><td>S.No</td><td>Name</td><td>Age</td><td>Sex</td><td>Concession Code</td><td>Booking Status/Current Status/Coach.No/Seat.No</td><td>Id Card Type/No</td></tr>
+  <apex:variable value="{!1}" var="sno"/>
+  <apex:repeat value="{!passList}" var="pList">
+  <tr>
+  <td>{!sno}</td>
+  <td>{!pList}</td><td>{!passMap[pList].age}</td><td>{!passMap[pList].gender}</td><td>code</td><td>{!passMap[pList].PassengerSeats}</td><td width="20%">pan card/123456</td></tr>
+<apex:variable value="{!sno+1}" var="sno"/>
+  </apex:repeat>
+  </table>
+  
+ Discount Advertisement
+ 
+ 
+ Important:
+ <ul>
+  <li>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
+  <li>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</li>
+  <li>ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</li>
+  <li>ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</li>
+  <li>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
+  <li>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</li>
+  <li>ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</li>
+  <li>ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</li>
+  <li>ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</li>
+  </ul>
+ 
+ 
+ 
+ </apex:form>
+ 
+</apex:page>

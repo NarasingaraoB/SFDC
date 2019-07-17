@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:registerEvent name="SelObjRecEve" type="c:selectedsObjectRecordEvent"/>
+    <aura:attribute name="IconName" type="string"/> 
+    <aura:attribute name="label" type="string" default=""/>
+     <aura:attribute name="lkRecord" type="sObject"/>
+    <li onclick="{c.searchRecord}">
+    {!v.lkRecord}<lightning:icon iconName="{!v.IconName}" size="small" alternative-text="{!'This is '+v.label}"/>
+    </li>
+   
+</aura:component>

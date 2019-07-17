@@ -1,0 +1,77 @@
+<apex:page sidebar="false" showHeader="false" standardController="Temple__c" extensions="Temples_history_ctrl">
+ <apex:form id="form">
+ <div style="display:block;width:100%;text-align:center;">
+ <apex:inputText value="{!state}"  id="stat" html-placeholder="State">
+        <c:autoPopData autocomplete_textbox="{!$Component.stat}" objectname="State__c"></c:autoPopData>
+        </apex:inputText>
+        <apex:inputText value="{!city}"  id="cty" html-placeholder="City">
+        <c:autoPopData autocomplete_textbox="{!$Component.cty}" objectname="City__c"></c:autoPopData>
+        <apex:actionSupport event="onblur" action="{!templeList}" reRender="form"/>
+        </apex:inputText>
+                           
+ <apex:selectList size="1" value="{!tmpName}">
+ <apex:selectOptions value="{!tmpList}"></apex:selectOptions>
+ <apex:actionSupport event="onchange" action="{!templeInfo}" reRender="form"/>
+ </apex:selectList>
+  
+ </div>
+ <br/>
+ <apex:variable value="{!0}" var="inx"/>
+ <apex:repeat value="{!tmplImgUrl}" var="tmp">
+ <div style="float:left;">
+ <apex:image value="{!tmplImgUrl[inx]}"/><apex:outputText style="border:solid 1px;" value="{!tmplDesc[inx]}"/>
+ </div>
+
+ <apex:variable value="{!inx+1}" var="inx"/>
+  </apex:repeat>
+ </apex:form>
+ <div style="display:{!if($Profile.Name !='System Administrator','none','block')};width:500px;height:333px;text-align:center;border:solid 1px gray;float:left;">
+ <apex:form id="frm">
+<table>
+<tr><td><apex:outputLabel value="Temple Name"/></td><td><apex:inputField value="{!Temple__c.Name}"></apex:inputField></td></tr>
+<tr><td><apex:outputLabel value="State"/></td><td><apex:inputField value="{!Temple__c.State__c}"  id="stat1">
+        <c:autoPopData autocomplete_textbox="{!$Component.stat1}" objectname="State__c"></c:autoPopData>
+        </apex:inputField></td></tr>
+<tr><td><apex:outputLabel value="City"/></td><td><apex:inputField value="{!Temple__c.City__c}"  id="cty1">
+        <c:autoPopData autocomplete_textbox="{!$Component.cty1}" objectname="City__c"></c:autoPopData>
+        </apex:inputField></td></tr>
+        <tr><td><apex:commandButton value="Next" action="{!saveRec}"/><apex:commandButton value="Edit" action="{!editRec}"/></td><td></td></tr>
+</table>
+</apex:form>
+<apex:form id="fr">
+<table>
+<apex:repeat value="{!newAttachments}" var="newAtt">        
+<tr><td><apex:outputLabel value="Image Name" for="imageName"/></td><td><apex:inputText value="{!newAtt.name}" id="fileName"/></td></tr>
+<tr><td><apex:outputLabel value="File" for="file"/></td><td><apex:inputFile value="{!newAtt.body}" filename="{!newAtt.name}" id="file"/></td></tr>
+<tr><td><apex:outputLabel value="Description" for="description"/></td><td><apex:inputTextarea value="{!newAtt.description}" id="description"/></td></tr>
+</apex:repeat>
+<tr><td>
+<apex:actionRegion id="more" renderRegionOnly="false">
+<apex:commandButton value="Add More" action="{!attachMore}" reRender="fr"/><apex:commandButton value="Delete" action="{!attachDelete}" reRender="fr"/>
+</apex:actionRegion>
+</td><td><apex:commandButton value="Save" action="{!saveAttach}"/></td></tr>
+<tr><td>{!newAttachments.size}</td></tr>
+</table>
+        
+        
+        
+          
+          
+<br/>        
+       
+          
+          
+       
+<br/>
+        
+          
+          
+        
+<br/>
+ <apex:commandButton action="{!upload}" value="Save"/>
+   </apex:form>   
+ </div>
+ 
+
+
+</apex:page>

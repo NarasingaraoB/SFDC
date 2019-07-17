@@ -1,0 +1,15 @@
+<apex:page sidebar="false" showHeader="false" controller="advertisePage_ctrl">
+ <apex:form id="form">
+ <apex:outputLabel value="Choose Page:"/><apex:selectList size="1" value="{!pgName}">
+ <apex:selectOptions value="{!GetVFPages}"/>
+ <apex:actionSupport action="{!GetCountOnPage}" event="onchange" reRender="form"/>
+ </apex:selectList>
+ <apex:outputLabel value="Choose Position:"/><apex:selectList size="1" value="{!advPos}">
+ <apex:selectOptions value="{!GetAdvPos}"/>
+ </apex:selectList>
+ </apex:form>
+ <apex:form >
+ <apex:inputFile value="{!advBlob}" fileName="{!advName}"/>
+ <apex:commandButton value="Add" action="{!StoreAndSet}"/>
+ </apex:form>
+</apex:page>

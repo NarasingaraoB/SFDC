@@ -1,0 +1,7 @@
+<apex:page sidebar="false" showHeader="false">
+
+<apex:insert name="header">
+    <c:findHeader />
+   
+  </apex:insert>
+</apex:page>

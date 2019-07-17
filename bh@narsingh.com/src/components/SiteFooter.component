@@ -1,0 +1,92 @@
+<apex:component id="footerComponent">
+<apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/vendor/jquery-1.10.2.min.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/main.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/vendor/bootstrap.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.easing.1.3.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/retina-1.1.0.min.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.cookie.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/styleswitch.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.fractionslider.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.superfish.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.meanmenu.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.jcarousel.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jflickrfeed.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.magnific-popup.min.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/jquery.isotope.min.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.findHomePage,'findHomePage/js/swipe.js')}"/>
+ 
+ 
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+ <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ </head>
+<body>
+
+<footer class="footer" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="widget_title">
+                        <h4><span>About Us</span></h4>
+
+                    </div>
+                    <div class="widget_content">
+                        <p></p>
+                        <ul class="contact-details-alt">
+                            <li><i class="fa fa-map-marker"></i> <p><strong>Address</strong>: #111. India.</p></li>
+                            <li><i class="fa fa-user"></i> <p><strong>Phone</strong>: (+91) 929-31-59856</p></li>
+                            <li><i class="fa fa-envelope"></i> <p><strong>Email</strong>: <a href="#">narsingbh@gmail.com</a></p></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="widget_title">
+                        <h4><span>Recent Posts</span></h4>
+                    </div>
+                    <div class="widget_content">
+                        <ul class="links">
+                            <li><i class="fa fa-caret-right"></i> <a href="#"><span></span></a></li>
+                            <li><i class="fa fa-caret-right"></i> <a href="#"><span></span></a></li>
+                            <li><i class="fa fa-caret-right"></i> <a href="#"><span></span></a></li>
+                            <li><i class="fa fa-caret-right"></i> <a href="#"><span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                   
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--end footer-->
+
+    <section class="footer_bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <p class="copyright">&copy; Copyright 2015 Find@nything | Powered by  <a href="http://www.find@nything.com/">find@nythimg</a></p>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="footer_social">
+                        <ul class="footbot_social">
+                            <li><a class="fb" href="#." data-placement="top" data-toggle="tooltip" title="Facbook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="twtr" href="#." data-placement="top" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="dribbble" href="#." data-placement="top" data-toggle="tooltip" title="Dribbble"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a class="skype" href="#." data-placement="top" data-toggle="tooltip" title="Skype"><i class="fa fa-skype"></i></a></li>
+                            <li><a class="rss" href="#." data-placement="top" data-toggle="tooltip" title="RSS"><i class="fa fa-rss"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     </body>  
+</apex:component>

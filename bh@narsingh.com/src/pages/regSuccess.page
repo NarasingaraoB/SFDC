@@ -1,0 +1,11 @@
+<apex:page sidebar="false" showHeader="false">
+  <div style="margin:100px;border:2px solid green;text-align:center;font-size:18px">
+  <p>
+  Your registration is successful and verifivation code for login is sent to your registered mail which is used upto daynight 11:55hrs.<br/>
+  If you want login in anytime get verification code by enter registered email and click on link verification code.
+  <a href="https://c.ap2.visual.force.com/apex/findanything">Click here login</a>
+  </p>
+ 
+  
+  </div>
+</apex:page>

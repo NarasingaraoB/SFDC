@@ -1,0 +1,92 @@
+<apex:page sidebar="false">
+<html>
+<head>
+<style>
+  .info{
+  margin: 0px auto;
+  width: 500px; 
+  height: 500px; 
+  float:left;
+  -webkit-border-radius: 8px/7px; 
+  -moz-border-radius: 8px/7px; 
+  border-radius: 8px/7px; 
+  background-color: #ebebeb; 
+  -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+  -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+  box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+  border: solid 1px #cbc9c9;
+}
+  </style>
+
+<script type="text/javascript">
+sourceImage=new Image();
+function changeImage(target,image)
+{
+sourceImage.src=image;
+document.getElementById(target).src=sourceImage.src;
+
+}
+</script>
+</head>
+<apex:form >
+  <div style="width:200px;height:700px;float:left;">
+  <table>
+  <tr>
+  <td><apex:outputLabel >From:</apex:outputLabel></td>
+  <td><apex:inputText /></td>
+  </tr>
+  <tr>
+  <td><apex:outputLabel >To:</apex:outputLabel></td>
+  <td><apex:inputText /></td>
+  </tr>
+  </table>
+  </div>
+                                                          <div>
+                                                          <table><tr><td>
+                                                          <apex:outputLabel >Country:</apex:outputLabel>
+                                                          <apex:selectList size="1">
+                                                          <apex:selectOption itemLabel="none" itemvalue="None"></apex:selectOption>
+                                                          <apex:selectOption itemLabel="India" itemvalue="India"></apex:selectOption>
+                                                          </apex:selectList>
+                                                          </td>
+                                                          <td>
+                                                          <apex:outputLabel >State:</apex:outputLabel>
+                                                          <apex:selectList size="1">
+                                                          <apex:selectOption itemLabel="none" itemvalue="None"></apex:selectOption>
+                                                          <apex:selectOption itemLabel="AndhraPradesh" itemvalue="India"></apex:selectOption>
+                                                          </apex:selectList>
+                                                          </td>
+                                                          <td>
+                                                          <apex:outputLabel >City:</apex:outputLabel>
+                                                          <apex:selectList size="1">
+                                                          <apex:selectOption itemLabel="none" itemvalue="None"></apex:selectOption>
+                                                          <apex:selectOption itemLabel="Srikakukalm" itemvalue="India"></apex:selectOption>
+                                                          </apex:selectList>
+                                                          </td>
+                                                           <td>
+                                                          <apex:outputLabel >Station:</apex:outputLabel>
+                                                          <apex:selectList size="1">
+                                                          <apex:selectOption itemLabel="none" itemvalue="None"></apex:selectOption>
+                                                          <apex:selectOption itemLabel="Bus" itemvalue="Bus"></apex:selectOption>
+                                                           <apex:selectOption itemLabel="Raiway" itemvalue="Railway"></apex:selectOption>
+                                                          </apex:selectList>
+                                                          </td>
+                                                          </tr></table>
+                                                          </div>
+<div>
+<div class="info" style="width:516px;height:700px;">
+
+
+<img src="{!URLFOR($Resource.india)}" width="516" height="700"/>
+<img src="{!URLFOR($Resource.india1)}" id="ind" usemap="#map"/>
+<map name="map">
+<area shape="poly" coords="214,510,210,510,204,515,198,514,193,519,186,519,176,526,173,524,181,513,177,512,178,508,173,507,173,502,165,501,165,504,161,506,157,500,159,493,152,492,147,485,148,478,153,478,153,472,154,458,164,461,173,461,175,458,185,459,189,454,195,455,195,449,208,447,213,440,216,440,217,445,220,444,219,437,225,440,236,436,241,426,249,421,254,422,256,411,259,413,260,417,263,414,266,415,268,407,274,406,276,400,283,405,288,407,294,404,299,399,289,414,270,430,253,441,255,450,243,454,235,454,229,466,224,464,215,467,211,484,215,511" href="Ap.html"/>
+
+</map>
+</div>
+<div class="info" style="width:300px;height:500px;">fffffffffff</div>
+</div>
+  </apex:form>
+  
+  </html>
+</apex:page>

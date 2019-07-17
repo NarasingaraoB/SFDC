@@ -1,0 +1,32 @@
+<apex:page showHeader="false" sidebar="false" docType="html-5.0">
+<style>
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    height: 464px;
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+</style>
+  <apex:pageMessages id="showmsg"></apex:pageMessages>
+ <apex:insert name="header">
+    <c:SiteHeader /> 
+ </apex:insert>
+  <div class="Contentbox">
+  <apex:insert name="body">
+  <c:siteLeftMenu />
+  <div>quick booking</div>
+  </apex:insert>
+  </div>
+   <apex:insert name="footer">
+    <c:SiteFooter />  
+  </apex:insert>
+</apex:page>

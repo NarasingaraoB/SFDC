@@ -1,0 +1,16 @@
+<aura:component implements="force:hasRecordId,lightning:hasPageReference,lightning:actionOverride">
+    <aura:attribute name="recTypeId" type="Id"/>
+    <aura:attribute name="recAction" type="String"/>
+    <aura:attribute name="recObject" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--Component Start-->
+    <div class="slds-m-around--xx-large">
+        Selected Record Type Id : {!v.recTypeId}
+    </div>
+    <div class="slds-m-around--xx-large">   
+        Selected Record Action : {!v.recAction}
+    </div>
+    <div class="slds-m-around--xx-large">
+    Selected Record On Object : {!v.recObject}
+    </div>
+</aura:component>

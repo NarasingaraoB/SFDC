@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="tMapNum" label="Greatter"/>
+    <design:attribute name="boxSize" label="Size(PX)"/>
+    <design:attribute name="chooseColor" label="Color" datasource="Red,Black,White,Blue"/>
+    <design:attribute name="tMapNum1" label="Less"/>
+    <design:attribute name="boxSize1" label="Size(PX)"/>
+    <design:attribute name="chooseColor1" label="Color" datasource="Red,Black,White,Blue"/>
+</design:component>

@@ -1,0 +1,126 @@
+<apex:page sidebar="false" showHeader="false" controller="Train_BW_Stations_ctrl">
+  <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+ <style>
+ th.tStyle{
+         border: 1px solid green;
+           background-color: green;
+    color: white;
+    text-align: center;
+        }
+       table.tStyle{
+       table-layout: fixed;
+          border: 1px solid green;
+          font-size:14px;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align
+        }
+ a.button {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 6px 25px 0px 20px;
+    margin: 10px 8px 20px 0px;
+    display: inline-block;
+    float: center;
+    text-decoration: none;
+    width: 80px;
+    height: 27px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3a57af;
+    -webkit-box-shadow: 0 3px rgba(58,87,175,.75);
+    -moz-box-shadow: 0 3px rgba(58,87,175,.75);
+    box-shadow: 0 3px rgba(58,87,175,.75);
+    transition: all 0.1s linear 0s;
+    top: 0px;
+    position: relative;
+}
+a.button:hover {
+    top: 3px;
+    background-color: #2e458b;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+ </style>
+  <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ </head>
+  <body>
+  
+  <header id="header" class="clearfix">
+  <apex:insert name="header">
+    <c:findHeader />
+   
+  </apex:insert>
+ </header>
+ <apex:form id="form">
+ <div style="background-color: #e5eecc;border: solid 1px #c3c3c3;width:40%;margin: 100px 280px 0px 400px;text-align:center;display:{!viewB};">
+ 
+ <apex:inputText value="{!trNo}" html-placeholder="Enter Train Number" style="height:25px;width:100%;" disabled="true"/>
+ <apex:commandLink value="Submit" action="{!getTrainRoute}" rerender="form" styleClass="button"/>
+ </div>
+  <div style="margin: 100px 500px 50px 400px;background-color: #e5eecc;border: solid 1px #c3c3c3;display:{!viewD};;">
+  <table cellpadding="2" cellspacing="2" border="0" width="100%">
+<tr>
+<th style="border: 1px solid white;border-left: 1px solid green;background-color: green;color:white;text-align: center;">Train No</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Train Name</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Runs From Source</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;border-right: 1px solid green;">Runs On</th>
+</tr>
+<tr>
+<td style="border: 1px solid green;text-align: center;">{!trNo}</td>
+<td style="border: 1px solid green;text-align: center;">{!trainName}</td>
+<td style="border: 1px solid green;text-align: center;">trainSrc</td>
+<td style="border: 1px solid green;text-align: center;">
+                    <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tr>
+                    <apex:repeat value="{!rDays}" var="rd">
+                    <td style="border: 1px solid green;text-align: center;">{!rd.dayCode}</td>
+                    </apex:repeat>
+                    </tr>
+                    </table>
+</td>
+</tr>
+</table><br/>
+<table cellpadding="2" cellspacing="2" border="0" width="100%">
+<tr>
+<th style="border: 1px solid white;border-left: 1px solid green;background-color: green;color:white;text-align: center;">S.No</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Stn Code</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">RStn Name</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Arr. Time</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Dep.Time</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Halt.Minutes</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Distance</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;border-right: 1px solid green;">Day</th>
+
+</tr>
+ <apex:repeat value="{!tRoute}" var="tr">
+                                 <tr>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.sNo}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.stCode}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.stName}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.arrTime}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.depTime}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.haltTime}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.dist}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.day}</td>
+                                 </tr>
+                                 </apex:repeat>
+</table>
+                   
+
+
+                         
+ </div>
+  </apex:form>
+  </body>
+</apex:page>

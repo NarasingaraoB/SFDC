@@ -1,0 +1,7 @@
+<aura:component >
+   <aura:attribute name="UName" type="String"/> 
+    <aura:handler event="c:event1" action="{!c.BEvent}"/>
+    <div class="slds-m-around_xx-large">
+        <p>{!v.UName}</p> 
+    </div>
+</aura:component>

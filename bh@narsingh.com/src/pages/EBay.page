@@ -1,0 +1,41 @@
+<apex:page sidebar="false" showHeader="false" controller="EBay_ctrl" action="{!getGetItems}">
+<style>
+th.tStyle{
+             border: 1px solid green;
+             background-color: green;
+             color: white;
+             text-align: center;
+        }
+       table.tStyle{
+       table-layout: fixed;
+          border: 1px solid green;
+          font-size:14px;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+</style>
+ <apex:form >
+<apex:outputText value="{!jout}"></apex:outputText>
+ 
+ <table class="tStyle">
+ <tr class="tStyle"><th class="tStyle">Title</th><th class="tStyle"></th><th class="tStyle"></th><th class="tStyle"></th></tr>
+ <apex:variable value="{!0}" var="i"/>
+ <apex:repeat value="{!dInfo}" var="dt">
+ <tr><td class="tStyle">{!dt.product}</td><td class="tStyle"><img src="{!dt.productImg}"/></td></tr>
+ <apex:variable value="{!i+1}" var="i"/>
+ </apex:repeat>
+ </table>
+ <table class="tStyle">
+ <tr class="tStyle"><th class="tStyle">Title</th><th class="tStyle"></th><th class="tStyle"></th><th class="tStyle"></th></tr>
+ <apex:variable value="{!0}" var="i"/>
+ <apex:repeat value="{!tokens}" var="dt">
+ <tr><td class="tStyle">{!tokens[i]}</td><td class="tStyle"></td></tr>
+ <apex:variable value="{!i+1}" var="i"/>
+ </apex:repeat>
+ </table>
+ </apex:form>
+ 
+</apex:page>

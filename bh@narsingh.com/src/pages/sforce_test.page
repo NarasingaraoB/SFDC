@@ -1,0 +1,18 @@
+<apex:page sidebar="false" showHeader="false">
+<apex:includeScript value="{!$Resource.forceJs}"/>
+  <head>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+     force.init({
+            appId: result.appId
+        });
+    </script>
+</head>
+<body>
+<div id="div1">
+<h2>test ajax</h2>
+</div>
+<button>Get</button>
+</body>
+</apex:page>

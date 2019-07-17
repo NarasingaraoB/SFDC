@@ -1,0 +1,642 @@
+<apex:page sidebar="false" showHeader="false" controller="book_train" docType="html-5.0">
+
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/jquery-1.8.2.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/ui/jquery.ui.position.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/ui/jquery.ui.core.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/ui/jquery.ui.widget.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/ui/jquery.ui.button.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/ui/jquery.ui.tabs.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/ui/jquery.ui.dialog.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/themes/base/jquery.ui.all.css')}"/>
+
+<style>
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    height: 464px;
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+         .book_container{
+            width: 300px;
+           
+         /* margin: 0 auto;  */
+         
+        }
+        ul.book_tabs{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+        ul.book_tabs li{
+            background: none;
+            color: white;
+            display: inline-block;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        ul.book_tabs li.current{
+            background: #ededed;
+            color: #222;
+        }
+        .book_tab-content{
+            display: none;
+            background: #ededed;
+            padding: 15px;
+             
+        }
+
+        .book_tab-content.current{
+        
+            display: inherit;
+        }
+         
+         .container{
+            width: 100%;
+         /* margin: 0 auto;  */
+         background: gray;
+         height:300px;
+        }
+
+        ul.tabs{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+        ul.tabs li{
+            background: none;
+            color: white;
+            display: inline-block;
+            padding: 10px 15px;
+            cursor: pointer;
+            
+        }
+
+        ul.tabs li.current{
+            background: #ededed;
+            color: #222;
+           
+        }
+
+        .tab-content{
+            display: none;
+            background: #ededed;
+            padding: 15px;
+            
+        }
+
+        .tab-content.current{
+        height:250px;
+            display: inherit;
+            
+        }
+        .center_div
+        {
+             /*position: relative; 
+              top: 20px;
+              left: 30px;
+              background-color: white;*/
+        }
+        .theadStyle{
+             border: 1px solid black;
+             background-color: blue;
+             text-align: center;
+             color:white;
+        }
+        .trStyle{
+             border: 1px solid black;
+             text-align: center;
+             font-weight: bold;
+        }
+        .aTag
+        {
+        color:blue;
+        }
+        
+        .tblStyle
+        {
+       /* position: relative; 
+              top: 0px;
+              left: 20px;*/
+              width:75%;
+        }
+        .faretblStyle
+        {
+       /* position: relative; 
+              top: 25px;
+              left: 20px;*/
+              width:75%;
+        }
+        th.tStyle{
+             border: 1px solid green;
+             background-color: green;
+             color: white;
+             text-align: center;
+        }
+       table.tStyle{
+       table-layout: fixed;
+          border: 1px solid green;
+          font-size:14px;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+</style>
+<script type="text/javascript">
+var existA;
+function changeDate()
+{
+existA=new Array();
+}
+$(document).ready(function() {
+$( "#tbs span.ui-icon-close" ).live( "click", function() {
+       
+            
+            var liId=$( this ).closest( "li" )[0].id;
+            var tab_id = document.getElementById(liId).getAttribute("data-tab");
+            
+    $('#tbs div#'+tab_id).remove();
+   $( "#" + liId ).remove();
+   var index = existA.indexOf(liId);
+  
+   if (index > -1) {
+    existA.splice(index, 1);
+}
+  if(existA.length>0)
+  {
+  if(index!=0)
+  {
+  var setInd=index-1;
+  var existAval=existA[setInd];
+  $("#"+existAval).addClass('current');
+  var tab_id = document.getElementById(existAval).getAttribute("data-tab");
+  $('#tbs div#'+tab_id).addClass('current');
+  }
+  }
+            console.log(liId);
+           
+            $("div#tbs").tabs("refresh");
+        });
+ 
+        $('ul.book_tabs li').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.book_tabs li').removeClass('current');
+        $('.book_tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#"+tab_id).addClass('current');
+    });
+        });
+    
+    function changeTab()
+    {
+            $('ul.tabs li').click(function(){
+            var tab_id = $(this).attr('data-tab');
+   
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+    
+            $(this).addClass('current');
+            $("#"+tab_id).addClass('current');
+    });
+    }
+     var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>";
+     $("div#tbs").tabs();
+    
+    function addT(tNo,tName,Coach,frm,to)
+    {
+    
+    $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+    var num_tabs = $("div#tbs ul li").length + 1;
+     
+            var label =tNo+'-'+Coach,
+                id = "tab-" + num_tabs,
+                li = "<li id='"+label+"' class='tab-link current' data-tab='tab-"+num_tabs+"' onclick='changeTab()'><h6 style='float:left'>" + label + "</h6><span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
+                tabContentHtml ="<div style='padding: 3px;text-align: center;background-color: lightblue;border: solid 3px #c3c3c3;width:100%;'>Availability Train Number:"+tNo+"("+tName+"),Class:"+Coach+",Qouta:GN</div>";
+    
+    
+    var existTab=$.inArray(label, existA) > -1;
+    
+     if(existTab)
+    {
+    document.getElementById(label).className='tab-link current';
+    
+     var arrT = $('#tbs > div').map(function(){
+    return this.id;
+}).get();
+
+document.getElementById(arrT[0]).className='tab-content current';
+    }
+    else
+    {
+    existA.push(label);
+               $("div#tbs ul").append(li);
+                $("div#tbs").append( "<div title='"+label+"' id='" + id + "' class='tab-content current'></div>" );
+                newDivTab(id,tNo,tName,Coach,frm,to);
+                
+    }
+               $("div#tbs").tabs("refresh");
+    }
+    function newDivTab(id,tNo,tName,Coach,frm,to)
+    {
+    document.getElementById('ticketInfo').style.display='block';
+   var dat=jQuery('[id$=subDate]').val();
+   var dats = dat.split('-'); 
+   var dateList=[];
+   var m=Number(dats[1]).toString();
+   
+   var d = new Date(dats[0],m-1,dats[2]);
+   dateList.push(dats[2]+'-'+dats[1]+'-'+dats[0]); 
+   for(var j=1;j<6;j++)
+   {
+   var someDate = new Date();
+   someDate.setDate(someDate.getDate() +j);
+    var dd = someDate.getDate();
+    var mm = someDate.getMonth() + 1;
+    var yy = someDate.getFullYear();
+    if(dd<9)
+    {
+    dd='0'+dd;
+    }
+    if(mm<9)
+    {
+    mm='0'+mm;
+    }
+   dateList.push(dd+'-'+mm+'-'+yy); 
+   }
+  
+    var tbl=document.createElement('table');
+    tbl.className='tblStyle';
+    tbl.setAttribute('border','1');
+    var tbdy=document.createElement('tbody');
+    var thead = document.createElement('thead');
+    var th=document.createElement("th");
+    th.className='theadStyle';
+    thead.appendChild(th).appendChild(document.createTextNode('Date'));
+    for (var i = 0; i < dateList.length; i++) {
+     var th=document.createElement("th");
+              th.className='theadStyle';
+              thead.appendChild(th).
+              appendChild(document.createTextNode(dateList[i]));
+   
+}
+               
+    
+   var aTag = document.createElement('a');
+    tbl.appendChild(thead);
+    var tr2=document.createElement('tr');
+    var td=document.createElement('td');
+    tr2.className='trStyle';
+    
+        td.appendChild(document.createTextNode('Availability'));
+        tr2.appendChild(td);
+    Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.book_train.getCoachDetails}',
+            tNo,tName,Coach,dat,frm,to, 
+            function(result, event){
+                if (event.status && event.result) {
+                for(var i=0;i<dateList.length;i++)
+                {
+               var td=document.createElement('td');
+               var cDate=dateList[i]
+               var res=result[dateList[i]];
+               
+               var finalRes;
+               
+               if(res == '0')
+               {
+               
+               td.appendChild(document.createTextNode('Not Schedule'));
+               }
+               else
+               {
+               td.appendChild(document.createTextNode(res));
+               var br = document.createElement('br');
+        td.appendChild(br);
+               aTag.className='aTag';
+               var hlink='apex/book_ticket?trNo=' + tNo+'&tName='+tName+'&frm='+frm+'&jrDate='+cDate+'&to='+to+'&cls='+Coach;
+            aTag.setAttribute('href',hlink);
+           
+            aTag.innerHTML = "Book Now";
+            td.appendChild(aTag); 
+            
+               }
+               
+        
+        
+        
+        
+            
+            
+            
+        
+    tr2.appendChild(td);
+    }
+    
+   
+                }
+            }, 
+            {escape: true}
+        );
+  
+              
+              
+   tbdy.appendChild(tr2);
+tbl.appendChild(tbdy);
+
+
+var faretbl=document.createElement('table');
+    faretbl.className='faretblStyle';
+    faretbl.setAttribute('border','1');
+    var faretbdy=document.createElement('tbody');
+    var farethead = document.createElement('thead');
+    <apex:repeat value="{!fareList}" var="far">
+    var th=document.createElement("th");
+    th.className='theadStyle';
+    farethead.appendChild(th).
+    appendChild(document.createTextNode('{!far}'));
+    </apex:repeat>
+    faretbl.appendChild(farethead);
+    var tr3=document.createElement('tr');
+    tr3.className='trStyle';
+    Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.book_train.getFareDetails}',
+            tNo,tName,Coach,dat, 
+            function(result, event){
+                if (event.status && event.result) {
+                console.log(result);
+   
+    for(var j=0;j<result.length;j++)
+    {
+               var td=document.createElement('td');
+               td.appendChild(document.createTextNode(result[j]));
+               tr3.appendChild(td);
+     }
+    
+                }
+            }, 
+            {escape: true}
+        );
+    
+    faretbdy.appendChild(tr3);
+    faretbl.appendChild(faretbdy);
+    var tabContentHtml ="<div style='text-align:center;padding: 3px;background-color: blue;color:white;border: solid 3px #c3c3c3;width:100%;'>Availability Train Number:"+tNo+"("+tName+"),Class:"+Coach+",Qouta:GN</div>";
+    $("#"+id).append(tabContentHtml);
+    $("#"+id).append(tbl);
+    var tabContentHtml1 ="<div style='text-align:center;padding: 3px;background-color: blue;color:white;border: solid 3px #c3c3c3;width:100%;'>Fare Train Number:"+tNo+",Class:"+Coach+"</div>";
+    $("#"+id).append(tabContentHtml1);
+    $("#"+id).append(faretbl);
+    }
+    </script>
+    <apex:form id="form">
+   
+ <div class="Contentbox">
+<div id="main_div" style="width:100%;height:464px">
+<c:railway_nvgHeader_Menu ></c:railway_nvgHeader_Menu>
+  <apex:pageMessages id="showmsg"></apex:pageMessages>
+  
+  <div style="float:left;display: inline-block;background-color: lightgray;width:20%;">
+    <div class="book_container">
+    <ul class="book_tabs">
+        <li class="tab-link current" data-tab="normal">Plan My Journey</li>
+        <li class="tab-link" data-tab="quick">Quick Book</li>
+        
+    </ul>
+    <div id="normal" class="book_tab-content current">
+       <table>
+                       <tr><td>
+                       <table> 
+                        <tr><td><apex:outputLabel value="From Station:"/><apex:outputLabel value="*" style="color:red"/></td>
+                        <td><apex:inputText value="{!SrcText}" id="srcT">
+                            <c:autoPopData autocomplete_textbox="{!$Component.srcT}" objectname="City__c" ></c:autoPopData>
+                            </apex:inputText>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td><apex:outputLabel value="To Station:"/><apex:outputLabel value="*" style="color:red"/></td>
+                        <td><apex:inputText value="{!DesText}" id="desT">
+                            <c:autoPopData autocomplete_textbox="{!$Component.desT}" objectname="City__c" ></c:autoPopData>
+                            </apex:inputText>                                        
+                        </td>
+                        </tr>
+                        <tr>
+                        <td><apex:outputLabel value="Journey Date:"/><apex:outputLabel value="*" style="color:red"/></td>
+                        <td><apex:input type="date" id="subDate" value="{!dat}" onchange="changeDate()"/><!--<apex:inputText value="{!dat}" size="10" id="demo" onfocus="DatePicker.pickDate(false, this , false);" /> --></td>
+                        </tr>
+                        <tr>
+                        <td><apex:outputLabel value="Ticket Type:"/><apex:outputLabel value="*" style="color:red"/></td>
+                        <td><apex:selectList size="1">
+                            <apex:selectOption itemValue="E-Ticket" itemLabel="E-Ticket"></apex:selectOption>
+                            <apex:selectOption itemValue="I-Ticket" itemLabel="I-Ticket"></apex:selectOption>
+                            </apex:selectList>
+                        </td>
+                        </tr>
+                        </table>
+                        </td></tr>
+                        <tr>
+                        <td><apex:inputCheckbox value="{!handicap}"/><apex:outputLabel value="I'll book in Handicap concession"/></td>
+                        </tr>
+                        <tr> 
+                        <td align="center">
+                        <apex:commandButton value="Submit" action="{!Submit}" reRender="form"/>
+                        <apex:commandButton value="Reset"/>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                        <table style="table-layout: fixed;border: 1px solid green;font-size:14px;background:white;width:100%">
+                        <caption style="border: 1px solid #c3c3c3;background-color: lightgreen;text-align: center;">Journey Class</caption>
+                        <tr><td>1A</td><td>2A</td><td>3A</td><td>CC</td><td>SL</td><td>2S</td></tr>
+                        <tr>
+                        <apex:repeat value="{!categoryList}" var="cat">
+                        <td><apex:inputCheckbox value="{!categoryMap[cat]}"/></td>
+                        </apex:repeat>
+                        </tr>
+                        </table>
+                        <table style="table-layout: fixed;border: 1px solid green;font-size:14px;background:white;width:100%">
+                        <caption style="border: 1px solid #c3c3c3;background-color: lightgreen;text-align: center;">Train Type</caption>
+                        <apex:repeat value="{!tTypeList}" var="tType">
+                        <tr><td><apex:inputCheckbox value="{!tTypeMap[tType]}"/><apex:outputLabel value="{!tType}"/></td></tr>
+                        </apex:repeat>
+                        </table>
+                        <div id="flipF">From Stations</div>
+                        <div id="panelF"><apex:inputCheckbox value="{!fromStaion}"/><apex:outputLabel value="{!SrcText}"/></div>
+                        <div id="flipT">To Stations</div>
+                        <div id="panelT"><apex:inputCheckbox value="{!toStaion}"/><apex:outputLabel value="{!DesText}"/></div>
+                        </td>
+                        </tr>
+       </table>    
+    </div>
+    <div id="quick" class="book_tab-content">
+         Developing......................................
+    </div>
+    </div>
+    <div style="display: inline-block;height: 340px;background-color: white;">OUTSIDE ADERVITESMENT</div>
+  </div>
+  
+
+<div style="display: inline-block;background-color: lightgray;width:80%;">
+
+<div id='ticketInfo' style="display:none;">
+<div class="container" id="tbs">
+    <ul class="tabs">    
+    </ul>    
+</div><!-- container -->
+</div>
+<div style="display: inline-block;">
+
+<apex:image value="{!$Resource.advertise1}"/>
+<div class="center_div">
+<apex:outputPanel layout="block" rendered="{!mainView}">
+<div style="float:left;padding: 5px;text-align: center;background-color: #e5eecc;border: solid 1px #c3c3c3;width:40%;"><apex:commandLink value="Cancel Ticket"/></div>
+<div style="padding: 5px;text-align: center;background-color: #e5eecc;border: solid 1px #c3c3c3;"><apex:commandLink value="Booked Ticket History"/></div>
+<div style="float:left;padding: 5px;text-align: center;background-color: #e5eecc;border: solid 1px #c3c3c3;width:40%;"><apex:commandLink value="Refunds"/></div>
+<div style="padding: 5px;text-align: center;background-color: #e5eecc;border: solid 1px #c3c3c3;"><apex:commandLink value="Print Ticket"/></div>
+<div style="padding: 5px;text-align: center;background-color: #e5eecc;border: solid 1px #c3c3c3;"><marquee><font color="red">Welcome</font> <font color="green">{!$User.FirstName}</font> <font color="red">Toll-free-no:000-00-0000 and website:<a href="#">http://www.indianrail.gov.in</a></font></marquee></div>
+<div style="padding: 5px;text-align: center;background-color: #e5eecc;border: solid 1px #c3c3c3;">
+                    <div style="padding: 5px;background-color: lightblue;border: solid 1px #c3c3c3;">Last Transaction Detail</div>
+                    <div style="padding: 15px;border: solid 1px #c3c3c3;">
+                                               <table>
+                                               <tr>
+                                               <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Booking Transaction ID</th>
+                                               <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Booking Status</th>
+                                               </tr>
+                                               <tr>
+                                               <td>1234567890012</td><td>Booked</td>
+                                               </tr>
+                                               </table>
+                    </div>
+</div>
+<div style="padding: 5px;text-align: center;background-color: #e5eecc;border: solid 1px #c3c3c3;">
+
+                    <div id="infoContainer" style="padding: 5px;background-color: lightblue;border: solid 3px #c3c3c3;width:50%;float:left;">Information  News Alerts</div>
+                    <div style="padding: 5px;background-color: lightblue;border: solid 1px #c3c3c3;">Caution/Remarks</div>
+              <!--      <div id="info" style="padding: 15px;border: solid 1px #c3c3c3;height:200px;width:50%;float:left;">-->
+                        <div id="marqueecontainer" onMouseover="copyspeed=pausespeed" onMouseout="copyspeed=marqueespeed" style="float:left;position: relative;width: 51%;height: 225px;background-color: white;overflow: hidden;border: 3px solid #c3c3c3;padding: 2px;">
+                        <div id="vmarquee" style="position: absolute; width: 98%;">
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa    
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa    
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa     
+                          </div>
+                          </div>                    
+                  <!--  </div>      -->
+                        <div style="position: relative;height: 225px;background-color: white;overflow: hidden;border: 3px solid #c3c3c3;padding: 2px;">
+                        <div id="vmarquee" style="position: absolute; width: 98%;">
+                              
+                        </div>
+                        </div>      
+
+</div>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!bookView}">
+<div style="padding: 5px;text-align: left;background-color: #e5eecc;border: solid 1px #c3c3c3;width:100%;">Train Between Stations</div>
+<br/>
+<div style="padding: 5px;text-align: left;background-color: #e5eecc;border: solid 1px #c3c3c3;width:100%;">                                   
+                                        <table>
+                                        <tr>
+                                        <td>Select Quota</td>
+                                        <td><apex:selectRadio onchange="change(this);">
+                                        <apex:selectOption itemValue="GENERAL" itemLabel="GENERAL"/>
+                                        <apex:selectOption itemValue="PREMIUM TATKAL" itemLabel="PREMIUM TATKAL"/>
+                                        <apex:selectOption itemValue="PHYSICALLY HANDICAP" itemLabel="PHYSICALLY HANDICAP"/>
+                                        <apex:selectOption itemValue="LADIES" itemLabel="LADIES"/>
+                                        <apex:selectOption itemValue="TATKAL" itemLabel="TATKAL"/>
+                                        </apex:selectRadio>
+                                        </td>
+                                        <td><apex:outputLabel value="Click on a Class to get Availability and Fare*" style="Color:red;"/></td>
+                                        </tr>
+                                        </table>
+</div>
+<div style="padding: 5px;text-align: left;background-color: #e5eecc;border: solid 1px #c3c3c3;">
+                                        <table class="tStyle" cellpadding="5">
+                                        <tr class="tStyle">
+                                        <th class="tStyle">Train No</th>
+                                        <th class="tStyle">Train Name</th>
+                                        <th class="tStyle">From</th>
+                                        <th class="tStyle">Departure</th>
+                                        <th class="tStyle">To</th>
+                                        <th class="tStyle">Arrival</th>
+                                        <th class="tStyle">Dist.(Km)</th>
+                                        <th class="tStyle">Travel Time</th>
+                                        <th style="background-color: green;">
+                                        <div>
+                                                <div style="width:21px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">M</font></div>
+                                                <div style="width:21px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">T</font></div>
+                                                <div style="width:21px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">W</font></div>
+                                                <div style="width:21px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">T</font></div>
+                                                <div style="width:21px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">F</font></div>
+                                                <div style="width:21px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">S</font></div>
+                                                <div style="width:21px;float:left;"><font size="3" color="white">S</font></div>
+                                        </div>
+                                        </th>
+                                        <th class="tStyle">Class</th>
+                                        </tr>
+                                        <apex:repeat value="{!trList}" var="trs">
+                                        <tr class="tStyle">
+                                        <td class="tStyle"><apex:commandLink value="{!wrapperTrains[trs].tNo}" style="color:blue"/></td>
+                                        <td class="tStyle">{!wrapperTrains[trs].tName}</td>
+                                        <td class="tStyle">{!wrapperTrains[trs].frm}</td>
+                                        <td class="tStyle">{!wrapperTrains[trs].depT}</td>
+                                        <td class="tStyle">{!wrapperTrains[trs].to}</td>
+                                        <td class="tStyle">{!wrapperTrains[trs].arrT}</td>
+                                        <td class="tStyle">{!wrapperTrains[trs].dist}</td>
+                                        <td class="tStyle">{!wrapperTrains[trs].travT}</td>
+                                        <td class="tStyle">
+                                        <div>
+                                        <apex:repeat value="{!dayList}" var="m">
+                                                <div style="width:21px;border-right:1px solid green;float:left;text-align: center;"><font size="3">{!wrapperTrains[trs].tsh[m]}</font></div>
+                                        </apex:repeat>        
+                                        </div>
+                                        </td>
+                                        <td class="tStyle">
+                                             <table><tr>
+                                             <apex:repeat value="{!wrapperTrains[trs].tcd}" var="c">
+                                             <td><apex:commandLink value="{!c}" style="color:blue" action="{!GetCoachInfo}" onclick="addT('{!wrapperTrains[trs].tNo}','{!wrapperTrains[trs].tName}','{!c}','{!wrapperTrains[trs].frm}','{!wrapperTrains[trs].to}')" reRender="form">
+                                            <!-- <apex:param name="chInfo" value="{!wrapperTrains[trs].tNo}/{!c}" assignTo="{!TByCoachInfo}"/> -->
+                                            <apex:inputHidden value="{!TByCoachInfo}" id="tCoachInfo"/>
+                                             </apex:commandLink>
+                                             </td>
+                                             </apex:repeat>
+                                             </tr>
+                                             </table>
+                                        </td>
+                                        </tr>
+                                        </apex:repeat>
+                                        
+                                        </table>
+
+</div>
+</apex:outputPanel>
+<br/><br/>
+<apex:image value="{!$Resource.advertise1}"/>
+</div>
+</div>
+</div>
+</div>
+<apex:actionFunction name="getTrainDates"  reRender="form"/>
+</div>
+</apex:form>
+
+</apex:page>

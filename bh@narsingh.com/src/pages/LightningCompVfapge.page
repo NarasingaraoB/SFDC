@@ -1,0 +1,66 @@
+<apex:page >
+    <apex:includeLightning /><!-- tag imports necessary dependencies and scripts to enable Visualforce to act as Lightning component container.-->
+    <div id="compContainer">   
+    </div>
+    <script type="text/javascript">
+    <!--ltng:outApp indicates that any component defined in this application-(Sample app) can be used on Visualforce page-->
+    <!--lightning use method in JavaScript is used to refer Lightning Application which extends ltng:outApp -->
+    $Lightning.use("c:Sample",function()
+                      {
+                          $Lightning.createComponent("c:SampleCmp",{mesg:"welcome"},"compContainer",function(cmp)
+                                                    {
+                                                        console.log('SampleCmp component created.');
+                                                        });
+                      });
+        $Lightning.use("c:Sample",function()
+                       {
+                           $Lightning.createComponent("c:SampleCmp1",{JsMethod:getMessage},"compContainer",function()
+                                                      {
+                                                          console.log('SampleCmp1 component created.');
+                                                      });
+                       });
+     var component; //Variable for Lightning Out Component
+    //Create Lightning Component
+    $Lightning.use("c:Sample", function() {
+        $Lightning.createComponent("c:SampleCmp2", { },
+                                   "compContainer",
+                                   function(cmp) {
+                                       component = cmp;
+                                       console.log('SampleCmp2 component created.');
+                                   });
+    });
+     
+    //Method to call Lightning Component Method
+    var getWelcomeMessage = function(){
+        component.welcomeMsgMethod({message : "Welcome to Salesforce Ohana", developerGroup: "Bengaluru"}, "Biswajeet Samal");
+    }
+    var getWelMessage=function()
+    {
+        console.log('vfJSMethod');
+        component.welcomeMsgMethod("Welcome");
+        }
+    function getMessage(mesg)
+    {
+        alert(mesg);
+    }
+    $Lightning.use("c:Sample",function()
+                 {
+                     $Lightning.createComponent("c:SampleComp3",{ },compContainer,function(cmp)
+                                              {
+                                                  $A.eventService.addHandler({ "event": "c:SampleEvent", "handler" : handlerFun});
+                                                  });
+                     });
+     var handlerFun=function(event)
+     {
+         var mesg=event.getParam("mesg");
+         alert('Comp fire and vf handle event'+mesg);
+         }
+    
+        
+        
+    </script>
+     <apex:form >
+        <!--Button to call Javascript method-->
+        <apex:commandButton value="Get Welcome Message" onclick="getWelcomeMessage();return false;"/>
+    </apex:form>
+</apex:page>

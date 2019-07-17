@@ -1,0 +1,6 @@
+<apex:page sidebar="false" showHeader="false" controller="Bikes_Prices_ctrl" action="{!getData}">
+ <apex:form >
+ <apex:outputText value="{!jsonoutput}"></apex:outputText>
+ 
+ </apex:form>
+</apex:page>

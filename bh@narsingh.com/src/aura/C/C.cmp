@@ -1,0 +1,4 @@
+<aura:component >
+    <aura:registerEvent name="event2" type="c:event2"/>
+    <button onclik="childAction">Click</button>
+</aura:component>

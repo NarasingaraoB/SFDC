@@ -1,0 +1,16 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="SearchController" access="global">
+    <aura:attribute name="selectedLookupRecord" type="sObject" default="{}" description="store lookup record"/>
+    <aura:attribute name="objectAPIName" type="string" default=""/>
+    <aura:attribute name="IconName" type="string" default=""/>
+    <aura:attribute name="label" type="string" default=""/>
+    <aura:attribute name="listOfSearchRecords" type="list"/>
+    <aura:attribute name="SearchKeyword" type="string"/>
+   <div>
+   <label>
+        {!v.label}
+       </label>
+       <ui:inputText click="{!c.onFocus}" keyup="{!c.keyPressController}" value="{!v.SearchKeyword}" placeholder="Search."/>
+    </div>
+    {!v.listOfSearchRecords}
+    <c:custSearchChild IconName="{!v.IconName}" label="{!v.label}"/>
+</aura:component>

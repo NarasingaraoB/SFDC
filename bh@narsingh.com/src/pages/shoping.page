@@ -1,0 +1,123 @@
+<apex:page sidebar="false" showHeader="false" controller="shoping_ctrl">
+<apex:includeScript value="{!$Resource.jquery}"/>
+<apex:includeScript value="{!$Resource.slideScript}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+
+ <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ </head>
+
+<style>
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    
+   -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+.box {
+    margin-left: 40px ;
+    width: 95%;
+    
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+
+.title {
+    font-size: larger;
+    font-weight: bold;
+}
+
+#slideshow #slideshowWindow {
+    width: 843px;
+    height: 464px;
+    margin: 0px auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow .slide {
+    margin: 0;
+    padding: 0;
+    width: 843px;
+    height: 464px;
+    float: left;
+    position: relative;
+}
+.sliderWin{
+    position:relative;
+    width:100%;
+    /*  height:400px; when responsive, comment this out */
+    margin:0 auto;
+}
+.sliderWin-wrapper
+    {
+    margin-left: 250px ;
+        max-height:464px;
+        
+        float:left;
+    }
+</style>
+<apex:form id="form">
+<apex:pageMessages id="showmsg"></apex:pageMessages>
+<div class="box">
+<apex:insert name="header">
+    <c:findHeader />
+   
+  </apex:insert>
+</div>
+<div class="Contentbox">
+
+<apex:variable value="{!0}" var="x"/>
+<apex:repeat value="{!imgUrls}" var="img">
+<div style="float:left;border:solid 1px gray;max-width:200px;max-height:550px">
+
+<apex:image value="{!imgUrls[x]}"/>
+<table>
+<tr><td>Title:</td><td>{!proDetails[x].proName}</td></tr>
+<tr><td>Brand:</td><td>{!proDetails[x].brandName}</td></tr>
+<tr><td>Retail Price:</td><td>{!proDetails[x].retailPrice}</td></tr>
+<tr><td>Selling Price:</td><td>{!proDetails[x].sellingPrice}</td></tr>
+<tr><td>Color:</td><td>{!proDetails[x].color}</td></tr>
+<tr><td><apex:commandLink value="more Info"/></td><td><a href="{!proDetails[x].prodUrl}">Buy</a></td></tr>
+</table>
+</div>
+<apex:variable value="{!x+1}" var="x"/>
+</apex:repeat>
+
+</div>
+<div>
+<apex:insert name="header">
+    <c:SiteFooter />
+    <hr/>
+  </apex:insert>
+</div>
+</apex:form>
+</apex:page>

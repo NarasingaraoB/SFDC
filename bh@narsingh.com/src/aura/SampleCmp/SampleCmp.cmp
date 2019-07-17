@@ -1,0 +1,6 @@
+<aura:component >
+    <aura:attribute name="mesg" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    {!v.mesg}
+</aura:component>

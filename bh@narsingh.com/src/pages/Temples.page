@@ -1,0 +1,173 @@
+<apex:page showheader="false"  standardStylesheets="false" controller="Temple_ctrl_history">
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/jquery-1.8.2.js')}"/>
+<style>
+body{
+            margin-top: 100px;
+            font-family: 'Trebuchet MS', serif;
+            line-height: 1.6
+        }
+        .container{
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+
+
+        ul.tabs{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+        ul.tabs li{
+            background: none;
+            color: #222;
+            display: inline-block;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        ul.tabs li.current{
+            background: #ededed;
+            color: #222;
+        }
+
+        .tab-content{
+            display: none;
+            background: #ededed;
+            padding: 15px;
+        }
+
+        .tab-content.current{
+            display: inherit;
+        }
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+    
+    $('ul.tabs li').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#"+tab_id).addClass('current');
+    })
+
+});
+</script>
+  <body>
+ 
+<div class="container">
+
+    <ul class="tabs">
+        <li class="tab-link current" data-tab="tab-1">New</li>
+        <li class="tab-link" data-tab="tab-2">Edit</li>
+        <li class="tab-link" data-tab="tab-3">Delete</li>
+        <li class="tab-link" data-tab="tab-4">View</li>
+    </ul>
+
+    <div id="tab-1" class="tab-content current">
+    <apex:form id="fr">
+     <apex:actionRegion renderRegionOnly="false">
+      <apex:outputLabel >How Many Attachs</apex:outputLabel><apex:inputText value="{!noOfAttach}">
+      <apex:actionSupport event="onchange" action="{!GetAttachs}" rerender="fr,form"/>
+      </apex:inputText>
+      </apex:actionRegion>
+    <div id="div1" style="display:{!done}">
+      
+      
+      <table>
+      <tr>
+      <td>
+            <table>
+            <apex:repeat value="{!newAttachments}" var="newAtt">        
+            <tr><td><apex:outputLabel value="Image Name" for="imageName"/></td><td><apex:inputText value="{!newAtt.name}" id="fileName"/></td></tr>
+            <tr><td><apex:outputLabel value="File" for="file"/></td><td><apex:inputFile value="{!newAtt.body}" filename="{!newAtt.name}" id="file"/></td></tr>
+            <tr><td><apex:outputLabel value="Description" for="description"/></td><td><apex:inputTextarea value="{!newAtt.description}" id="description"/></td></tr>
+            </apex:repeat>
+            </table>
+       </td>
+       <td>
+       <table>
+            <tr><td><apex:outputLabel value="Temple Name"/></td><td><apex:inputText value="{!tmpName}"></apex:inputText></td></tr>
+            <tr><td><apex:outputLabel value="State"/></td><td><apex:inputText value="{!state}"  id="stat1">
+            <c:autoPopData autocomplete_textbox="{!$Component.stat1}" objectname="State__c"></c:autoPopData>
+            </apex:inputText></td></tr>
+            <tr><td><apex:outputLabel value="City"/></td><td><apex:inputText value="{!city}"  id="cty1">
+            <c:autoPopData autocomplete_textbox="{!$Component.cty1}" objectname="City__c"></c:autoPopData>
+            </apex:inputText></td></tr>    
+            </table>
+       </td>
+       </tr>
+       <tr><td></td><td><apex:commandButton value="Save" action="{!saveAttach}"/></td></tr>
+       </table>   
+        
+  </div>
+  </apex:form>
+  
+    </div>
+    <div id="tab-2" class="tab-content">
+        <apex:form id="frm">
+        <apex:outputLabel value="Temple Name"/><apex:inputText value="{!tName}"  id="tmp">
+            <c:autoPopData autocomplete_textbox="{!$Component.tmp}" objectname="Temple__c"></c:autoPopData>
+            <apex:actionSupport event="onblur" action="{!GetDetails}" rerender="frm"/>
+            </apex:inputText>
+        <div style="display:{!viewData}">
+        
+        <table>
+            <tr><td>
+            <table>
+            <tr><td><apex:outputLabel value="State"/></td><td><apex:inputText value="{!stateEdit}"  id="stat1">
+            <c:autoPopData autocomplete_textbox="{!$Component.stat1}" objectname="State__c"></c:autoPopData>
+            </apex:inputText></td></tr>
+            <tr><td><apex:outputLabel value="City"/></td><td><apex:inputText value="{!cityEdit}"  id="cty1">
+            <c:autoPopData autocomplete_textbox="{!$Component.cty1}" objectname="City__c"></c:autoPopData>
+            </apex:inputText></td></tr>
+            </table>
+            </td></tr>
+            <tr><td>
+            <table>
+            <tr>
+             <apex:repeat value="{!att}" var="ExistAtt">
+            <td> 
+            <table>       
+            <tr><td><apex:outputLabel value="Image Name" for="imageName"/></td><td><apex:inputText value="{!ExistAtt.name}" id="fileName"/>
+            <apex:actionRegion renderRegionOnly="false">
+            <apex:commandLink value="X" title="Delete" action="{!deleteAttach}" reRender="frm">
+            
+            </apex:commandLink>
+            </apex:actionRegion>
+            </td></tr>
+            <tr><td><apex:outputLabel value="File" for="file"/></td><td><img src="https://c.ap2.content.force.com/servlet/servlet.FileDownload?file={!ExistAtt.id}"/></td></tr>
+            <tr><td><apex:outputLabel value="Description" for="description"/></td><td><apex:inputTextarea value="{!ExistAtt.description}" id="description"/></td></tr>
+            </table>
+            </td>
+            </apex:repeat>
+            </tr>
+            </table>
+            
+            </td></tr>
+        </table>
+        
+        
+        
+        </div>
+        </apex:form>
+    </div>
+    <div id="tab-3" class="tab-content">
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    </div>
+    <div id="tab-4" class="tab-content">
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </div>
+
+</div><!-- container -->
+ 
+ 
+</body>
+  
+  
+  
+  
+</apex:page>

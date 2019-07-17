@@ -1,0 +1,273 @@
+<apex:page showHeader="false" sidebar="false" controller="book_ticket_ctrl">
+<apex:includeScript value="{!URLFOR($Resource.jQueryUI191, '/jquery-ui-1.9.1/jquery-1.8.2.js')}"/>
+<style>
+        th.tStyle
+        {
+             border: 1px solid green;
+             background-color: lightblue;
+             color: black;
+             text-align: center;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+</style>
+
+  <apex:form id="form">
+  <apex:pageMessages id="showmsg"></apex:pageMessages>
+  <div id="main_div" style="overflow: scroll;">
+  <c:railway_nvgHeader_Menu ></c:railway_nvgHeader_Menu>
+  <div style="background-color:white;padding-left:50px;padding-right:50px;border:1px solid blue;height:150px">
+  <apex:image URL="{!advMap[1]}"/>
+  </div>
+  <div style="background-color:white;padding-left:50px;padding-right:50px;">
+  <table width="100%">
+  <caption style="text-align:left;border:1px solid blue;background-color:blue;color:white">Journey Details</caption>
+  <tr>
+  <td>
+  <table>
+  <tr><td>Train.No/Name:</td><td>{!trNo}&nbsp;/&nbsp;{!tName}</td></tr>
+  <tr><td>From Station:</td><td>{!frm}</td></tr>
+  <tr><td>Boarding Station:</td></tr>
+  </table>
+  </td>
+  <td>
+  <table>
+  <tr><td>Journey Date:</td><td>{!jrDate}</td></tr>
+  <tr><td>To Station</td><td>{!to}</td></tr>
+  <tr><td>Reservation Upto:</td></tr>
+  </table>
+  </td>
+  <td>
+  <table>
+  <tr><td>class</td><td>{!classN}</td></tr>
+  <tr><td>Quota</td></tr>
+  <tr><td></td></tr>
+  </table>
+  </td>
+  </tr>
+  </table>
+  <apex:outputPanel rendered="{!backView}">
+  <table width="100%">
+  <caption style="text-align:left;border:1px solid blue;background-color:blue;color:white">Passenger List
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <apex:commandLink value="Select Your Travel List " style="color:white;"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <apex:commandLink value="Select Passenger From Your Master List" style="color:white;"/></caption>
+  <tr>
+  <th class="tStyle">S.No</th>
+  <th class="tStyle">Name</th>
+  <th class="tStyle">Age</th>
+  <th class="tStyle">Gender</th>
+  <th class="tStyle">Berth Preference</th>
+  <th class="tStyle">Senior Citizen</th>
+  <th class="tStyle">Id Proof</th>
+  </tr>
+  <apex:variable value="{!1}" var="sno"/>
+  <apex:repeat value="{!passList}" var="pList">
+  <tr>
+  <td class="tStyle">{!sno}</td>
+  <td class="tStyle"><apex:inputText value="{!passName[pList]}"/></td>
+  <td class="tStyle"><apex:inputText value="{!passAge[pList]}"/></td>
+  <td class="tStyle"><apex:selectList size="1" value="{!passGender[pList]}"><apex:selectOption itemLabel="Male" itemValue="Male"/><apex:selectOption itemLabel="Female" itemValue="Female"/></apex:selectList></td>
+  <td class="tStyle">
+  <apex:selectList size="1" value="{!passBerth[pList]}">
+  <apex:selectOption itemLabel="Lower" itemValue="Lower"/>
+  <apex:selectOption itemLabel="Upper" itemValue="Upper"/>
+  <apex:selectOption itemLabel="SideLower" itemValue="SideLower"/>
+  <apex:selectOption itemLabel="SideUpper" itemValue="SideUpper"/>
+  </apex:selectList>
+  </td>
+  <td class="tStyle"><apex:inputCheckbox value="{!passSenior[pList]}"/></td>
+  <td class="tStyle"><apex:inputText value="{!passProof[pList]}"/></td>
+  </tr>
+  <apex:variable value="{!sno+1}" var="sno"/>
+  </apex:repeat>
+  </table>
+  <div style="text-align:center;background-color:lightgray;width:100%;"><apex:commandButton value="Reset Passenger Details" action="{!resetPassDetails}" reRender="form"/></div>
+  <table width="100%">
+  <caption style="text-align:left;border:1px solid blue;background-color:blue;color:white">Children Below 5 Years(Ticket is not to be issued)</caption>
+  <tr><th class="tStyle">S.No</th><th class="tStyle">Name</th><th class="tStyle">Age</th><th class="tStyle">Gender</th></tr>
+  <apex:variable value="{!1}" var="no"/>
+  <apex:repeat value="{!childList}" var="cList">
+  <tr>
+  <td class="tStyle">{!no}</td>
+  <td class="tStyle"><apex:inputText value="{!childName[cList]}"/></td>
+  <td class="tStyle">
+  <apex:selectList value="{!childAge[cList]}" size="1">
+  <apex:selectOption itemLabel="Select" itemvalue="Select"/>
+  <apex:selectOption itemLabel="Below One Year" itemvalue="Below One Year"/>
+  <apex:selectOption itemLabel="One Year" itemvalue="One Year"/>
+  <apex:selectOption itemLabel="Two Years" itemvalue="Two Years"/>
+  <apex:selectOption itemLabel="Three Years" itemvalue="Three Years"/>
+  <apex:selectOption itemLabel="Four Years" itemvalue="Four Years"/>
+  </apex:selectList>
+  </td>
+  <td class="tStyle"><apex:selectList size="1" value="{!childGender[cList]}"><apex:selectOption itemLabel="Male" itemValue="Male"/><apex:selectOption itemLabel="Female" itemValue="Female"/></apex:selectList></td>
+  </tr>
+  <apex:variable value="{!no+1}" var="no"/>
+  </apex:repeat>
+  </table>
+  <div style="text-align:center;background-color:lightgray;width:100%;"><apex:commandButton value="Reset Child Details" action="{!resetChildDetails}" reRender="form"/></div>
+  
+  <div style="border: 1px solid green;padding-left:30px;padding-right:30px">
+  <table cellspacing="5" cellpadding="5" width="100%">
+  <tr height="100px"><td style="border: 1px solid green;text-align: left;" width="50%"><apex:inputCheckbox /><apex:outputLabel value="Consider for Auto Upgradation"/></td><td style="border: 1px solid green;text-align: left;" width="50%">Berth preference does not guarantee allotment of preferred berth type.</td></tr>
+  <tr height="100px">
+  <td style="border: 1px solid green;text-align: left;" width="50%">
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  <apex:outputText value="{!GetCaptcha}" style="font-size: 40px;"/>&nbsp;&nbsp;<apex:commandButton value="Refresh Captcha" reRender="form"/><br/><br/>
+  <apex:inputText value="{!captcha}" style="font-size: 15px;font-weight: bold;"/><apex:outputLabel value="Case-Sensitive" style="font-size: 15px;font-weight: bold;"/>
+  
+  </td>
+  <td style="border: 1px solid green;text-align: left;" width="50%">
+  <apex:outputLabel value="Mobile Number" style="font-size: 15px;font-weight: bold;"/>:<apex:inputText value="{!smsMobNo}" style="font-size: 15px;"/><br/>
+  <apex:outputLabel value="SMS will be sent to this number" style="color:red;"/>
+  </td></tr>
+  </table>
+  </div>
+  <p style="color:red">
+  * If for any reason, the reservation output details are not displayed on your screen after you have made payments,please check the details in ' Booked Tickets' under 'Booking History' in left navigation bar. You may also check your mail for the details of your booking. You are also advised to contact Indian Railways before trying to book your ticket again.
+  </p>
+  
+  <p style="color:red">
+  ** The ID card will be required during journey. One of the passenger booked on an e-ticket should have any of the nine identity cards(Voter Photo Identity Card / Passport / PAN Card / Driving License issued by a RTO/ Photo Identity card issued by Central / State Govt / Student Photo Identity Card issued by recognized School or College for their students/ Nationalized Bank Passbook with photograph/Credits Cards issued by banks with laminated photograph / Unique Identification Card 'Aadhaar') during train journey in original.The identification details are required at the time of Tatkal booking.** 
+  </p>
+  <div style="text-align:center;width:100%;"><apex:commandButton value="Next" action="{!NextPage}" reRender="form"/>&nbsp;&nbsp;&nbsp;&nbsp;<apex:commandButton value="Replan" action="{!replan}"/></div>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!nextView}">
+  <table width="100%">
+  <caption style="text-align:left;border:1px solid blue;background-color:blue;color:white">Passenger List</caption>
+  <tr>
+  <th class="tStyle">S.No</th>
+  <th class="tStyle">Name</th>
+  <th class="tStyle">Age</th>
+  <th class="tStyle">Gender</th>
+  <th class="tStyle">Berth Preference</th>
+  <th class="tStyle">Senior Citizen</th>
+  <th class="tStyle">Id Proof</th>
+  </tr>
+  <apex:variable value="{!1}" var="no"/>
+  <apex:repeat value="{!passEntryList}" var="pList">
+  <tr>
+  <td class="tStyle">{!no}</td>
+  <td class="tStyle"><apex:outputText value="{!passName[pList]}"/></td>
+  <td class="tStyle"><apex:outputText value="{!passAge[pList]}"/></td>
+  <td class="tStyle"><apex:outputText value="{!passGender[pList]}"/></td>
+  <td class="tStyle"><apex:outputText value="{!passBerth[pList]}"/></td>
+  <td class="tStyle"><apex:outputText value="{!if((passSenior[pList])=='true','Yes','No')}"/></td>
+  <td class="tStyle"><apex:outputText value="{!passProof[pList]}"/></td>
+  </tr>
+  <apex:variable value="{!no+1}" var="no"/>
+  </apex:repeat>
+  </table>
+  <table width="100%">
+  <caption style="text-align:left;border:1px solid blue;background-color:blue;color:white">Infant Details(Ticket is not to be issued)</caption>
+  <tr><th class="tStyle">S.No</th><th class="tStyle">Name</th><th class="tStyle">Age</th><th class="tStyle">Gender</th></tr>
+  <apex:variable value="{!1}" var="no"/>
+  <apex:repeat value="{!childEntryList}" var="cList">
+  <tr>
+  <td class="tStyle">{!no}</td>
+  <td class="tStyle"><apex:outputText value="{!childName[cList]}" rendered="{!if(childName[cList]=='',false,true)}"/></td>
+  <td class="tStyle"><apex:outputText value="{!childAge[cList]}" rendered="{!if(childAge[cList]=='',false,true)}"/></td>
+  <td class="tStyle"><apex:outputText value="{!childGender[cList]}" rendered="{!if(childGender[cList]=='',false,true)}"/></td>
+  </tr>
+  <apex:variable value="{!no+1}" var="no"/>
+  </apex:repeat>
+  </table>
+  <div style="border: 1px solid green;padding-left:30px;padding-right:30px">
+  <table cellspacing="5" cellpadding="5" width="100%">
+  <tr><th style="background-color:lightblue;text-align;left;border: 1px solid green;color:black;width:50%">Availability Details</th><th style="background-color:lightblue;text-align;left;border: 1px solid green;color:black;width:50%;">Fare Details</th></tr>
+  <tr>
+  <td>
+              <table>
+              <tr><td>Availability :<apex:outputLabel value="{!availSeats}"/></td><td></td></tr>
+              <tr><td>Availability At :<apex:outputLabel value="{!currentDate}"/></td><td></td></tr>
+              </table>
+  </td>
+  <td>
+                  <table>
+                  <tr><td>Ticket Fare :</td><td><apex:outputText value="{!ticketFare}.00 Rs."/></td></tr>
+                  <tr><td>Service Charge (Incl. of Service Tax) #:<td><apex:outputText value="0.00 Rs."/></td></td></tr>
+                  <tr><td>Total Fare :</td><td><apex:outputText value="{!totalFare}.00 Rs."/></td></tr>
+                  <tr><td><apex:outputLabel value="* Ticket fare includes Service Tax of ₹"/></td></tr>
+                  </table>
+  </td>
+  </tr>
+  </table>
+  </div>
+  <p style="color:red">
+  # This availability is for all berths, not for your preferred berth type. As tickets are booked throughout the country across PRS counters, any confirmed status shown above may decline into RAC/ Waiting List status, while your payment being processed. 
+  </p>
+  <table width="100%">
+  <caption style="text-align:left;border:1px solid blue;background-color:blue;color:white">Payment Option</caption>
+  <tr>
+  <td>
+  <apex:outputPanel rendered="{!payTypeInfoView}">
+  <p style="background-color:orange;color:white">
+ {!payTypeInfo}
+ </p>
+  </apex:outputPanel>
+  </td>
+  </tr>
+  <tr>
+  <td>
+      <table><tr>
+             <td>Payment Mode :</td>
+             <td><apex:selectRadio value="{!payType}">
+                 <apex:selectOption itemLabel="Net Banking" itemvalue="Net Banking"></apex:selectOption>
+                 <apex:selectOption itemLabel="Credit Card" itemvalue="Credit Card"></apex:selectOption>
+                 <apex:selectOption itemLabel="Debit Card" itemvalue="Debit Card"></apex:selectOption>
+                 <apex:selectOption itemLabel="EMI" itemvalue="EMI"></apex:selectOption>
+                 <apex:actionSupport action="{!paymentTypeInfo}" event="onchange" reRender="form"/>
+                 </apex:selectRadio>
+             </td>
+             </tr>
+      </table>
+  </td>
+  </tr>
+  <tr>
+  <td>
+      <table>
+              <tr>
+              <td>Select Bank &nbsp;&nbsp;&nbsp;&nbsp;:</td>
+              <td>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <apex:selectList >
+              <apex:selectOption itemLabel="Select Bank" itemvalue="Select Bank"></apex:selectOption>
+              </apex:selectList>
+              </td>
+              </tr>
+      </table>
+  </td>
+  </tr>
+  </table>
+  <div style="text-align:center;width:100%;">
+  <apex:commandButton value="Back" action="{!backPage}" reRender="form"/>&nbsp;&nbsp;&nbsp;&nbsp;
+  <apex:commandButton value="Make Payment" action="{!PayBill}"  reRender="form" />&nbsp;&nbsp;&nbsp;&nbsp;
+  <apex:commandButton value="Replan" action="{!replan}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+  </apex:outputPanel>
+  </div>
+  <div style="background-color:white;padding-left:50px;padding-right:50px;border:1px solid blue;height:150px">
+  <apex:image URL="{!advMap[2]}"/>
+  </div>
+</div>
+  </apex:form>
+</apex:page>

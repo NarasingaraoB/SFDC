@@ -1,0 +1,49 @@
+<apex:page sidebar="false" showHeader="false" controller="welcome_ctrl" docType="html-5.0">
+
+
+<style>
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    height: 464px;
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+
+</style>
+<apex:form id="form">
+<apex:pageMessages id="showmsg"></apex:pageMessages>
+<apex:actionFunction name="getBySrcDest" action="{!BySrcDest}"/>
+<apex:actionFunction action="{!GetTrsInfo}" name="getTrInfo" reRender="form"/>
+<div>
+<apex:insert name="header">
+    <c:SiteHeader />
+    
+  </apex:insert>
+</div>
+<div class="Contentbox">
+ <!--<apex:insert name="body">
+  <c:siteLeftMenu />
+  <div>Railway Info and discount</div>
+  </apex:insert>
+  -->
+  <h1><marquee>welcome home-page<br/>Running Services>Travel>Train</marquee></h1>
+  <a href="/apex/Temples_history">temple</a>
+</div>
+
+<div>
+<apex:insert name="header">
+    <c:SiteFooter />
+    <hr/>
+  </apex:insert>
+</div>
+</apex:form>
+</apex:page>

@@ -1,0 +1,45 @@
+<aura:component controller="Lookupjitendrazaa" >
+    <aura:attribute name="ObjectName" type="String" access="public"/>
+    <aura:attribute name="field_API_text" type="String" access="public"/>
+    <aura:attribute name="field_API_value" type="String" access="public"/>
+    <aura:attribute name="limit" type="Integer" access="public"/>
+    <aura:attribute name="field_API_search" type="String" access="public"/>
+    
+    <aura:attribute name="selItem" type="String" access="public"/>
+    <aura:attribute name="placeholder" type="String" access="public"/>
+    <aura:attribute name="last_SearchText" type="String" access="private"/>
+    <aura:attribute name="server_result" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="lookupIcon" type="String" access="public" default="standard:contact"/>
+    <div class="slds">
+    <aura:if isTrue="{!empty(selItem)}">
+        <input type="text" placeholder="{!v.placeholder}" onkeyup="{!c.serverCall}"/>
+        <aura:set attribute="else">
+        jdfkdsfjdskfdsjfksdkf
+        </aura:set>
+        </aura:if>
+        <aura:if isTrue="{!greaterthanorequal(v.server_result.length,1)}">
+          <div id="listbox-unique-id" role="listbox">
+                                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation"
+                                        style="display: block; min-width: auto; max-width: 100% ; width: 100%;">
+                                        <aura:iteration items="{!v.server_result}" var="item" indexVar="i">
+                                            <li role="presentation" class="slds-listbox__item" data-selectedIndex="{#i}" onclick="{!c.itemSelected}">
+                                                <span id="{#'listbox-option-unique-id-'+i+1}"  
+                                                      class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" 
+                                                      role="option">
+                                                    <span class="slds-media__figure optionIcon">
+                                                        <span class="slds-icon_container" >
+                                                             <lightning:icon iconName="standard:account" alternativeText="Event" size="small"/>
+                                                            <span class="slds-assistive-text">{#v.ObjectName}</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="slds-media__body singleRow">
+                                                        <span class="optionTitle slds-listbox__option-text slds-listbox__option-text_entity">{#item.Name}</span>
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </aura:iteration> 
+                                    </ul>
+                                </div>
+        </aura:if>
+    </div>
+</aura:component>

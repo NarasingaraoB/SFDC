@@ -1,0 +1,29 @@
+.THIS body {
+    background-color: #000 !important;
+}
+
+.THIS .clock {
+ /*  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);*/
+    color: black;
+    font-size: 32px;
+    font-family: Orbitron;
+    letter-spacing: 2px;
+    border-radius: 50%;
+    border: 4px solid #d2d2d0;
+    width: 150px;
+    height: 150px;
+    background: white;
+    margin: 0 auto;
+}
+.THIS .clockOverdue {
+    color: red !important; 
+    font-family: Impact;
+}
+.THIS .time{
+    margin-top: 32%;
+    display: block;
+    margin-left: 7%;
+}

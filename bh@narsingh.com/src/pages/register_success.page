@@ -1,0 +1,9 @@
+<apex:page sidebar="false" showHeader="false">
+  
+  <div style="margin: 200px auto;margin-left: 250px;margin-right: 250px;background-color:lightgray;width:50%;height:50%;font-size:25px">
+  <h1>Congratulations...................<br/>
+  Please check email and password will sent to your registered email.
+  <a href="https://c.ap2.visual.force.com/apex/findanything">Clik here to login.</a>
+  </h1>
+  </div>
+</apex:page>

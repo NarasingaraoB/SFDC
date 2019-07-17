@@ -1,0 +1,267 @@
+<apex:page sidebar="false" showHeader="false" controller="findanything_ctrl" action="{!setInitialSession}">
+<apex:includeScript value="{!$Resource.jquery}"/>
+<apex:includeScript value="{!$Resource.slideScript}"/>
+<style>
+body {
+    line-height: 1;
+    color: #444444;
+    background: url({!$Resource.findBody}) repeat-x;
+    font: 16px/18px Helvetica Neue,Arial,Helvetica,Geneva,sans-serif;
+}
+#header {
+    position: relative;
+    display: block;
+    width: 940px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 110px;
+    margin-bottom: 40px;
+    border-bottom: 0px solid fuchsia;
+    float: left;
+}
+.logo {
+    height: 83px;
+    width: 84px;
+    position: absolute;
+    top: 10px;
+    float: right;
+}
+.Advbox {
+    margin: 20px auto;
+    width: 843px;
+    height: 464px;
+    float: left;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow {
+    width: 843px;
+    height: 464px;
+    margin: 0px auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow .slide {
+    margin: 0;
+    padding: 0;
+    width: 843px;
+    height: 464px;
+    float: left;
+    position: relative;
+}
+/*
+label.radio {
+    cursor: pointer;
+    text-indent: 35px;
+    overflow: visible;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 15px;
+}
+input[type=radio] {
+    visibility: hidden;
+}
+label.radio:before {
+    background: #3a57af;
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+}
+label.radio:after {
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: 0.5em;
+    height: 0.25em;
+    background: transparent;
+    top: 7.5px;
+    left: 4.5px;
+    border: 3px solid #ffffff;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+input[type=radio]:checked+label:after {
+    opacity: 1;
+}
+label.radio {
+    cursor: pointer;
+    text-indent: 35px;
+    overflow: visible;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 15px;
+}*/
+
+.gender {
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+.accounttype {
+    margin-left: 8px;
+    margin-top: 40px;
+}
+a.button {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 6px 25px 0px 20px;
+    margin: 10px 8px 20px 0px;
+    display: inline-block;
+    float: right;
+    text-decoration: none;
+    width: 50px;
+    height: 27px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3a57af;
+    -webkit-box-shadow: 0 3px rgba(58,87,175,.75);
+    -moz-box-shadow: 0 3px rgba(58,87,175,.75);
+    box-shadow: 0 3px rgba(58,87,175,.75);
+    transition: all 0.1s linear 0s;
+    top: 0px;
+    position: relative;
+}
+a.button:hover {
+    top: 3px;
+    background-color: #2e458b;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+p {
+    font-size: 12px;
+    width: 150px;
+    display: inline-block;
+    margin-left: 18px;
+}
+#icon {
+    display: inline-block;
+    width: 30px;
+    background-color: #3a57af;
+    padding: 6px 0px 6px 15px;
+    margin-left: 15px;
+    -webkit-border-radius: 4px 0px 0px 4px;
+    -moz-border-radius: 4px 0px 0px 4px;
+    border-radius: 4px 0px 0px 4px;
+    color: white;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    border: solid 0px #cbc9c9;
+}
+#regText {
+    display: inline-block;
+    width: 150px;
+    padding: 6px 0px 6px 15px;
+    -webkit-border-radius: 0px 4px 4px 0px;
+    -moz-border-radius: 0px 4px 4px 0px;
+    border-radius: 0px 4px 4px 0px;
+    color: white;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    border: solid 0px #cbc9c9;
+}
+</style>
+<apex:form id="form">
+<apex:pageMessages id="showmsg"></apex:pageMessages>
+<div id="header">
+<div>
+<apex:image value="{!$Resource.find_logo}" styleClass="logo"/>
+</div>
+<div style="float:left;width:425px;margin-left:80%;">
+<apex:outputLabel value="{!loginError}*" style="color:red" rendered="{!nullEmail}" />
+<table cellspacing="2" cellpadding="2">
+<tr><td></td></tr>
+<tr><td><apex:outputLabel value="Email*" style="color:white"/></td><td><apex:outputLabel value="Verification Code*" style="color:white"/></td></tr>
+<tr><td><apex:inputText value="{!userName}" style="height:20px"/></td><td><apex:inputText value="{!vfCode}" style="height:20px"/></td><td><apex:commandButton value="Login" action="{!loginPage}"/></td></tr>
+<tr><td><apex:commandLink value="Get verification Code" style="color:white;" action="{!validateAndGetCode}" rerender="form"/></td></tr>
+</table>
+</div>
+</div>
+<div id="content">
+<div style="width:64.0%;float:left;">
+<div class="Advbox" id="slideshow">
+<div id="slideshowWindow">
+
+<div class="slide" id="s1">
+<img src="http://placehold.it/843x464/e90101&text=Slide+1" />
+</div>
+<div class="slide">
+<img src="http://placehold.it/843x464/e9be3e&text=Slide+2" />
+</div>
+<div class="slide">
+<img src="http://placehold.it/843x464/4890b9&text=Slide+3" />
+</div>
+</div>
+</div>
+</div>
+<div style="width:25.0%;float:left;margin-right:50px;">
+ 
+
+<div><apex:outputLabel value="{!errorReg}*" style="color:red" rendered="{!nullregValues}" /></div>
+ <div style="margin-left:8px;margin-top:40px;">
+     <!-- <input type="radio" value="None" id="radioOne" name="account"/>
+      <label for="radioOne" class="radio">Personal</label>
+      <input type="radio" value="None" id="radioTwo" name="account" />
+      <label for="radioTwo" class="radio">Company</label>
+      -->
+      <apex:selectRadio value="{!accType}">
+      <apex:selectOption itemLabel="Personal" itemValue="Personal"></apex:selectOption>
+      <apex:selectOption itemLabel="Company" itemValue="Company"></apex:selectOption>
+      </apex:selectRadio>
+    </div>
+  
+<div style="width:250px;margin:30px;">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"/>
+<label id="icon" for="name"><i class="fa fa-user fa-fw"></i></label><apex:inputText value="{!fname}" html-placeholder="Firstname" style="width: 150px;padding: 6px 0px 6px 15px;"/> 
+<label id="icon" for="name"><i class="fa fa-user fa-fw"></i></label><apex:inputText value="{!lname}" html-placeholder="Lastname" style="width: 150px;padding: 6px 0px 6px 15px;"/><br/>
+<label id="icon" for="name"><i class="fa fa-envelope fa-fw"></i></label><apex:inputText value="{!email}" html-placeholder="Email" style="width: 150px;padding: 6px 0px 6px 15px;"/><br/>
+<label id="icon" for="name"><i class="fa fa-mobile fa-fw"></i></label><apex:inputText value="{!mobNo}" html-placeholder="Mobile No" style="width: 150px;padding: 6px 0px 6px 15px;"/>
+</div>
+<div class="gender">
+  <!--
+    <input type="radio" value="None" id="male" name="gender"/>
+    <label for="male" class="radio">Male</label>
+    <input type="radio" value="None" id="female" name="gender" />
+    <label for="female" class="radio">Female</label>
+   -->
+   <apex:selectRadio value="{!gender}">
+      <apex:selectOption itemLabel="Male" itemValue="Male"></apex:selectOption>
+      <apex:selectOption itemLabel="Female" itemValue="Female"></apex:selectOption>
+      </apex:selectRadio>
+   </div> 
+ 
+   <p>By clicking Register, you agree on our <a href="#">terms and condition</a>.</p>
+<apex:commandLink value="Register" styleClass="button" action="{!registerData}"/>
+</div>
+
+</div>
+
+</apex:form>
+</apex:page>

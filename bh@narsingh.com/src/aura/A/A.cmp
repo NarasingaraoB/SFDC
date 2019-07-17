@@ -1,0 +1,6 @@
+<aura:component >
+    <aura:attribute name="userName" type="String"/>
+    <aura:registerEvent name="event1" type="c:event1"/>
+    <lightning:input type="text" name="Name" label="UserName" value="{!v.userName}"/>
+    <lightning:button label="Click to fire the event" variant="brand" onclick="{!c.AEvent}"/>
+</aura:component>

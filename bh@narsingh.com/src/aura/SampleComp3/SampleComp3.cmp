@@ -1,0 +1,11 @@
+<aura:component >
+    <aura:registerEvent name="SampleEvent" type="c:SampleEvent"/>
+    <div class="slds-m-around_xx-large">
+        <lightning:buttonGroup>
+         <lightning:button variant="Brand" class="slds-button" label="Add"/>
+             <lightning:button variant="Brand" class="slds-button" label="Edit"/>
+             <lightning:button variant="Brand" class="slds-button" label="Delete"/>
+        </lightning:buttonGroup>
+        <lightning:button variant="Brand" class="slds-button" label="Submit" onclick="{!c.doAction}"/>
+    </div>
+</aura:component>

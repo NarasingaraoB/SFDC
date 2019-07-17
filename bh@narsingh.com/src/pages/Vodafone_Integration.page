@@ -1,0 +1,8 @@
+<apex:page sidebar="false" showHeader="false" controller="Vodafone_Integration_ctrl">
+  <apex:form >
+  <apex:outputLabel ></apex:outputLabel><apex:inputText value="{!uName}"/>
+  <apex:outputLabel ></apex:outputLabel><apex:inputText value="{!pwd}"/>
+  <apex:commandButton value="Submit" action="{!Vconnection}"/>
+  <apex:outputText value="{!jsonOut}"></apex:outputText>
+  </apex:form>
+</apex:page>

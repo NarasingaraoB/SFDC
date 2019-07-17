@@ -1,0 +1,25 @@
+<aura:component controller="ContactPicklist">
+    <aura:attribute name="Cont" type="Contact" default="{'sObjectType':'Contact','LastName':'','LeadSource':''}"/>
+    <aura:attribute name="leadS" type="Map"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-m-around--xx-large">
+    <div class="container-fluid">
+        <div class="form-group">
+            <lightning:input name="accName" type="text" required="true" maxlength="50" label="Contact LastName" value="{!v.Cont.LastName}"/>
+        </div>
+        <div class="form-group">
+            <lightning:radioGroup
+                                  name="leadSoure"
+                                  label="Lead Source"
+                                  required="true"
+                                  type="radio"
+                                  value="{!v.Cont.LeadSource}"
+                                  options="{!v.leadS}"
+                                  />
+        </div>
+        <br/>
+        <lightning:button variant="Brand" label="Create" onclick="{!c.createCon}"/>
+    </div>
+        {!v.leadS}
+    </div>
+</aura:component>

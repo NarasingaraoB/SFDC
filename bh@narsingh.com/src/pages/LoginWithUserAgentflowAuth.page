@@ -1,0 +1,88 @@
+<apex:page sidebar="false" showHeader="false">
+<h1> open source code and implement below code in eclipse </h1>
+<!--
+ https://salesforce.stackexchange.com/questions/166253/java-desktop-app-to-login-salesforce
+add e(FX)clipse plugin to Eclipse
+//narsing@sfdc.com developer Org  
+DesktopJavaToSFDC connected app
+package salesforce_rest;
+
+
+
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLDecoder;
+import java.net.URLStreamHandler;
+import java.util.HashMap;
+
+import javax.swing.JFrame;
+
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.web.WebView;
+
+@SuppressWarnings("serial")
+public class Main extends JFrame {
+//narsing@sfdc.com developer Org
+    public Main self;
+    public JFXPanel panel;
+
+    public Main() {
+        self = this;
+        setTitle("Demo");
+        setBounds(new Rectangle(new Point(0, 0), new Dimension(400, 800)));
+        panel = new JFXPanel();
+        this.add(panel);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Platform.runLater(() -> {
+            WebView view = new WebView();
+            panel.setScene(new Scene(view));
+            URL.setURLStreamHandlerFactory((protocol) -> {
+                if(protocol.equals("callout")) {
+                    return new URLStreamHandler() {
+                        @Override
+                        protected URLConnection openConnection(URL arg0) throws IOException {
+                            return new URLConnection(arg0) {
+                                @Override
+                                public void connect() throws IOException {
+                                    HashMap<String, String> data = new HashMap<String, String>();
+                                    String[] parts = arg0.toExternalForm().split("#");
+                                    String[] keypairs = parts[1].split("&");
+                                    for(String keypair: keypairs) {
+                                        String[] keypairparts = keypair.split("=",2);
+                                        data.put(keypairparts[0], URLDecoder.decode(keypairparts[1], "UTF-8"));
+                                    }
+            /***********************************************************************************
+            At this point, data contains access_token you can use to log in with, optional
+            refresh_token if specified in the scope, API url (instance_url), token_type, and
+            scope.
+            ***********************************************************************************/
+                                    System.out.println(data.toString());
+                                }
+                            };
+                        }
+                    };
+                }
+                return null;
+            });
+            view.getEngine().load(
+                "https://ap5.salesforce.com/services/oauth2/authorize" +
+                "?response_type=token" +
+                "&client_id=" + "3MVG9d8..z.hDcPL0CEwH3hW3TJW8BvM4LeOoED2umGFldOFaemjFZEG0EYdESOIX7mgeNeRTxD52pmerTpCn" +
+                "&redirect_uri=https%3A%2F%2Fc.ap5.visual.force.com%2Fapex%2FwelcomeToSFDC"
+            );
+        });
+
+    }
+    public static void main(String[] args) {
+        new Main();
+    }
+}
+-->
+</apex:page>

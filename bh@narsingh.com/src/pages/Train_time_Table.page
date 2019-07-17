@@ -1,0 +1,19 @@
+<apex:page sidebar="false" showHeader="false" controller="Train_time_Table_ctrl" action="{!getData}">
+<apex:form >
+  <apex:variable value="{!0}" var="cnt"/>
+  <table border="1" cellpadding="3" cellspacing="3">
+  <tr><th>S.No</th><th>Office Name</th><th>Pincode</th><th>Office Type</th><th>Status</th><th>Division Name</th><th>Regional Name</th></tr>
+  <apex:repeat value="{!tInfo}" var="t">
+  
+  <tr><td>{!cnt}</td><td>
+  <apex:outputText value="{!t.tNo}"/>
+  </td>
+  
+  </tr>
+  <apex:variable value="{!cnt+1}" var="cnt"/>
+  </apex:repeat>
+  </table>
+  <apex:outputText value="{!jsonoutput}"></apex:outputText>
+  </apex:form>
+  
+</apex:page>

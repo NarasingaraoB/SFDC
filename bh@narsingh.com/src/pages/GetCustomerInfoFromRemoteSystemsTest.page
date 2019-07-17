@@ -1,0 +1,24 @@
+<apex:page sidebar="false" showHeader="false">
+
+   <form method="post" name="f1">
+   {!$CurrentPage.parameters.code}
+    <table> <tr>
+            <td ><font face="Verdana">Your Name</font>
+            
+            <input type="text" name="p_name" style="pointer-events:{!if($CurrentPage.parameters.code==null,'none','auto')};"/> 
+            
+            
+          
+            
+ <a href="javascript:void(0);" NAME="My Window Name" title=" My title here " onclick="CloseMySelf();">Allow</a>  
+    </td></tr>
+    
+    </table>
+    
+  </form>  
+  <script>
+    function CloseMySelf() {
+   window.open("/apex/popupchild?code=123&core.apexpages.devmode.url=1","Ratting","width=550,height=170,left=150,top=200,toolbar=1,status=1,");
+}
+</script>
+</apex:page>

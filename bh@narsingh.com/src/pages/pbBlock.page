@@ -1,0 +1,65 @@
+<apex:page sidebar="false" showHeader="false" controller="pblock">
+<apex:form >
+<apex:pageblock title="main page" >
+<apex:pageBlockSection title="section 1 ">
+<apex:pageBlock title="values">
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem >
+
+<apex:outputLabel value="enter 1nd number"></apex:outputLabel>
+<apex:inputText value="{!a}" />
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem >
+
+<apex:outputLabel value="enter 2nd number"></apex:outputLabel>
+<apex:inputText value="{!b}" />
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+
+
+
+</apex:pageBlock>
+<apex:pageBlock title="addition">
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Result:::"></apex:outputLabel>
+<apex:outputText value="{!c}"></apex:outputText>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+</apex:pageBlock>
+<apex:pageBlock title="sub">
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Result:::"></apex:outputLabel>
+<apex:outputText value="{!cc}"></apex:outputText>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+</apex:pageBlock>
+<apex:pageBlock title="multi">
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Result:::"></apex:outputLabel>
+<apex:outputText value="{!ccc}"></apex:outputText>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+</apex:pageBlockSection>
+<apex:pageBlockSection title="section 2 ">
+
+
+</apex:pageBlockSection>
+<apex:pageBlockSection title="section 3 ">
+
+
+</apex:pageBlockSection>
+<apex:pageBlockSection title="section 4 ">
+
+
+</apex:pageBlockSection>
+</apex:pageblock>
+</apex:form>
+</apex:page>

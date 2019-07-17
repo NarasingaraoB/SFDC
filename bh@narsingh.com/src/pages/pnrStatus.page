@@ -1,0 +1,58 @@
+<apex:page showHeader="false" sidebar="false" controller="pnrStatus_ctrl">
+<style>
+th.tStyle{
+         border: 1px solid green;
+           background-color: green;
+    color: white;
+    text-align: center;
+        }
+       table.tStyle{
+       table-layout: fixed;
+          border: 1px solid green;
+          font-size:14px;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+        *{
+    margin:0;
+    padding:0;
+}
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    height: 464px;
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+
+</style>
+ <apex:form >
+ <apex:pageMessages id="showmsg"></apex:pageMessages>
+ <apex:insert name="header">
+    <c:SiteHeader /> 
+ </apex:insert>
+ <div class="Contentbox">
+   <apex:insert name="body">
+  <c:siteLeftMenu />
+  <div><table>
+  <tr><td><apex:outputLabel value="PNR No:"/></td><td><apex:inputText value="{!pnrNo}"/></td></tr></table>
+  <apex:commandButton value="Get Status" action="{!GetPnrStatus}"/></div>
+  </apex:insert>
+        
+        </div>
+  <apex:insert name="header">
+    <c:SiteFooter />  
+  </apex:insert>
+ </apex:form>
+</apex:page>

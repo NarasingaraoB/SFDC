@@ -1,0 +1,8 @@
+<apex:page sidebar="false" showHeader="false" controller="Integration_ctrl">
+ <apex:form >
+ <apex:inputText value="{!SrcText}" id="srcT">
+                            <c:autoPopData autocomplete_textbox="{!$Component.srcT}" objectname="City__c" ></c:autoPopData>
+                            </apex:inputText>
+ 
+ </apex:form>
+</apex:page>

@@ -1,0 +1,3 @@
+<aura:component >
+	<div>Model box header</div>
+</aura:component>

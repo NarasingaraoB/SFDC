@@ -1,0 +1,11 @@
+<apex:page standardController="Opportunity">
+
+<apex:outputPanel rendered="{!$Profile.Name != 'Community User'}" >
+    <apex:detail subject="{!Opportunity.Id}" inlineEdit="true" showChatter="true"  />
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!$Profile.Name = 'Community User'}" >
+    <apex:detail subject="{!Opportunity.Id}" inlineEdit="true" showChatter="false"  />
+</apex:outputPanel>
+
+</apex:page>

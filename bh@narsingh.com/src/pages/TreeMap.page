@@ -1,0 +1,111 @@
+<apex:page sidebar="false" showHeader="false">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/treemap.js"></script>
+<div id="container"></div>
+<script>
+$(function() {
+  var chart = new Highcharts.Chart({
+    "chart": {
+      type: "treemap",
+      renderTo: "container"
+    },
+
+    series: [{
+      "type": "treemap",
+      "layoutAlgorithm": "squarified",
+      "allowDrillToNode": true,
+      "animationLimit": 1000,
+      "dataLabels": {
+        "enabled": false
+      },
+      "levelIsConstant": false,
+      "levels": [{
+        "level": 1,
+        "dataLabels": {
+          "enabled": true
+        },
+        "borderWidth": 3
+      }],
+      "data": [{
+        "color": "#932",
+        "id": "id_0",
+        "name": "Marcus Richards"
+      }, {
+        "color": "#FF1100",
+        "id": "id_0_0",
+        "name": "Overdue",
+        "ownerId": "00541000000jw8CAAQ",
+        "parent": "id_0",
+        "value": 2
+      }, {
+        "color": "#FFD310",
+        "id": "id_0_1",
+        "name": "Due Today",
+        "ownerId": "00541000000jw8CAAQ",
+        "parent": "id_0",
+        "value": 0
+      }, {
+        "color": "#12AD2A",
+        "id": "id_0_2",
+        "name": "Open",
+        "ownerId": "00541000000jw8CAAQ",
+        "parent": "id_0",
+        "value": 1
+      }, {
+        "color": "#23",
+        "id": "id_1",
+        "name": "John Smith"
+      }, {
+        "color": "#FF1100",
+        "id": "id_1_0",
+        "name": "Overdue",
+        "ownerId": "00541000001s0ouAAA",
+        "parent": "id_1",
+        "value": 19
+      }, {
+        "color": "#FFD310",
+        "id": "id_1_1",
+        "name": "Due Today",
+        "ownerId": "00541000001s0ouAAA",
+        "parent": "id_1",
+        "value": 0
+      }, {
+        "color": "#12AD2A",
+        "id": "id_1_2",
+        "name": "Open",
+        "ownerId": "00541000001s0ouAAA",
+        "parent": "id_1",
+        "value": 12
+      }, {
+        "color": "#391",
+        "id": "id_2",
+        "name": "Integration User"
+      }, {
+        "color": "#FF1100",
+        "id": "id_2_0",
+        "name": "Overdue",
+        "ownerId": "00541000000jw89AAA",
+        "parent": "id_2",
+        "value": 0
+      }, {
+        "color": "#FFD310",
+        "id": "id_2_1",
+        "name": "Due Today",
+        "ownerId": "00541000000jw89AAA",
+        "parent": "id_2",
+        "value": 0
+      }, {
+        "color": "#12AD2A",
+        "id": "id_2_2",
+        "name": "Open",
+        "ownerId": "00541000000jw89AAA",
+        "parent": "id_2",
+        "value": 1
+      }]
+    }]
+
+  });
+});
+    </script>
+</apex:page>

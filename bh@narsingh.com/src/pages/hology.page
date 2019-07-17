@@ -1,0 +1,523 @@
+<apex:page showheader="false"  standardStylesheets="false" controller="Temple_ctrl_history">
+
+<html>
+    <head>
+
+        <meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" /> 
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="shortcut icon" href="http://res.cloudinary.com/lbn8r653o/image/upload/v1403411937/hology_fav.ico" />
+        
+        <apex:stylesheet value="{!URLFOR($Resource.hgassets_cm1, 'mobilesb/css/jquery.mobile.icons-1.4.2.css')}" />     
+        <apex:stylesheet value="{!URLFOR($Resource.hgassets_cm1, 'mobilesb/css/mblurtheme.css')}" />        
+        <apex:stylesheet value="{!URLFOR($Resource.hgassets_cm1, 'mobilesb/css/jquery.mobile.structure-1.4.2.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.hgassets_cm1, 'css/jquery.fullPage.css')}" />
+        <apex:includescript value="{!URLFOR($Resource.hgassets_cm1, 'mobile/js/jquery-1.9.1.js')}" />
+        <apex:includescript value="{!URLFOR($Resource.hgassets_cm1, 'mobile/js/jquery-ui-1.9.2.custom.min.js')}" /> 
+        <apex:includescript value="{!URLFOR($Resource.hgassets_cm1, 'mobilesb/js/jquery.mobile-1.4.2.js')}" />
+        <apex:includescript value="{!URLFOR($Resource.hgassets_cm1, 'js/jquery/jquery.cloudinary.js')}" />
+        <apex:includescript value="{!URLFOR($Resource.hgassets_cm1, 'js/jquery/jquery.fullPage.js')}" />
+    
+    </head>
+
+    <body>
+     <style type="text/css">
+        .fline
+        {
+            color: #89583A;
+            vertical-align: baseline;
+        }
+        .sline
+        {
+            color: #A5A397;
+            padding-left: 25px;
+        }
+    </style>
+
+        <script type="text/javascript">
+            $.cloudinary.config({"api_key":"961121743243177","cloud_name":"lbn8r653o"});
+
+            $(document)
+                .ready(
+                    function() {
+                                                
+                        css_cursor_OnRdy();
+                        css_undl_OnRdy();
+                        
+                        $('.profileImageSmall').cloudinary({fetch_format: 'auto'});
+                        $('#fullpage').fullpage({
+                            verticalCentered: true,
+                            afterLoad: function(anchorLink, index){}
+                        });
+                        $('.prodDownBtn').click(function(){
+                         
+                            $.fn.fullpage.moveSectionDown();
+                        });
+                        $('.nextBtn').click(function(){
+                          
+                            $.fn.fullpage.moveSlideRight();
+                        });
+                        $('.previousBtn').click(function(){
+                            $.fn.fullpage.moveSlideLeft();
+                        });
+                        $('.nxtBtn').click(function(){
+                        
+                        });
+                        $('.bckBtn').click(function(){
+                            $.fn.fullpage.back();
+                        });
+
+ 
+                        products_OnReady();
+                        
+                    });
+
+            //--cursor onhover
+            function css_cursor_OnRdy(){
+                $('.css_cursor').hover(
+                    function(){$(this).css({cursor: 'pointer'});},
+                    function(){$(this).css({cursor: ''});
+                 });
+            }   
+            //--underline onhover
+            function css_undl_OnRdy(){
+                $('.css_undl').hover(
+                    function(){$(this).css({textDecoration: 'underline'});},
+                    function(){$(this).css({textDecoration: 'none'});
+                });             
+            }   
+        
+        </script>       
+
+        <style>
+            .ui-page-theme-a .ui-bar-inherit{background-color: rgba(108,39,0,0.9); }
+            .ui-header{ box-shadow: 0px 0px 4px rgb(24, 23, 22) !important; text-shadow: 1px 1px 1px black}
+            .ui-header div{position: relative; display: inline-block; height: 100%;}
+            .ui-header div span {display: inline-block; margin-right: 15px; color: #e8e5d2; font-weight: normal; font-size: 16px; text-shadow: 2px 0 0px #222; text-transform: uppercase; font-family: 'RobotoCondensed',sans-serif}
+            .ui-header .headerButton{margin: 10px 2px; text-decoration: none; color: #fff; text-shadow: 1px 1px 1px black; font-size: 14px; font-weight: normal;}           
+            .ui-content {padding: 0px !important;}
+            .ui-content .section1{ background-color: #fbf8e7; background: url(http://res.cloudinary.com/lbn8r653o/image/upload/v1403423650/restore_bg.jpg); background-size: cover;}
+            .ui-content .section1 .block1{position: relative; left: 10%; }
+            .ui-content .section1 .header{font-size: 46px; margin-bottom: 10px}
+            .ui-content .section1 .text{font-size: 18px;}
+            .ui-content .section1 .prodDownBtn{display: block; position: relative; margin: 150px auto 10px; auto; background-color: rgba(108,39,0,0.9); border: 1px solid #333; border-radius: 30px; height: 50px; width: 50px}
+            .ui-content .section1 .prodDownBtn .arrow-down {display: block; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 20px solid white; margin: 17px 10px;}           
+            .ui-content .section2{ background-color: #fbf8e7;}
+            .ui-panel-inner { position: absolute; top: 1px; left: 0; right: 0; bottom: 0px; overflow: auto; -webkit-overflow-scrolling: touch;}
+            .ui-panel-wrapper{ background-color: rgba(37,21,21,0.5) !important} 
+            .ui-content{color: #fff; vertical-align: middle;}
+            .menuProfile{position: relative; padding: 10px 15px 5px;}
+            .menuProfImage{display: inline-block; padding-right: 4px;} 
+            .menuProfName{position: relative; display: inline-block; max-width: 150px; top: -10px; }
+            .menuProfileEdit{font-size: 11px; color: rgb(146, 94, 130);text-decoration: none;}
+            .menuFilterDisable{display: none; z-index: 3; position: absolute;  height: 5000px; width: 185px;}           
+            .menuBtn{padding: 10px 15px; background-color: #333; text-align: left; text-shadow: 1px 1px 1px black; border-bottom: 1px solid #1A1918; box-shadow: #2E2D2D 0px -4px 1px -2px inset;}          
+            .menuBtnText{display: inline-block; text-decoration: none; font-size: 15px; color: #DDD; text-shadow: 0px 0px 1px rgb(213, 110, 16); font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;max-width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+            .menuBtnTextArrowRight{display: inline-block; position: relative; top: 1px;left: 2px; height: 0; width: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 10px solid rgb(238, 125, 21);}
+            .menuBtnTextArrowDown{display: inline-block; position: relative; top: 1px;left: 2px; height: 0; width: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 10px solid rgb(238, 125, 21);}
+            .menuIcon{position: relative; display: inline-block; margin: 5px 7px;}
+            .menuTrendIcon1{display: inline-block; position: relative; font-weight: bold; font-family: arial black; color: rgb(238, 125, 21); text-shadow: none; font-style: normal; font-size: 20px;}
+            .menulogoutIcon1{display: inline-block; position: relative; top: 3px; height: 12px; width: 10px; border: 2px solid rgb(238, 125, 21); border-radius: 2px;}
+            .menulogoutIcon2{z-index: 2; display: inline-block; position: absolute; top: 7px; left: -5px; height: 0; width: 0; border-top: 4px solid transparent; border-bottom: 3px solid transparent; border-right: 7px solid rgb(238, 125, 21);}
+            .menulogoutIcon3{z-index: 1; position: absolute; display: inline-block; margin: 6px 0px 0px -2px; height: 9px; width: 5px; background-color: #333;}
+            .menulogoutIcon4{z-index: 2; display: inline-block; position: absolute; margin: 9px 0px 0px 2px; height: 3px; width: 5px; background-color: rgb(238, 125, 21); border-radius: 1px;}
+            .menuSignupIcon1{position: relative; display: block; top: 7px; left: 3px; height: 0; width: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 7px solid rgb(238, 125, 21);}
+            .menuSignupIcon2{position: absolute; display: block; top: 13px; left: 6px; height: 5px; width: 4px; background-color: rgb(238, 125, 21);}
+            .menuSignupIcon3{position: absolute; display: block; top: 18px; left: 5px; height: 2px; width: 6px; border-radius: 1px; background-color: rgb(238, 125, 21);}
+            .menuSignupIcon4{position: relative; display: inline-block; margin: 0px 0px -2px; border: 2px solid rgb(238, 125, 21); width: 12px; border-top: none; height: 2px; border-radius: 2px;}         
+            .menuSection{color: white; text-align: left; border-right: 1px solid #333;}
+            .menuFilterPanel{ background: #333;}
+            .menuSection .menuTitle{display: block; padding: 10px 15px; text-transform: uppercase; font-family: verdana; font-size: 12px; font-weight: bold; background-color: rgb(238, 125, 21); box-shadow: inset 0px -4px 4px rgb(201, 108, 46);}
+            
+        </style>
+
+
+        <div data-role="page" data-theme="a" id="restoreSplash">
+
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                                      
+
+                <h1>Restore rid Name-</h1>
+                <a href="#" data-rel="back" id="signUpBack" class="headerButton" data-role="none" data-inline="true" data-direction="reverse" data-transition="slide"><span class="headerButtonIcon">&#171;</span> Back</a>
+            </div>  
+
+            <script>
+
+                //LL06242014 builds out products page handlers (clicks, cart behavior and calculations)
+                function products_OnReady(){
+                
+                    var section2 = $('.ui-content').find('.section2');
+                    
+                    var sec2ProdItems = section2.find('.products.ui-grid-a .ui-block-a .prodContainer .prodItem')
+                    sec2ProdItems.find('.prodImg > img').cloudinary({fetch_format: 'auto', src: $(this).attr('data-src'), width: '60', height: '60', crop: 'fit'})
+                            .load(function(){
+                                var hImg = $(this).height();
+                                var hParent = $(this).parent().height();
+                                $(this).css({marginTop: (hParent-hImg)/2});
+                            });
+                    $('.ui-page').find('.prodImgLarge > img').cloudinary({fetch_format: 'auto', src: $(this).attr('data-src'), width: '125', height: '125', crop: 'fit'});                          
+                  
+                    
+                    section2.find('.ui-grid-a.products').find('.prodContainer').unbind('mouseenter mouseleave click')
+                        .hover(function(){$(this).find('.prodPrice,.prodInfoIcon').fadeIn('fast'); $(this).find('.prodItem').stop().animate({backgroundColor: 'rgba(162, 125, 107, 1)'}); },
+                                function(){$(this).find('.prodPrice,.prodInfoIcon').stop().fadeOut('fast'); $(this).find('.prodItem').stop().animate({backgroundColor: 'rgba(179, 147, 121, 0.56)'}); })
+                        //when you click on a prodItem
+                        .click(function(){
+                            $(this).find('.prodItem').css({border: '5px solid #AAA'});
+                            $(this).find('.prodPrice').css({backgroundColor: '#AAA', color: 'white'});
+                            $(this).append($('<span class="prodPlus">+1</span>').show().stop().animate({ opacity: 0, top: '-15px'}, 'slow', function(){$(this).remove();}));
+                            var item = $(this).find('.prodText').text();
+                            var price = $(this).find('.prodPrice .prodPriceNum').text();
+                            var cartTable = section2.find('.products.ui-grid-a').find('.ui-block-b').find('.cart').find('table');
+                          var cartTable1 = section2.find('.products.ui-grid-as').find('.ui-block-d').find('.cart').find('table');
+                            var itemRow = cartTable.find('tr:contains("'+item+'")');   
+                            var itemRow1 = cartTable1.find('tr:contains("'+item+'")');                           
+                            var subtotal = 0;
+                            var allTotal = 0; 
+                            
+    var vn=document.getElementById('hname').value;
+  var vi=document.getElementById('hid').value;
+    
+         alert(parseFloat(itemRow1.find('.prodQty input').val())+1);
+                                             
+                            //if the prod is already in the cart then call the increment and total operation by invoking click on the input
+                            if(itemRow.length == 1){
+                                console.log(parseFloat($(this).find('.prodQty input').val())+1);
+                                itemRow.find('.prodQty input').val(parseFloat(itemRow.find('.prodQty input').val())+1);
+                                itemRow.find('.prodQty input').click();    
+                                itemRow1.find('.prodQty input').val(parseFloat(itemRow1.find('.prodQty input').val())+1);
+                                itemRow1.find('.prodQty input').click();                                                           
+                            } else{
+                                //if prod not present then add entry and attach input handlers and perform totaling
+                                section2.find('.products.ui-grid-a').find('.ui-block-b').find('.cart').find('table .cartRowNone').remove();                         
+                                section2.find('.products.ui-grid-a').find('.ui-block-b').find('.cart').find('table .cartStorage')
+                                    .before($('<tr class="cartRow"></tr>')
+                                                .append($('<td class="prodText"></td>')
+                                                            //remove prod from cart functionality
+                                                            .append($('<span class="remove helper noselect" title="Remove item"></span>').append('x').click(function(){
+                                                                        //unselect product
+                                                                        var prod = $(this).next().text();
+                                                                        var prodContainer = section2.find('.ui-grid-a.products').find(".prodContainer:contains('"+prod+"')");
+                                                                        prodContainer.find('.prodItem').css({border: ''});
+                                                                        prodContainer.find('.prodPrice').css({backgroundColor: '', color: ''});
+                                                                        //remove cart row
+                                                                        $(this).parent().parent().remove();
+                                                                        allTotal = 0; 
+                                                                        //recalculate subtotal
+                                                                        cartTable.find('.prodTotalNum').each(function(){
+                                                                            allTotal += parseFloat($(this).text());
+                                                                        });
+                                                                        cartTable.find('.rowFooter').find('.subtotalNum').text(allTotal.toFixed(2));                                                                    
+                                                                    })                                                                  
+                                                                )
+                                                            .append('<span>'+item+'</span>')                                                    
+                                                        )
+                                                .append($('<td class="prodQty"></td>')
+                                                            .append($('<input type="number" min="0" />').val(1)
+                                                                .unbind('keyup click').bind("keyup click",function(){
+                                                                    var prodTotal = $(this).parent().parent().find('.prodTotal');
+                                                                    qty = $(this).val();                                                                    
+                                                                    total = parseInt(qty) * parseFloat(price,10);
+                                                                    if(qty != null && qty != ''){total = parseInt(qty) * parseFloat(price,10);                                                                                                                                              
+                                                                        prodTotal.find('.prodTotalNum').text(total.toFixed(2));
+                                                                    }
+                                                                    allTotal = 0; 
+                                                                    cartTable.find('.prodTotalNum').each(function(){
+                                                                        allTotal += parseFloat($(this).text());
+                                                                    });
+                                                                    cartTable.find('.rowFooter').find('.subtotalNum').text(allTotal.toFixed(2));                                                                    
+                                                                })                                                          
+                                                            )
+                                                        )
+                                                .append($('<td class="prodTotal" title="$'+price+' each"></td>')
+                                                            .append('$<span class="prodTotalNum">'+price+'</span>')
+                                                        )
+                                                .hover(function(){$(this).find('.remove').show();},
+                                                        function(){$(this).find('.remove').hide();})                                                
+                                          );
+                                cartTable.find('.prodTotalNum').each(function(){
+                                    allTotal += parseFloat($(this).text());
+                                });                                       
+                                cartTable.find('.rowFooter').find('.subtotalNum').text((allTotal + parseFloat(price)).toFixed(2)); 
+                                
+                                
+         section2.find('.products.ui-grid-as').find('.ui-block-d').find('.cart').find('table .cartRowNone').remove();                  
+          section2.find('.products.ui-grid-as').find('.ui-block-d').find('.cart').find('table .cartStorage')
+                                    .before($('<tr class="cartRow"></tr>')
+                                                .append($('<td class="prodText"></td>')
+                                                            //remove prod from cart functionality
+                                                            .append($('<span class="remove helper noselect" title="Remove item"></span>').append('x').click(function(){
+                                                                        //unselect product
+                                                                        var prod = $(this).next().text();
+                                                                        var prodContainer = section2.find('.ui-grid-a.products').find(".prodContainer:contains('"+prod+"')");
+                                                                        prodContainer.find('.prodItem').css({border: '10'});
+                                                                        prodContainer.find('.prodPrice').css({backgroundColor: '', color: ''});
+                                                                        //remove cart row
+                                                                        $(this).parent().parent().remove();
+                                                                        allTotal = 0; 
+                                                                        //recalculate subtotal
+                                                                        cartTable1.find('.prodTotalNum').each(function(){
+                                                                            allTotal += parseFloat($(this).text());
+                                                                        });
+                                                                        cartTable1.find('.rowFooter').find('.subtotalNum').text(allTotal.toFixed(2));                                                                    
+                                                                    })                                                                  
+                                                                )
+                                                            .append('<span>'+item+'</span>')                                                    
+                                                        )
+                                                .append($('<td class="prodQty"></td>')
+                                                            .append($('<input type="number" min="0" />').val(1)
+                                                                .unbind('keyup click').bind("keyup click",function(){
+                                                                    var prodTotal = $(this).parent().parent().find('.prodTotal');
+                                                                    qty = $(this).val();                                                                    
+                                                                    total = parseInt(qty) * parseFloat(price,10);
+                                                                    if(qty != null && qty != ''){total = parseInt(qty) * parseFloat(price,10);                                                                                                                                              
+                                                                        prodTotal.find('.prodTotalNum').text(total.toFixed(2));
+                                                                    }
+                                                                    allTotal = 0; 
+                                                                    cartTable1.find('.prodTotalNum').each(function(){
+                                                                        allTotal += parseFloat($(this).text());
+                                                                    });
+                                                                    cartTable1.find('.rowFooter').find('.subtotalNum').text(allTotal.toFixed(2));                                                                    
+                                                                })                                                          
+                                                            )
+                                                        )
+                                                .append($('<td class="prodTotal" title="$'+price+' each"></td>')
+                                                            .append('$<span class="prodTotalNum">'+price+'</span>')
+                                                        )
+                                                .hover(function(){$(this).find('.remove').show();},
+                                                        function(){$(this).find('.remove').hide();})                                                
+                                          );
+                                cartTable1.find('.prodTotalNum').each(function(){
+                                    allTotal += parseFloat($(this).text());
+                                });                                       
+                                cartTable1.find('.rowFooter').find('.subtotalNum').text((allTotal + parseFloat(price)).toFixed(2)); 
+                                                                        
+                            }                           
+                        });                                         
+                    
+      
+                    
+                    
+                    
+                    
+                    
+                    
+                    //LL07042014 Popup product info by cloning hidden items and appending to jqm popup
+                    section2.find('.products').find('.prodContainer').find('.prodInfoIcon').unbind('mouseenter mouseleave click')
+                        .hover(function(){$(this).css({backgroundColor: '#ECE2D1'});},
+                                function(){$(this).css({backgroundColor: ''});})
+                        .click(function(){                          
+                            $('#prodPop').popup("open");
+                            var prodData = $(this).next().clone();
+                            prodData.find('select').each(function(){
+                                if($(this).children('option').length == 0){
+                                    $(this).parent().parent().remove();
+                                }
+                            });
+                            //LL07042014 Handler to add to cart via popup
+                            prodData.find('.addBtn').click(function(){
+                                var item = prodData.find('.name').text();
+                                console.log('item:'+item);
+                                section2.find('.ui-grid-a.products').find(".prodContainer:contains('"+item+"')").click();
+                                $(this).parent().append($('<span class="plus">+1</span>').show().stop().animate({ opacity: 0, top: '-15px'}, 'slow', function(){$(this).remove();}));
+                            });
+                            
+                            $('#prodPop').find('.block').empty();
+                            $('#prodPop').find('.block').append(prodData.show());
+                            
+                            event.stopPropagation();
+                        });
+                                            
+                    section2.find('.products.ui-grid-a').find('.ui-block-b').find('.cart').find('table .cartStorage')
+                        .hover(function(){$(this).find('.cloudNote').show();},
+                                function(){$(this).find('.cloudNote').hide();
+                    });                 
+                    section2.find('.products.ui-grid-a').find('.ui-block-b').find('.cart').find('table .cartStorage').find('.cloudNote')
+                        .click(function(){
+                            $('#cloudPop').popup("open");
+                    }); 
+                    $('#cloudPop').find('.close')
+                        .click(function(){
+                            $('#cloudPop').popup("close");                          
+                    });                                                                     
+                    $('#herlomopenpoup1').click(function(){                         
+                            
+                            $('#cloudPop').popup("close");   
+                            setTimeout(function(){$('#cloudPop1').popup("open");}, 200);                       
+                                                     
+                    }); 
+                    $('#cloudPop1').find('.close')
+                        .click(function(){
+                            $('#cloudPop1').popup("close");                                                  
+                    });        
+                     
+                }
+                $(document).ready(function(){
+                  $('.ui-radio').removeClass('.ui-radio');
+                });
+                             
+            </script>
+            
+            <style>
+                .controlArrow{border:0;}
+                .noselect{-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}             
+                .ui-content .section2 .tableCell{vertical-align: top !important;}               
+                .ui-content .section2 .header.ui-grid-a { margin: 0px 50px;}                
+                .ui-content .section2 .header.ui-grid-a .ui-block-a{  width: 60%; margin-right: 25px; }
+                .ui-content .section2 .header.ui-grid-a .ui-block-b{  width: 20%; }
+                .ui-content .section2 .header.ui-grid-a .ui-block-b .nextBtn{ position: relative; float: right; margin-top: 40px; background-color: rgb(175,70,70); text-align: right; border-radius: 4px; width: 115px; padding: 5px 15px;}
+                .ui-content .section2 .header.ui-grid-a .ui-block-b .nextBtn:hover{background-color: rgb(155, 58, 58)}
+                .ui-content .section2 .header.ui-grid-a .ui-block-b .nextBtn .icon{ display: inline-block; background-color: rgba(108,39,0,0.9); border-radius: 15px; padding: 0px 10px 3px; margin: 0px 0px 1px 10px; font-size: 20px;} 
+                .ui-content .section2 .header.ui-grid-a .ui-block-a .header{ margin: 30px 20px 5px; font-size: 21px; color: rgb(175,70,70); }
+                .ui-content .section2 .header.ui-grid-a .ui-block-a .text{ margin: 0px 20px 30px; font-size: 15px; color: rgba(108,39,0,0.9); }
+                
+                .ui-content .section2 .products.ui-grid-a {margin: 0px 50px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-a{width: 60%; margin-right: 25px; padding-top: 1px;}
+//                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer{position: relative; display: inline-block; height: 130px; margin: 0px 0px 20px 20px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+//                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer .prodItem{height: 100px; width: 170px; border: 5px solid #DFD8C8; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; background-color: rgba(179, 147, 121, 0.56); box-shadow: 0px 0px 1px #444; text-align: center; color: #fbf8e7}
+                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer{position: relative; display: inline-block; height: 110px; margin: 0px 0px 20px 20px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer .prodItem{height: 100px; width: 100px; border: 5px solid #DFD8C8; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; background-color: rgba(179, 147, 121, 0.56); box-shadow: 0px 0px 1px #444; text-align: center; color: #fbf8e7}
+                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer .prodItem .prodImg{display: inline-block; margin: 10px 0px 2px; width: 80px; height: 70px; background-color: rgba(162, 125, 107, 0.51);}
+                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer .prodItem .prodInfoIcon{display: none; position: absolute; right: 0; margin: 5px 10px; padding: 1px 8px 2px; border-radius: 10px; background-color: #fbf8e7; color: rgb(175,70,70); font-size: 14px; font-style: italic; font-weight: bold; font-family: Park Ave; box-shadow: inset 0px -1px 1px gray;}
+
+                .ui-content .section2 .header.ui-grid-a { margin: 0px 50px;}                
+                .ui-content .section2 .header.ui-grid-a .ui-block-c{  width: 60%; margin-right: 25px; }
+                .ui-content .section2 .header.ui-grid-a .ui-block-d{  width: 20%; }
+                .ui-content .section2 .header.ui-grid-a .ui-block-d .nextBtn{ position: relative; float: right; margin-top: 40px; background-color: rgb(175,70,70); text-align: right; border-radius: 4px; width: 115px; padding: 5px 15px;}
+                .ui-content .section2 .header.ui-grid-a .ui-block-d .nextBtn:hover{background-color: rgb(155, 58, 58)}
+                .ui-content .section2 .header.ui-grid-a .ui-block-d .nextBtn .icon{ display: inline-block; background-color: rgba(108,39,0,0.9); border-radius: 15px; padding: 0px 10px 3px; margin: 0px 0px 1px 10px; font-size: 20px;} 
+                .ui-content .section2 .header.ui-grid-a .ui-block-d .previousBtn{ position: absolute; float: left; margin-top: 40px; background-color: rgb(175,70,70); text-align: right; border-radius: 4px; width: 115px; padding: 5px 15px; height: 30px; font: left;}
+                .ui-content .section2 .header.ui-grid-a .ui-block-d .previousBtn:hover{background-color: rgb(155, 58, 58)}
+                .ui-content .section2 .header.ui-grid-a .ui-block-d .previousBtn .icon{ display: table-cell; background-color: rgba(108,39,0,0.9); border-radius: 15px; padding: 0px 10px 3px; margin: 0px 0px 1px 10px; font-size: 20px; } 
+                .ui-content .section2 .header.ui-grid-a .ui-block-c .header{ margin: 30px 20px 5px; font-size: 21px; color: rgb(175,70,70); }
+                .ui-content .section2 .header.ui-grid-a .ui-block-c .text{ margin: 0px 20px 30px; font-size: 15px; color: rgba(108,39,0,0.9); }
+                
+                .ui-content .section2 .products.ui-grid-a {margin: 0px 50px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-c{width: 60%; margin-right: 25px; padding-top: 1px;}
+//                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer{position: relative; display: inline-block; height: 130px; margin: 0px 0px 20px 20px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+//                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer .prodItem{height: 100px; width: 170px; border: 5px solid #DFD8C8; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; background-color: rgba(179, 147, 121, 0.56); box-shadow: 0px 0px 1px #444; text-align: center; color: #fbf8e7}
+                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer{position: relative; display: inline-block; height: 110px; margin: 0px 0px 20px 20px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer .prodItem{height: 100px; width: 100px; border: 5px solid #DFD8C8; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; background-color: rgba(179, 147, 121, 0.56); box-shadow: 0px 0px 1px #444; text-align: center; color: #fbf8e7}
+                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer .prodItem .prodImg{display: inline-block; margin: 10px 0px 2px; width: 80px; height: 70px; background-color: rgba(162, 125, 107, 0.51);}
+                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer .prodItem .prodInfoIcon{display: none; position: absolute; right: 0; margin: 5px 10px; padding: 1px 8px 2px; border-radius: 10px; background-color: #fbf8e7; color: rgb(175,70,70); font-size: 14px; font-style: italic; font-weight: bold; font-family: Park Ave; box-shadow: inset 0px -1px 1px gray;}
+
+
+
+                .prodDataHidden{display: none; }
+                .prodDataHidden .prodRight {display: inline-block; margin: 10px; max-width: 350px; max-height: 400px; overflow-y: hidden }
+                .prodDataHidden .prodRight .prodMain .prodImgLarge {display: inline-block; margin-right: 15px; width: 140px;}
+                .prodDataHidden .prodRight .prodMain .prodDetail {display: inline-block; width: 170px; vertical-align: top;}                
+                .prodDataHidden .prodRight .prodMain .prodDetail .name{ margin: 5px 0px; font-size: 24px;}
+                .prodDataHidden .prodRight .prodMain .prodDetail .price__c{ font-size: 18px;}
+                .prodDataHidden .prodRight .prodMain .prodDetail .addBtn{display: inline-block; position: relative; top: -2px; margin-left: 15px; background-color: rgb(175,70,70); border-radius: 4px; width: 21px; padding: 5px 17px 5px 15px; font-size: 12px; color: white; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+                .prodDataHidden .prodRight .prodMain .prodDetail .addBtn:hover{background-color: rgb(155, 58, 58)}
+                .prodDataHidden .prodRight .prodMain .prodDetail .plus{ color: rgb(175,70,70); font-family: Park Ave; font-style: italic; font-size: 12px; font-weight: bold; }
+                .prodDataHidden .prodRight .prodMain .prodDetail .ui-select .ui-btn{width: 105px; color: black; font-size: 12px; font-weight: normal; margin: 15px 0px;}
+                .prodDataHidden .prodRight .detailHeader{ border-bottom: 1px solid #777; padding-bottom: 10px; margin: 10px 0px; font-size: 14px; font-weight: bold }
+                .prodDataHidden .prodRight .primary_description__c{ font-size: 13px; border-bottom: 1px solid #DDD; padding: 0px 0px 10px 0px; margin-bottom: 10px;}                
+                .prodDataHidden .prodRight .prod_descContainer{ max-height: 280px; overflow-y: scroll;}
+                
+                               
+                
+               
+                
+                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer .prodItem .prodText{display: block; font-size: 12px; }              
+                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer .prodPrice{position: absolute; display: none; width: 100%; text-align: center; background-color: rgb(223, 216, 202); font-size: 12px; padding: 0px 0px 4px; box-shadow: 0px 1px 0px #CACACA,-1px 0px 0px #CACACA, 1px 0px 0px #CACACA; color: gray; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-a .prodContainer .prodPlus{position: absolute; display: none; top: 15px; left: 20px; padding: 2px 4px; border-radius: 3px; background-color: #fbf8e7; color: rgb(175,70,70); font-family: Park Ave; font-style: italic; font-size: 12px; font-weight: bold;}
+
+                .ui-content .section2 .products.ui-grid-a .ui-block-b{width: 20%; height: 100%;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart{position: relative; margin-top: 1px; border: 7px solid rgba(223, 216, 200, 0.65); border-radius: 2px; box-shadow: 0px 0px 1px #333}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart .header{ text-align: center; color: rgb(175,70,70); font-size: 18px; margin: 15px; }
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table {width: 95%; margin: 10px; }
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table .rowHeader td{color: rgb(175,70,70); border-bottom: 1px solid #DDD;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table .rowFooter td{color: rgb(175,70,70); border-top: 1px solid #DDD;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table .rowFooter td:nth-child(1){text-align: right;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td{ color: gray; padding: 7px; font-size: 12px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td:nth-child(1){position: relative; width: 50%; padding: 7px 0px 7px 15px; }                      
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td:nth-child(1) .helper{display: none; position: absolute; left: -7px; top: 6px; width: 5px; padding: 0px 4px 1px 5px; border-radius: 10px; background-color: #EEE; border: 1px solid #DDD; cursor: pointer; font-size: 11px; font-weight: bold; font-family: Park Ave; color: rgb(175,70,70); text-shadow: 1px 1px 1px white; }
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td:nth-child(1) .helper:hover{background-color: #DDD;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td:nth-child(1) .remove{ font-family: arial; padding: 0px 6px 2px 5px; top: 10px; left: -6px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td:nth-child(2){width: 25%; text-align: center;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td:nth-child(3){width: 25%; text-align: center;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-b .cart table td.prodQty input{ width: 100%; border: 1px solid #DDD; border-radius: 2px; padding: 2px; text-align: center;}
+
+                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer .prodItem .prodText{display: block; font-size: 12px; }              
+                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer .prodPrice{position: absolute; display: none; width: 100%; text-align: center; background-color: rgb(223, 216, 202); font-size: 12px; padding: 0px 0px 4px; box-shadow: 0px 1px 0px #CACACA,-1px 0px 0px #CACACA, 1px 0px 0px #CACACA; color: gray; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-c .prodContainer .prodPlus{position: absolute; display: none; top: 15px; left: 20px; padding: 2px 4px; border-radius: 3px; background-color: #fbf8e7; color: rgb(175,70,70); font-family: Park Ave; font-style: italic; font-size: 12px; font-weight: bold;}
+
+                .ui-content .section2 .products.ui-grid-a .ui-block-d{width: 20%; height: 100%;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart{position: relative; margin-top: 1px; border: 7px solid rgba(223, 216, 200, 0.65); border-radius: 2px; box-shadow: 0px 0px 1px #333}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart .header{ text-align: center; color: rgb(175,70,70); font-size: 18px; margin: 15px; }
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table {width: 95%; margin: 10px; }
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table .rowHeader td{color: rgb(175,70,70); border-bottom: 1px solid #DDD;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table .rowFooter td{color: rgb(175,70,70); border-top: 1px solid #DDD;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table .rowFooter td:nth-child(1){text-align: right;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td{ color: gray; padding: 7px; font-size: 12px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td:nth-child(1){position: relative; width: 50%; padding: 7px 0px 7px 15px; }                      
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td:nth-child(1) .helper{display: none; position: absolute; left: -7px; top: 6px; width: 5px; padding: 0px 4px 1px 5px; border-radius: 10px; background-color: #EEE; border: 1px solid #DDD; cursor: pointer; font-size: 11px; font-weight: bold; font-family: Park Ave; color: rgb(175,70,70); text-shadow: 1px 1px 1px white; }
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td:nth-child(1) .helper:hover{background-color: #DDD;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td:nth-child(1) .remove{ font-family: arial; padding: 0px 6px 2px 5px; top: 10px; left: -6px;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td:nth-child(2){width: 25%; text-align: center;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td:nth-child(3){width: 25%; text-align: center;}
+                .ui-content .section2 .products.ui-grid-a .ui-block-d .cart table td.prodQty input{ width: 100%; border: 1px solid #DDD; border-radius: 2px; padding: 2px; text-align: center;}
+                
+                #cloudPop .block{ height: 287px; width: 260px; padding: 10px; border-radius: 3px; border: 0px !important; background-color: rgba(179, 147, 121, 0.90); box-shadow: 2px 2px 12px gray; font-size: 12px; color: #fbf8e7; cursor: normal;}
+                #cloudPop .block p{display: block; margin: 0px; }
+                #cloudPop .block .close{display: block; position: relative; float: right; margin: -17px; padding: 2px 7px 4px; border: 0px !important; border-radius: 10px; background-color: rgb(175,70,70); box-shadow: 1px 1px 2px gray; color: white; font-weight: bold; cursor: pointer;}
+
+                #cloudPop1 .block{ height: 70px; width: 260px; padding: 10px; border-radius: 3px; border: 0px !important; background-color: rgba(179, 147, 121, 0.90); box-shadow: 2px 2px 12px gray; font-size: 12px; color: #fbf8e7; cursor: normal;}
+                #cloudPop1 .block p{display: block; margin: 0px; }
+                #cloudPop1 .block .close{display: block; position: relative; float: right; margin: -17px; padding: 2px 7px 4px; border: 0px !important; border-radius: 10px; background-color: rgb(175,70,70); box-shadow: 1px 1px 2px gray; color: white; font-weight: bold; cursor: pointer;}
+
+                #prodPop .block{ width: 350px; height: 400px; padding: 10px; border-radius: 3px; }
+                
+                @media all and (max-device-width : 480px) 
+                {                                               
+                    .products.ui-grid-a .ui-block-a{width: 100%;}
+                    .products.ui-grid-a .ui-block-b{width: 100%;}               
+                    .header.ui-grid-a{margin: 0px;}
+                    .products.ui-grid-a{margin: 0px;}
+                }
+                
+            </style>                                
+            
+            <div data-role="content">
+            
+                                          
+                
+                <div id="fullpage"> 
+                    
+                     <div class="section section2">
+                        <div class="slide" data-anchor="slide1">                        
+                            <div class="header ui-grid-a">
+                                <div class="ui-block-a">
+                                    <div class="header">Gather your family memories...</div>
+                                    <div class="text">Select the content you would like to digitize.</div>                                                  
+                                </div>
+                                <div class="ui-block-b">
+                                    <div class="nextBtn css_cursor noselect">Next Step <span class="icon">&#187;</span> </div>
+                                </div>
+                            </div>  
+                                                    
+                     </div>
+                
+                     <div class="slide" data-anchor="slide2">                        
+                            <div class="header ui-grid-a">
+                                <div class="ui-block-c">
+                                    <div class="header">Mail your memories</div>
+                                    <div class="text" >Select the Heirloombox you want to send in your memories</div>                                                  
+                                </div>                                
+                                <div class="ui-block-d" style=" width: 300px; height: 100px;">
+                                    <div class="previousBtn css_cursor select"><span class="icon">&#171;</span>Previous Step </div>
+                                    <div class="nextBtn css_cursor select">Next Step <span class="icon">&#187;</span> </div>
+                                </div>
+                            </div>
+                     </div>
+                </div>
+                </div>
+            </div>                  
+        </div>
+
+    </body>
+
+</html>
+
+</apex:page>

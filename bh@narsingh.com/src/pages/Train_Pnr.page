@@ -1,0 +1,151 @@
+<apex:page sidebar="false" showHeader="false" controller="Train_Pnr_ctrl">
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+
+ <style>
+ a.button {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 6px 25px 0px 20px;
+    margin: 10px 8px 20px 0px;
+    display: inline-block;
+    float: center;
+    text-decoration: none;
+    width: 80px;
+    height: 27px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3a57af;
+    -webkit-box-shadow: 0 3px rgba(58,87,175,.75);
+    -moz-box-shadow: 0 3px rgba(58,87,175,.75);
+    box-shadow: 0 3px rgba(58,87,175,.75);
+    transition: all 0.1s linear 0s;
+    top: 0px;
+    position: relative;
+}
+a.button:hover {
+    top: 3px;
+    background-color: #2e458b;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+ </style>
+  <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ </head>
+  <body>
+  
+  <header id="header" class="clearfix">
+ <apex:insert name="header">
+    <c:findHeader />
+   
+  </apex:insert>
+ </header>
+ <apex:form id="form">
+ <div style="background-color: #e5eecc;border: solid 1px #c3c3c3;width:40%;margin: 100px 280px 0px 400px;text-align:center;display:{!viewB};">
+ 
+ <apex:inputText value="{!pnr}" html-placeholder="Enter Pnr Number" style="height:25px;width:100%;" disabled="true"/>
+ <apex:commandLink value="Submit" action="{!getPnrStatus}" rerender="form" styleClass="button"/>
+ </div>
+ 
+ <div style="margin: 100px 500px 50px 400px;background-color: #e5eecc;border: solid 1px #c3c3c3;display:{!viewD};">
+ <div style="padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;"><apex:outputLabel >PNR NO-{!pnr}</apex:outputLabel></div>
+ 
+ <div style="padding: 5px;background-color: green;color:white;">
+ <apex:outputLabel >Journey Details</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:45px;width:11%;">
+ <apex:outputLabel >Train Number</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color:green;color:white;border: solid 1px #c3c3c3;height:45px;width:14%;">
+ <apex:outputLabel >Train Name</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:45px;width:14%;">
+ <apex:outputLabel >Boarding Date</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:45px;width:11%;">
+ <apex:outputLabel >From</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:45px;width:11%;">
+ <apex:outputLabel >To&nbsp;</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:45px;width:14%;">
+ <apex:outputLabel >Reserved upto</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:45px;width:14%;">
+ <apex:outputLabel >Boarding point</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:45px;width:11%;">
+ <apex:outputLabel >Class</apex:outputLabel>
+ </div>
+  <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:11%;;height:43px;">
+ <apex:outputText value="{!trNo}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:14%;height:43px;">
+ <apex:outputText value="{!trName}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:14%;height:43px;">
+ <apex:outputText value="{!boardingDate}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:11%;height:43px;">
+ <apex:outputText value="{!src}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:11%;height:43px;">
+ <apex:outputText value="{!reservedUpto}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:14%;height:43px;">
+ <apex:outputText value="{!dest}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:14%;height:43px;">
+ <apex:outputText value="{!boardingPoint}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:11%;height:43px;">
+ <apex:outputText value="{!classType}"></apex:outputText>
+ </div>
+
+ 
+  <div style="padding: 5px;text-align: center;background-color: #e5eecc;color:white;border: solid 1px #c3c3c3;diplay:block;"><apex:outputLabel >&nbsp;</apex:outputLabel></div>
+ 
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:43px;width:31%">
+ <apex:outputLabel >S.NO</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:43px;width:31%">
+ <apex:outputLabel >Booking Status(Coach No , Berth No., Quota)</apex:outputLabel>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;height:43px;width:38%">
+ <apex:outputLabel >* Current Status(Coach No , Berth No.)</apex:outputLabel>
+ </div>
+ <apex:repeat value="{!passengersList}" var="passList">
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:31%;">
+ <apex:outputText value="Passenger{!passList.sr}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color:green;color:white;border: solid 1px #c3c3c3;width:31%;">
+ <apex:outputText value="{!passList.booking_status}"></apex:outputText>
+ </div>
+ <div style="float:left;padding: 5px;text-align: center;background-color: green;color:white;border: solid 1px #c3c3c3;width:38%;">
+ <apex:outputText value="{!passList.current_status}"></apex:outputText>
+ </div>
+  </apex:repeat>
+ 
+ </div>
+  <div>
+ Share
+                    <ul class="clearfix">
+                        <li><a href="" class="my-tweet"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="" class="my-facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="" class="my-skype"><i class="fa fa-skype"></i></a></li>
+                        <li><a href="" class="my-pint"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="" class="my-rss"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="" class="my-google"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+               
+ </div>
+</apex:form>
+  </body>
+</apex:page>

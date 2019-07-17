@@ -1,0 +1,160 @@
+<apex:page sidebar="false" showHeader="false" controller="Train_Fare_Enquiry_ctrl">
+   <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+ <style>
+ th.tStyle{
+         border: 1px solid green;
+           background-color: green;
+    color: white;
+    text-align: center;
+        }
+       table.tStyle{
+       table-layout: fixed;
+          border: 1px solid green;
+          font-size:14px;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align
+        }
+ a.button {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 6px 25px 0px 20px;
+    margin: 10px 8px 20px 0px;
+    display: inline-block;
+    float: center;
+    text-decoration: none;
+    width: 80px;
+    height: 27px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3a57af;
+    -webkit-box-shadow: 0 3px rgba(58,87,175,.75);
+    -moz-box-shadow: 0 3px rgba(58,87,175,.75);
+    box-shadow: 0 3px rgba(58,87,175,.75);
+    transition: all 0.1s linear 0s;
+    top: 0px;
+    position: relative;
+}
+a.button:hover {
+    top: 3px;
+    background-color: #2e458b;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+ </style>
+  <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ </head>
+  <body>
+  
+  <header id="header" class="clearfix">
+   <apex:insert name="header">
+    <c:findHeader />
+   
+  </apex:insert>
+ </header>
+ <apex:form id="form">
+ <div style="background-color: #e5eecc;border: solid 1px #c3c3c3;width:40%;margin: 100px 280px 0px 400px;text-align:center;display:{!viewB};">
+ <table cellpadding="2" cellspacing="2" border="0" width="100%">
+ <caption>Fare Enquiry</caption>
+ <tr>
+ <td align="right"><apex:outputLabel >Train Number:</apex:outputLabel></td><td align="left"><apex:inputText value="{!trNo}" html-placeholder="Enter Train Number" disabled="true" style="height:25px;width:100%;"/></td>
+ <td align="right"><apex:outputLabel >Age:</apex:outputLabel></td>
+ <td align="left">
+                                                                     
+                                                                      <apex:selectList Size="1" value="{!age}" style="height:25px;width:100%;" disabled="true">
+                                                                      <apex:selectOption itemLabel="Child" itemvalue="CH"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="Adult" itemvalue="AD"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="Senior Male" itemvalue="SM"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="Senior Female" itemvalue="SF"></apex:selectOption>
+                                                                      
+                                                                      
+                                                                      </apex:selectList>
+ </td>
+ </tr>
+ 
+ <tr>
+ <td align="right"><apex:outputLabel style="height:25px;width:100%;">SrcStnCode:</apex:outputLabel></td>
+ <td align="left">
+ <apex:inputText value="{!srcCode}" id="src" style="height:25px;width:100%;" disabled="true">
+ <c:autocomplete_component autocomplete_textbox="{!$Component.src}"></c:autocomplete_component>
+ </apex:inputText>
+ </td>
+ <td align="right"><apex:outputLabel style="height:25px;width:100%;">DestStnCode:</apex:outputLabel></td>
+ <td align="left">
+ <apex:inputText value="{!destCode}" id="dest" style="height:25px;width:100%;" disabled="true">
+ <c:autocomplete_component autocomplete_textbox="{!$Component.dest}"></c:autocomplete_component>
+ </apex:inputText>
+ </td>                         
+ </tr>
+ <tr>
+ <td align="right"><apex:outputLabel style="height:25px;width:100%;">Class:</apex:outputLabel></td>
+ <td align="left">
+                                                                     
+                                                                      <apex:selectList Size="1" value="{!selClass}" style="height:25px;width:100%;" disabled="true">
+                                                                      <apex:selectOption itemLabel="ALL CLASSES" itemvalue="ALL"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="FIRST AC" itemvalue="1A"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SECOND AC" itemvalue="2A"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="THIRD AC" itemvalue="3A"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SLEEPER CLASS" itemvalue="SL"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SECOND SEATING" itemvalue="2S"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="AC CHAIR CAR" itemvalue="CC"></apex:selectOption>
+                                                                      
+                                                                      </apex:selectList>
+ </td>
+ <td align="right"><apex:outputLabel style="height:25px;width:100%;">Quota:</apex:outputLabel></td>
+ <td align="left">
+                                                                     
+                                                                      <apex:selectList Size="1" value="{!quota}" style="height:25px;width:100%;" disabled="true">
+                                                                      <apex:selectOption itemLabel="CK" itemvalue="CK"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="LD" itemvalue="LD"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="DF" itemvalue="DF"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="FT" itemvalue="FT"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="DP" itemvalue="DP"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="HP" itemvalue="HP"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="PH" itemvalue="PH"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SS" itemvalue="SS"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="YU" itemvalue="YU"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="GENERAL" itemvalue="GN"></apex:selectOption>
+                                                                      </apex:selectList>
+ </td>                              
+ </tr>
+ </table>
+
+ <apex:commandLink value="Submit" action="{!getFareDetails}" rerender="form" styleClass="button"/>
+ <apex:commandLink value="Clear" action="{!getReset}" rerender="form" styleClass="button"/>
+ </div>
+  <div style="margin: 100px 500px 50px 400px;background-color: #e5eecc;border: solid 1px #c3c3c3;display:{!viewD};">
+  <table cellpadding="2" cellspacing="2" border="0" width="100%">
+<tr>
+<th style="border: 1px solid white;border-left: 1px solid green;background-color: green;color:white;text-align: center;">Train No</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Source</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Destination</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Class</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Age</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Quota</th>
+<th style="border: 1px solid white;background-color: green;color:white;text-align: center;">Fare</th>
+</tr>
+<tr>
+<td style="border: 1px solid green;text-align: center;">{!trNo}</td>
+<td style="border: 1px solid green;text-align: center;">{!srcCode}</td>
+<td style="border: 1px solid green;text-align: center;">{!destCode}</td>
+<td style="border: 1px solid green;text-align: center;">{!selClass}</td>
+<td style="border: 1px solid green;text-align: center;">{!age}</td>
+<td style="border: 1px solid green;text-align: center;">{!quota}</td>
+<td style="border: 1px solid green;text-align: center;">{!fare}</td>
+</tr>
+</table>
+</div>
+ </apex:form>
+ </body>
+</apex:page>

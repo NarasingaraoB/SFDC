@@ -1,0 +1,77 @@
+<apex:page controller="CallRemoteSystems">
+<script>
+function editRec()
+{
+editRecJS('00012');
+}
+function CloseMySelf() {
+window.open("{!loginURL}","_blank");
+}
+function CloseMySelf1() {
+window.open("{!loginURL1}","_blank");
+}
+
+</script>
+
+
+<apex:form id="frm">
+
+<apex:actionFunction name="editRecJS" action="{!editCustomer}" reRender="frm">
+<apex:param name="AccountN" value=""/>
+</apex:actionFunction>
+
+{!if(!successAuth,'Please click login to authorize','')}<br/>
+
+<apex:outputLabel value="Customer ID:"></apex:outputLabel><apex:inputText value="{!customerId}" disabled="{!!successAuth}"/>
+
+<apex:commandButton value="Get Billing info" action="{!CustomerBillingInfo}" disabled="{!!successAuth}" reRender="frm"/>
+<apex:commandButton value="Modify" action="{!CustomerModifyInfo}" disabled="{!!successAuth}" reRender="frm"/>
+
+<apex:outputPanel rendered="{!!successAuth}">
+        <a href="javascript:void(0);" NAME="My Window Name" title=" My title here " onclick="CloseMySelf();">Login With Web-flow-Auth</a> &nbsp;&nbsp;&nbsp;
+        <a href="javascript:void(0);" NAME="My Window Name1" title=" My title here1 " onclick="CloseMySelf1();">Login With User-Agent-flow-Auth</a> 
+</apex:outputPanel> 
+
+<br/>
+
+<apex:outputPanel id="pan1" rendered="{!if(billingInfo!=null && successAuth && billingErrorInfo==null,true,false)}">
+<table border="1">
+<caption>Customer ID:{!billingInfo.CustomerID}</caption>
+<tr><td>BillingStreet</td><td>{!if(billingInfo.BillingStreet!=null,billingInfo.BillingStreet,'NA')}</td></tr>
+<tr><td>BillingCity</td><td>{!if(billingInfo.BillingCity!=null,billingInfo.BillingCity,'NA')}</td></tr>
+<tr><td>BillingState</td><td>{!if(billingInfo.BillingState!=null,billingInfo.BillingState,'NA')}</td></tr>
+<tr><td>BillingPostalCode</td><td>{!if(billingInfo.BillingPostalCode!=null,billingInfo.BillingPostalCode,'NA')}</td></tr>
+<tr><td>BillingCountry</td><td>{!if(billingInfo.BillingCountry!=null,billingInfo.BillingCountry,'NA')}</td></tr>
+</table>
+</apex:outputPanel>
+
+<apex:outputPanel id="pan2"  rendered="{!if(billingErrorInfo!=null,true,false)}">
+<table border="1">
+<tr><td>ErrorCode</td><td>{!if(billingErrorInfo.errorCode!=null,billingErrorInfo.errorCode,'NA')}</td></tr>
+<tr><td>Message</td><td>{!if(billingErrorInfo.message!=null,billingErrorInfo.message,'NA')}</td></tr>
+</table>
+</apex:outputPanel>
+
+<apex:outputPanel id="pan3">
+<table border="1">
+<caption>New Customer<br/><apex:outputLabel rendered="{!successfullSaveNewCust}" value="Record is saved" style="color:red"></apex:outputLabel></caption>
+<tr><td>Name</td><td><apex:inputText value="{!Name}" disabled="{!!successAuth}"/></td></tr>
+<tr><td>AccountNumber</td><td><apex:inputText value="{!AccountNumber}" disabled="{!!successAuth}"/></td></tr>
+<tr><td>Customer ID</td><td><apex:inputText value="{!Customer_ID}" disabled="{!!successAuth}"/></td></tr>
+<tr><td>BillingStreet</td><td><apex:inputText value="{!BillingStreet}" disabled="{!!successAuth}"/></td></tr>
+<tr><td>BillingCity</td><td><apex:inputText value="{!BillingCity}" disabled="{!!successAuth}"/></td></tr>
+<tr><td>BillingState</td><td><apex:inputText value="{!BillingState}" disabled="{!!successAuth}"/></td></tr>
+<tr><td>BillingPostalCode</td><td><apex:inputText value="{!BillingPostalCode}" disabled="{!!successAuth}"/></td></tr>
+<tr><td>BillingCountry</td><td><apex:inputText value="{!BillingCountry}" disabled="{!!successAuth}"/></td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>
+<apex:commandButton value="Create" action="{!saveCustomer}" disabled="{!!successAuth}" reRender="frm" rendered="{!if(Customer_ID==null,true,false)}"/>
+<apex:commandButton value="Save" onclick="editRec()" disabled="{!!successAuth}" reRender="frm" rendered="{!if(Customer_ID!=null,true,false)}"/>
+</td></tr>
+</table>
+</apex:outputPanel>
+
+ 
+</apex:form>
+</apex:page>

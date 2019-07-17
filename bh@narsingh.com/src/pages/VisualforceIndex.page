@@ -1,0 +1,16 @@
+<apex:page >
+ <ul>
+ <li>Chatter
+ <ul>
+ <li><a href="/apex/chatterTestPage">chatterTestPage</a></li>
+ <li><a href="/apex/chatterTestPage1">chatterTestPage1</a></li>
+ </ul>
+ </li>
+ <li>Metadata-API
+ <ul>
+ <li><a href="#">empty</a></li>
+ 
+ </ul>
+ </li>
+ </ul>
+</apex:page>

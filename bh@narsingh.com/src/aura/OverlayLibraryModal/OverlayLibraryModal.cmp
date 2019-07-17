@@ -1,0 +1,4 @@
+<aura:component access="global">
+    <lightning:icon size="medium" iconName="action:approval" alternativeText="Approved" />
+    Your application has been approved.
+</aura:component>

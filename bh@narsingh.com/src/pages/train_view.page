@@ -1,0 +1,619 @@
+<apex:page sidebar="false" showHeader="false" controller="train_view_ctrl" docType="html-5.0">
+<style>
+th.tStyle{
+         border: 1px solid green;
+           background-color: green;
+    color: white;
+    text-align: center;
+        }
+       table.tStyle{
+       table-layout: fixed;
+          border: 1px solid green;
+          font-size:14px;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+        *{
+    margin:0;
+    padding:0;
+}
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    height: 464px;
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+.containerVertical {
+    
+    border: 1px solid #FFFFFF;
+    height:464px;
+    float:left;
+    padding:10px;
+    position:relative;
+    width:19%;
+
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+#navVertical {
+   
+/* border:3px solid #3e4547;
+    box-shadow:2px 2px 8px #000000;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;*/
+}
+#navVertical, #navVertical ul {
+    list-style:none;
+    padding:0;
+    width:200px;
+}
+#navVertical ul {
+    position:relative;
+    z-index:-1;
+}
+#navVertical li {
+    position:relative;
+    z-index:100;
+}
+#navVertical ul li {
+    margin-top:-23px;
+
+    -moz-transition:  0.4s linear 0.4s;
+    -ms-transition: 0.4s linear 0.4s;
+    -o-transition: 0.4s linear 0.4s;
+    -webkit-transition: 0.4s linear 0.4s;
+    transition: 0.4s linear 0.4s;
+}
+#navVertical li a {
+    background-color:#d4d5d8;
+    color:#000;
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    line-height:28px;
+    outline:0;
+    padding-left:15px;
+    text-decoration:none;
+}
+#navVertical li a.sub {
+    background:#d4d5d8 url("{!URLFOR($Resource.VerticalMenu,'verticalMenu/images/down.gif')}") no-repeat;
+}
+#navVertical li a + img {
+    cursor:pointer;
+    display:none;
+    height:28px;
+    left:0;
+    position:absolute;
+    top:0;
+    width:250px;
+}
+#navVertical li a img {
+    border-width:0px;
+    height:24px;
+    line-height:28px;
+    margin-right:8px;
+    vertical-align:middle;
+    width:24px;
+}
+#navVertical li a:hover {
+    background-color:#bcbdc1;
+}
+#navVertical ul li a {
+    background-color:#eee;
+    border-bottom:1px solid #ccc;
+    color:#000;
+    font-size:11px;
+    line-height:22px;
+}
+#navVertical ul li a:hover {
+    background-color:#ddd;
+    color:#444;
+}
+#navVertical ul li a img {
+    background: url("{!URLFOR($Resource.VerticalMenu,'verticalMenu/images/bulb.png')}") no-repeat;
+    border-width:0px;
+    height:16px;
+    line-height:22px;
+    margin-right:5px;
+    vertical-align:middle;
+    width:16px;
+}
+#navVertical ul li:nth-child(odd) a img {
+    background:url("{!URLFOR($Resource.VerticalMenu,'verticalMenu/images/bulb2.png')}") no-repeat;
+}
+#navVertical a.sub:focus {
+    background:#bcbdc1;
+    outline:0;
+}
+#navVertical a:focus ~ ul li {
+    margin-top:0;
+
+    -moz-transition:  0.4s linear;
+    -ms-transition: 0.4s linear;
+    -o-transition: 0.4s linears;
+    -webkit-transition: 0.4s linears;
+    transition: 0.4s linear;
+}
+#navVertical a:focus + img, #navVertical a:active + img {
+    display:block;
+}
+#navVertical a.sub:active {
+    background:#bcbdc1;
+    outline:0;
+}
+#navVertical a:active ~ ul li {
+    margin-top:0;
+}
+#navVertical ul:hover li {
+    margin-top:0;
+}
+</style>
+<script type="text/javascript">
+function changeKnowPanel()
+{
+var len=document.getElementsByName('knw');
+for(i = 0; i < len.length; i++) 
+    if(len[i].checked) {
+       document.getElementById(len[i].value).style.display = 'block'; 
+      
+    }
+    else
+    {
+    document.getElementById(len[i].value).style.display = 'none'; 
+    }
+  
+}
+function getTrInfo()
+    {
+   
+    }
+function getBySrcDest()
+{
+}
+function changeValue(chkId,cat,selId)
+    {
+    
+   /* alert((document.getElementById(chkId).value)+'/'+cat);*/
+    document.getElementById(chkId).checked = true;
+    document.getElementById(selId).value = (document.getElementById(chkId).value)+'/'+cat;
+    
+    }
+</script>
+<apex:form id="form">  
+<apex:pageMessages id="showmsg"></apex:pageMessages>
+<apex:actionFunction action="{!GetTrsInfo}" name="getTrInfo" reRender="form">
+       
+</apex:actionFunction>
+<apex:actionFunction action="{!BySrcDest}" name="getBySrcDest" reRender="form">
+       
+</apex:actionFunction>
+ 
+  <div class="Contentbox">
+   
+       
+<div id="main_div" style="width:100%;height:464px">
+ <c:railway_nvgHeader_Menu ></c:railway_nvgHeader_Menu>
+
+  
+  <div>
+  <div id="KnWBtns">
+                          <!--    <input type="radio" name="knw" value="kSD" onclick="changeKnowPanel()" checked="{!rdbtn1}"/><apex:outputLabel value="Know Source/Destination" style="color:white"/>
+                              <input type="radio" name="knw" value="kNN" onclick="changeKnowPanel()" checked="{!rdbtn2}" /><apex:outputLabel value="Know Train Name/Number" style="color:white"/>
+                            -->  
+                              <apex:selectRadio value="{!knw}" style="height:55px">
+                              <apex:actionSupport event="onchange" action="{!knowsSDTN}" reRender="form"/>
+                              <apex:selectOption itemLabel="Know Source/Destination" itemValue="1"/>
+                              <apex:selectOption itemLabel="Know Train Name/No" itemValue="2"/>
+                              </apex:selectRadio>
+                              
+ 
+  </div>
+  
+  <div id="kSD" style="display:{!sdDisplay};float:left;">
+                            <table>
+                               <tr class="tStyle">
+                               <th class="tStyle"><apex:outputLabel style="color:white">Source</apex:outputLabel></th>
+                               <th class="tStyle"><apex:outputLabel style="color:white">Destination</apex:outputLabel></th>
+                               <th class="tStyle"><apex:outputLabel style="color:white">Class</apex:outputLabel></th>
+                               <th class="tStyle"><apex:outputLabel style="color:white">Journey Date</apex:outputLabel></th>
+                               <th class="tStyle"><apex:outputLabel style="color:white">Dep B/w</apex:outputLabel></th>
+                               <th class="tStyle"><apex:outputLabel style="color:white">Arr B/w</apex:outputLabel></th>
+                               </tr>
+                               <tr class="tStyle">
+                               <td class="tStyle">
+                               <apex:inputText value="{!srcText}" id="fromSrc" html-placeholder="Source" size="15">
+                                                          <c:autoPopData autocomplete_textbox="{!$Component.fromSrc}" objectname="Cities__c" />
+                                                          </apex:inputText>
+                               </td>
+                               
+                               <td class="tStyle"><apex:inputText value="{!destText}" id="toDest" html-placeholder="Destination" size="15">
+                                                          <c:autoPopData autocomplete_textbox="{!$Component.toDest}" objectname="Cities__c" />
+                                                          <apex:actionSupport action="{!GetTimings}" event="onblur" reRender="form"/>
+                                                          </apex:inputText>
+                               </td>
+                                <td class="tStyle">
+                                                                     
+                                                                      <apex:selectList Size="1" value="{!selClass}" style="width:120px;height:23px">
+                                                                      <apex:selectOption itemLabel="ALL CLASSES" itemvalue="ALL"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="FIRST AC" itemvalue="1AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SECOND AC" itemvalue="2AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="THIRD AC" itemvalue="3AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SLEEPER CLASS" itemvalue="SL"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SECOND SEATING" itemvalue="2S"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="AC CHAIR CAR" itemvalue="CC"></apex:selectOption>
+                                                                      
+                                                                      </apex:selectList>
+                               </td>
+                               <td class="tStyle">
+                                           <apex:input type="date" value="{!dat}" style="width:135px;height:23px"/><!--<apex:inputText value="{!dat}" size="10" id="demo" onfocus="DatePicker.pickDate(false, this , false);" /> -->
+                               </td>
+                               <td class="tStyle">
+                                       <table><tr><td>
+                                       <apex:selectList size="1" value="{!depTime}" style="height:23px">
+                                       <apex:selectOptions value="{!depTs}"/>
+                                       </apex:selectList>
+                                       </td>
+                                       </tr>
+                                       </table>
+                               </td>
+                                <td class="tStyle">
+                                       <table><tr><td><apex:selectList size="1" value="{!arrTime}" style="height:23px">
+                                       <apex:selectOptions value="{!arrTs}"/>
+                                       </apex:selectList></td>
+                                       </tr>
+                                       </table>
+                               </td>
+                               <td align="right"><apex:commandButton value="Get" onclick="getBySrcDest();return false;" style="width:40px;height:23px">
+                              <!-- <apex:actionSupport action="{!BySrcDest}" event="onclick" reRender="trInf"/>-->
+                               </apex:commandButton>
+                               </td>
+                               </tr>
+                            </table>
+  </div>  
+  <div id="kNN" style="display:{!tnDisplay};float:left">
+                            <table>
+                               <tr class="tStyle">
+                               <th class="tStyle"><apex:outputLabel style="color:white">Train Name</apex:outputLabel></th>
+                               <th class="tStyle"><apex:outputLabel style="color:white">Train No</apex:outputLabel></th>
+                               </tr>
+                               <tr>
+                              
+                               <td>
+                                                <apex:inputText id="trians" value="{!tText}" html-placeholder="Name">
+                                                <c:autoPopData autocomplete_textbox="{!$Component.trians}" objectname="Train__c"/>
+                                                <apex:actionSupport event="onblur" action="{!chooseTrainNos}" reRender="form"/>
+                                                </apex:inputText>
+                               </td>
+                               
+                               <td>                         
+                                <apex:selectList SIze="1" value="{!tNoS}" onchange="getTrInfo();return false;" style="height:23px"><apex:selectOptions value="{!TrNos}">
+                                </apex:selectOptions></apex:selectList>
+                               </td> 
+                               </tr>
+                            </table>  
+  </div>
+  <div>
+  <div style="border:3px solid white;float:left;display:{!sdInfoView};">
+  <table class="tStyle">
+                            <caption><apex:outputLabel value="Your Selection"/></caption>
+                            <tr class="tStyle"><th class="tStyle">Source</th><th class="tStyle">Destination</th><th class="tStyle">Calss</th></tr>
+                            <tr class="tStyle"><td class="tStyle"><apex:outputText value="{!srcText}"/></td><td class="tStyle"><apex:outputText value="{!destText}"/></td><td class="tStyle"><apex:outputText value="{!selClass}"/></td></tr>
+                            </table>
+                            <table>
+                            <tr><td><apex:outputLabel value="Concession:"/></td><td><apex:selectList size="1"><apex:selectOption itemLabel="None" itemValue="None"></apex:selectOption></apex:selectList></td></tr>
+                            <tr><td><apex:outputLabel value="Enter Quota:"/></td><td><apex:selectList size="1"><apex:selectOption itemLabel="None" itemValue="None"></apex:selectOption></apex:selectList></td></tr>
+                            <tr><td><apex:outputLabel value="Journey Date:"/></td><td><apex:outputText value="{!dat}"/></td></tr>
+                            </table>
+                            <table>
+                            <tr>
+                            <td><apex:commandButton value="Get Availability"/></td>
+                            <td><apex:commandButton value="Get Full Fare"/></td>
+                            <td><apex:commandButton value="Get Schedule" action="{!GetsheduleTrain}" reRender="form"/><apex:inputHidden value="{!selectedValue}" id="RBValue" /></td>
+                            <td><apex:commandButton value="Get Running Status"/></td>
+                            </tr>
+                            </table>
+                             <div style="border:1px solid olive;border-collapse:collapse; width:100%;">
+                                <div style="width:{!styleWidth};height:50px;background:red;border-bottom:1px solid white;">
+                                            <div style="width:30px;height:50px;border-right:1px solid white;float:left;text-align: center;"></div>
+                                            <div style="width:59px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;font-size:14px;">Train No</p></div>
+                                            <div style="width:120px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Train name</p></div>
+                                            <div style="width:130px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Source</p></div>
+                                            <div style="width:60px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Dep.Time</p></div>
+                                            <div style="width:120px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Destination</p></div>
+                                            <div style="width:55px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Arr.Time</p></div>
+                                            <div style="width:75px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Travel Time</p></div>
+                                    <div style="width:154px;height:50px;border-right:1px solid white;float:left;">
+                                            <div style="height:20px;border-bottom:1px solid white;text-align: center;"><font size="3" color="white">Days of Run</font></div>
+                                            <div style="height:27px;">
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">M</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">T</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">W</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">T</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">F</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">S</font></div>
+                                                <div style="width:21px;height:27px;float:left;"><font size="3" color="white">S</font></div>
+                                            </div>
+                                    </div>
+                                    <div style="width:140px;height:50px;float:left;display:{!if(selClass=='ALL','block','none')}">
+                                            <div style="height:20px;border-bottom:1px solid white;text-align: center;"><font size="3" color="white">Classes</font></div>
+                                            <div style="height:27px;">
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">1A</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">2A</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">3A</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">CC</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">SL</font></div>
+                                                <div style="width:22px;height:27px;float:left;text-align: center;border-right:1px solid white;"><font size="3" color="white">2S</font></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width:{!styleWidth1};">
+                            <apex:repeat value="{!wrapperTrainsInfo}" var="trs">
+                            <div style="border:1px solid olive;height:60px;border-collapse:collapse;">
+                            <div style="width:30px;height:60px;border-right:1px solid white;float:left;text-align: center;">
+                            <input type="radio" name="tn" id="{!trs.tNo}" value="{!trs.tNo}/{!trs.tName}/{!trs.from1}" onclick="changeValue(this.id,'0','{!$Component.RBValue}');"/>
+                            </div>
+                            <div style="width:59px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.tNo}</p></div>
+                            <div style="width:120px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.tName}</p></div>
+                            <div style="width:130px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.from1}</p></div>
+                            <div style="width:60px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.dep}</p></div>
+                            <div style="width:120px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.to}</p></div>
+                            <div style="width:55px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.arr}</p></div>
+                            <div style="width:75px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.tt}</p></div>
+                            <div style="width:160px;height:60px;float:left;">
+                            <div style="height:50px;">
+                            <apex:repeat value="{!trs.tcd}" var="m">
+                            <div style="width:21px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p>{!trs.tcd[m]}</p></div>
+                            </apex:repeat>
+                            </div>
+                            </div>
+                            <div style="width:135px;height:60px;float:left;display:{!if(selClass=='ALL','block','none')}">
+                            <div style="height:60px;">
+                                                                <apex:variable var="j" value="{!1}"/>
+                                                                <apex:repeat value="{!trs.tcd1}" var="c">
+                                                                <div style="width:21px;height:60px;border-right:1px solid white;float:left;text-align: center;">
+                                                                 <p><apex:outputText value="-" rendered="{!if(trs.tcd1[c]=='0',true,false)}"/></p>
+                                                                 
+                                                                 <input type="radio" name="se" id="chk" style="vertical-align: middle;width:21px;display:{!if(trs.tcd1[c]!='0','inline-block','none')}" value="{!j}" onclick="changeValue('{!trs.tNo}','{!categoryMap[j]}','{!$Component.RBValue}');"/>
+                                                                 
+                                                                </div>
+                                                                <apex:variable var="j" value="{!j+1}"/>
+                                                                </apex:repeat>
+                            </div>
+                            </div>  
+                            </div>                                     
+                            </apex:repeat>
+                            </div>
+  </div>
+  <div style="border:3px solid white;float:left;display:{!tnInfoView};">
+<table>
+
+<tr><td>
+<table style="table-layout: fixed;border: 1px solid green;font-size:14px;background:white;">
+<tr>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Train No</th>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Train Name</th>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Runs From Source</th>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Runs On</th>
+</tr>
+<tr>
+<td style="border: 1px solid green;text-align: center;">{!trainNo}</td>
+<td style="border: 1px solid green;text-align: center;">{!trainName}</td>
+<td style="border: 1px solid green;text-align: center;">{!trainSrc}</td>
+<td style="border: 1px solid green;text-align: center;">
+<table><tr><apex:repeat value="{!runsOn}" var="runDay"><td style="border: 1px solid green;text-align: center;">{!runDay}</td></apex:repeat></tr></table>
+
+</td>
+</tr>
+</table>
+</td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr><td>
+                                 <table style="table-layout: fixed;border: 1px solid green;font-size:14px;background:white;">
+                                 <tr>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">S.No</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Stn Code</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;" >Stn Name</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Route No</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Arrival Time</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Dep.Time</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Halt.Minutes</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Distance</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Day</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Remark</th>
+                                 </tr>
+                                 <apex:variable value="{!1}" var="sno"/>
+                                 <apex:repeat value="{!wrapperTrainInfo}" var="tr">
+                                 <tr>
+                                 <td style="border: 1px solid green;text-align: center;">{!sno}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.stC}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.stName}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.rtNo}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.arr}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.dep}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.hat}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.distKm}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.dCnt}</td>
+                                 
+                                 </tr>
+                                 <apex:variable value="{!sno+1}" var="sno"/>
+                                 </apex:repeat>
+                                 </table>
+</td></tr></table>
+</div>  
+  </div>
+  </div>
+  
+  <!--
+  <div style="width:35%;height:500px;border:3px solid white;float:left;display:{!sdInfoView};">
+                            <table class="tStyle">
+                            <caption><apex:outputLabel value="Your Selection" style="color:white;"/></caption>
+                            <tr class="tStyle"><th class="tStyle">Source</th><th class="tStyle">Destination</th><th class="tStyle">Calss</th></tr>
+                            <tr class="tStyle"><td class="tStyle"><apex:outputText value="{!srcText}" style="color:white;"/></td><td class="tStyle"><apex:outputText value="{!destText}" style="color:white;"/></td><td class="tStyle"><apex:outputText value="{!selClass}" style="color:white;"/></td></tr>
+                            </table>
+                            <table>
+                            <tr><td><apex:outputLabel value="Concession:" style="color:white"/></td><td><apex:selectList size="1"><apex:selectOption itemLabel="None" itemValue="None"></apex:selectOption></apex:selectList></td></tr>
+                            <tr><td><apex:outputLabel value="Enter Quota:" style="color:white"/></td><td><apex:selectList size="1"><apex:selectOption itemLabel="None" itemValue="None"></apex:selectOption></apex:selectList></td></tr>
+                            <tr><td><apex:outputLabel value="Journey Date:" style="color:white"/></td><td><apex:outputText value="{!dat}" style="Color:white"/></td></tr>
+                            </table>
+                            <table>
+                            <tr>
+                            <td><apex:commandButton value="Get Availability"/></td>
+                            <td><apex:commandButton value="Get Full Fare"/></td>
+                            <td><apex:commandButton value="Get Schedule" action="{!GetsheduleTrain}" reRender="form"/><apex:inputHidden value="{!selectedValue}" id="RBValue" /></td>
+                            <td><apex:commandButton value="Get Running Status"/></td>
+                            </tr>
+                            </table>
+                            <div style="border:1px solid olive;border-collapse:collapse; width:80%;">
+                                <div style="width:{!styleWidth};height:50px;background:red;border-bottom:1px solid white;">
+                                            <div style="width:30px;height:50px;border-right:1px solid white;float:left;text-align: center;"></div>
+                                            <div style="width:59px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;font-size:14px;">Train No</p></div>
+                                            <div style="width:120px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Train name</p></div>
+                                            <div style="width:130px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Source</p></div>
+                                            <div style="width:60px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Dep.Time</p></div>
+                                            <div style="width:120px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Destination</p></div>
+                                            <div style="width:55px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Arr.Time</p></div>
+                                            <div style="width:75px;height:50px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">Travel Time</p></div>
+                                    <div style="width:154px;height:50px;border-right:1px solid white;float:left;">
+                                            <div style="height:20px;border-bottom:1px solid white;text-align: center;"><font size="3" color="white">Days of Run</font></div>
+                                            <div style="height:27px;">
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">M</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">T</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">W</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">T</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">F</font></div>
+                                                <div style="width:21px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">S</font></div>
+                                                <div style="width:21px;height:27px;float:left;"><font size="3" color="white">S</font></div>
+                                            </div>
+                                    </div>
+                                    <div style="width:140px;height:50px;float:left;display:{!if(selClass=='ALL','block','none')}">
+                                            <div style="height:20px;border-bottom:1px solid white;text-align: center;"><font size="3" color="white">Classes</font></div>
+                                            <div style="height:27px;">
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">1A</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">2A</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">3A</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">CC</font></div>
+                                                <div style="width:22px;height:27px;border-right:1px solid white;float:left;text-align: center;"><font size="3" color="white">SL</font></div>
+                                                <div style="width:22px;height:27px;float:left;text-align: center;border-right:1px solid white;"><font size="3" color="white">2S</font></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width:{!styleWidth1};">
+                            <apex:repeat value="{!wrapperTrainsInfo}" var="trs">
+                            <div style="border:1px solid olive;height:60px;border-collapse:collapse;">
+                            <div style="width:30px;height:60px;border-right:1px solid white;float:left;text-align: center;">
+                            <input type="radio" name="tn" id="{!trs.tNo}" value="{!trs.tNo}/{!trs.tName}/{!trs.from1}" onclick="changeValue(this.id,'0','{!$Component.RBValue}');"/>
+                            </div>
+                            <div style="width:59px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.tNo}</p></div>
+                            <div style="width:120px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.tName}</p></div>
+                            <div style="width:130px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.from1}</p></div>
+                            <div style="width:60px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.dep}</p></div>
+                            <div style="width:120px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.to}</p></div>
+                            <div style="width:55px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.arr}</p></div>
+                            <div style="width:75px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.tt}</p></div>
+                            <div style="width:160px;height:60px;float:left;">
+                            <div style="height:50px;">
+                            <apex:repeat value="{!trs.tcd}" var="m">
+                            <div style="width:21px;height:60px;border-right:1px solid white;float:left;text-align: center;"><p style="color:white;">{!trs.tcd[m]}</p></div>
+                            </apex:repeat>
+                            </div>
+                            </div>
+                            <div style="width:135px;height:60px;float:left;display:{!if(selClass=='ALL','block','none')}">
+                            <div style="height:60px;">
+                                                                <apex:variable var="j" value="{!1}"/>
+                                                                <apex:repeat value="{!trs.tcd1}" var="c">
+                                                                <div style="width:21px;height:60px;border-right:1px solid white;float:left;text-align: center;">
+                                                                 <p><apex:outputText value="-" rendered="{!if(trs.tcd1[c]=='0',true,false)}" style="color:white;"/></p>
+                                                                 
+                                                                 <input type="radio" name="se" id="chk" style="vertical-align: middle;width:21px;display:{!if(trs.tcd1[c]!='0','inline-block','none')}" value="{!j}" onclick="changeValue('{!trs.tNo}','{!categoryMap[j]}','{!$Component.RBValue}');"/>
+                                                                 
+                                                                </div>
+                                                                <apex:variable var="j" value="{!j+1}"/>
+                                                                </apex:repeat>
+                            </div>
+                            </div>  
+                            </div>                                     
+                            </apex:repeat>
+                            </div>
+                    
+</div>  
+<div style="border:3px solid white;float:left;display:{!tnInfoView};">
+<table>
+<caption style="color:white">Your Selection</caption>
+<tr><td>
+<table style="table-layout: fixed;border: 1px solid green;font-size:14px;background:white;">
+<tr>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Train No</th>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Train Name</th>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Runs From Source</th>
+<th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Runs On</th>
+</tr>
+<tr>
+<td style="border: 1px solid green;text-align: center;">{!trainNo}</td>
+<td style="border: 1px solid green;text-align: center;">{!trainName}</td>
+<td style="border: 1px solid green;text-align: center;">{!trainSrc}</td>
+<td style="border: 1px solid green;text-align: center;">
+<table><tr><apex:repeat value="{!runsOn}" var="runDay"><td style="border: 1px solid green;text-align: center;">{!runDay}</td></apex:repeat></tr></table>
+
+</td>
+</tr>
+</table>
+</td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr><td>
+                                 <table style="table-layout: fixed;border: 1px solid green;font-size:14px;background:white;">
+                                 <tr>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">S.No</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Stn Code</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;" >Stn Name</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Route No</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Arrival Time</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Dep.Time</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Halt.Minutes</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Distance</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Day</th>
+                                 <th style="border: 1px solid green;background-color: green;color:white;text-align: center;">Remark</th>
+                                 </tr>
+                                 <apex:variable value="{!1}" var="sno"/>
+                                 <apex:repeat value="{!wrapperTrainInfo}" var="tr">
+                                 <tr>
+                                 <td style="border: 1px solid green;text-align: center;">{!sno}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.stC}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.stName}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.rtNo}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.arr}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.dep}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.hat}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.distKm}</td>
+                                 <td style="border: 1px solid green;text-align: center;">{!tr.dCnt}</td>
+                                 
+                                 </tr>
+                                 <apex:variable value="{!sno+1}" var="sno"/>
+                                 </apex:repeat>
+                                 </table>
+</td></tr></table>
+</div>  
+-->                   
+</div>
+ </div>
+
+</apex:form>
+
+</apex:page>

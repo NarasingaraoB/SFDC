@@ -1,0 +1,265 @@
+<apex:page sidebar="false" showHeader="false" controller="welcome_ctrl" docType="html-5.0" action="{!data}">
+<apex:includeScript value="{!$Resource.jquery}"/>
+<apex:includeScript value="{!$Resource.slideScript}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+
+ <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ </head>
+<script type="text/javascript">
+$(document).ready(function() {  
+//$('[id$=":send"]').click(function(){
+$('#send').click(function(){
+        var id = '#dialog';
+    
+        //Get the screen height and width
+        var maskHeight = $(document).height();
+        var maskWidth = $(window).width();
+    
+        //Set heigth and width to mask to fill up the whole screen
+        $('#mask').css({'width':maskWidth,'height':maskHeight});
+        
+        //transition effect     
+        $('#mask').fadeIn(1000);    
+        $('#mask').fadeTo("slow",0.8);  
+    
+        //Get the window height and width
+        var winH = $(window).height();
+        var winW = $(window).width();
+              
+        //Set the popup window to center
+        $(id).css('top',  winH/2-$(id).height()/2);
+        $(id).css('left', winW/2-$(id).width()/2);
+    
+        //transition effect
+        $(id).fadeIn(2000);     
+    
+    //if close button is clicked
+    $('.window .close').click(function (e) {
+        //Cancel the link behavior
+        e.preventDefault();
+        
+        $('#mask').hide();
+        $('.window').hide();
+    });     
+    
+    //if mask is clicked
+    $('#mask').click(function () {
+        $(this).hide();
+        $('.window').hide();
+    });     
+    
+})
+});
+
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script  src="https://www.googletagmanager.com/gtag/js?id=UA-125822707-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125822707-1');
+</script>
+
+<style>
+body {
+font-family:verdana;
+font-size:15px;
+}
+
+a {color:#333; text-decoration:none}
+a:hover {color:#ccc; text-decoration:none}
+
+#mask {
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+}  
+#boxes .window {
+  position:absolute;
+  left:0;
+  top:0;
+  width:440px;
+  height:200px;
+  display:none;
+  z-index:9999;
+  padding:20px;
+}
+#boxes #dialog {
+  width:375px; 
+  height:203px;
+  padding:10px;
+  background-color:#ffffff;
+}
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    
+   -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+.box {
+    margin-left: 40px ;
+    width: 95%;
+    
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+
+.title {
+    font-size: larger;
+    font-weight: bold;
+}
+
+#slideshow #slideshowWindow {
+    width: 843px;
+    height: 464px;
+    margin: 0px auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow .slide {
+    margin: 0;
+    padding: 0;
+    width: 843px;
+    height: 464px;
+    float: left;
+    position: relative;
+}
+.sliderWin{
+    position:relative;
+    width:100%;
+    /*  height:400px; when responsive, comment this out */
+    margin:0 auto;
+}
+.sliderWin-wrapper
+    {
+   
+        float:left;
+    }
+</style>
+
+<apex:form id="form">
+<apex:pageMessages id="showmsg"></apex:pageMessages>
+<apex:actionFunction name="getBySrcDest" action="{!BySrcDest}"/>
+<apex:actionFunction action="{!GetTrsInfo}" name="getTrInfo" reRender="form"/>
+
+<div id="boxes">
+<div style="top: 199.5px; left: 551.5px; display: none;" id="dialog" class="window">
+<center><h3>Email Subscription</h3></center><a href="#" class="close">Close it</a>
+<table cellpadding="4" cellspacing="4">
+<tr><td>Email:</td><td><apex:inputText value="{!userMail}"/></td></tr>
+<tr><td></td><td><apex:commandButton value="Get Code" action="{!sendVfCode}"/>First Time?</td></tr>
+<tr><td></td><td></td></tr>
+<tr><td>Verify Code:</td><td><apex:inputSecret value="{!vfCode}"/></td></tr>
+<tr><td></td><td><apex:commandButton value="Submit" action="{!veriByCodeSendMsg}"/></td></tr>
+</table>
+</div>
+<!-- Mask to cover the whole screen -->
+<div style="width: 1478px; height: 602px; display: none; opacity: 0.8;" id="mask"></div>
+</div>
+<div class="box">
+
+ <apex:insert name="header">
+    <c:findHeader />
+   
+  </apex:insert>
+</div>
+
+<div class="Contentbox">
+<div style="float:left;">
+ <div data-WRID="WRID-144914466133454934" data-widgetType="searchWidget" data-class="affiliateAdsByFlipkart" height="250" width="300"></div><script async="async" src="//affiliate.flipkart.com/affiliate/widgets/FKAffiliateWidgets.js"></script>
+<div data-WRID="WRID-144784048126912071" data-widgetType="staticBanner"  data-class="affiliateAdsByFlipkart" height="250" width="300" style="float:left;"></div><script async="async" src="//affiliate.flipkart.com/affiliate/widgets/FKAffiliateWidgets.js"></script>  
+</div>
+ 
+ 
+ <div class="sliderWin-wrapper">
+    <div class="Advbox" id="slideshow">
+    <div id="slideshowWindow">
+    <div class="slide" id="s1">
+<apex:image value="{!$Resource.wel_img_1}"/>
+</div>
+<div class="slide">
+<apex:image value="{!$Resource.wel_img_2}"/>
+</div>
+<div class="slide">
+<apex:image value="{!$Resource.wel_img_3}"/>
+</div>
+    </div>
+    </div> 
+     
+ </div>
+  <body>
+   <script charset="utf-8" type="text/javascript">
+amzn_assoc_ad_type = "responsive_search_widget";
+amzn_assoc_tracking_id = "httpfindanyde-21";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "IN";
+amzn_assoc_placement = "";
+amzn_assoc_search_type = "search_widget";
+amzn_assoc_width = "auto";
+amzn_assoc_height = "auto";
+amzn_assoc_default_search_category = "";
+amzn_assoc_default_search_key = "";
+amzn_assoc_theme = "light";
+amzn_assoc_bg_color = "FFFFFF";
+</script>
+<script src="//z-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace=IN"></script>
+</body>
+ </div>
+ <!--<div style="border:solid 1px gray;">
+ <table cellpadding="3" cellspacing="3">
+ <caption><h6>you can send sms up count Free</h6></caption>
+ <tr><td>Recipient:</td><td><apex:inputText value="{!recipient}"/></td></tr>
+  <tr><td>Text Message:</td><td><apex:inputText value="{!message}" style="width:200px;height:250px"/></td></tr>
+   <tr><td></td><td><input type="button" value="Send" id="send"/></td></tr>
+ </table>
+ </div>
+    -->
+
+
+ 
+
+<div>
+<apex:insert name="footer">
+    <c:SiteFooter />
+    <hr/>
+  </apex:insert>
+</div>
+
+</apex:form>
+
+</apex:page>

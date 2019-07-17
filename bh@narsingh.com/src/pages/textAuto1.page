@@ -1,0 +1,11 @@
+<apex:page controller="textAuto1">
+  <apex:form >
+  <apex:inputText value="{!memName}" id="membNam" >
+ <c:autoComp autocomplete_textbox="{!$Component.membNam}" objectname="Cities__c" />
+</apex:inputText> 
+<apex:inputText value="{!memName1}" id="membNam1" >
+ <c:autoComp autocomplete_textbox="{!$Component.membNam1}" objectname="Cities__c" />
+</apex:inputText> 
+  <apex:commandButton value="Get" action="{!getTextValues}"/>
+  </apex:form>
+</apex:page>

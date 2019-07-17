@@ -1,0 +1,119 @@
+<apex:page sidebar="false" showHeader="false" controller="book_train" docType="html-5.0">
+<apex:form >
+
+
+ 
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/style-fraction.css')}"/>
+ <apex:stylesheet value="{!URLFOR($Resource.findHomePage,'findHomePage/css/fractionslider.css')}"/>
+
+ <head>
+ <link href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/vendor/bootstrap.min.css')}" rel="stylesheet"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/style.css')}" media="screen" data-name="skins"/>
+ <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.findHomePage, 'findHomePage/css/switcher.css')}" media="screen" />
+ </head>
+
+  <body>
+  <header id="header" class="clearfix">
+   <div id="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="top-info hidden-xs col-sm-7 ">
+                    <span><i class="fa fa-phone"></i>phone: (+91) 888-60-73941</span>
+                    <span><i class="fa fa-envelope"></i>Email: narsingbh@gmail.com</span>
+                </div>
+                <div class="top-info col-sm-5">
+                    <ul class="clearfix">
+                        <li><a href="" class="my-tweet"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="" class="my-facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="" class="my-skype"><i class="fa fa-skype"></i></a></li>
+                        <li><a href="" class="my-pint"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="" class="my-rss"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="" class="my-google"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Nav Bar -->
+    <div id="nav-bar" class="clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- Logo / Mobile Menu -->
+                <div class="col-sm-2">
+                <div id="logo">
+                        <apex:image value="{!$Resource.find_logo}" style="align: left;height:45px" alt="Salesforce" width="70" title="Find@nything"/>
+                </div>
+                </div>
+                
+                
+                <div class="col-sm-10">
+                <apex:panelGroup rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
+                    <nav id="navigation" class="menu">
+                        <ul id="">
+                            <li><a href="/apex/welcome" id="current" class="border">Home</a>
+                                
+                            </li>
+
+                            <li><a href="#">Services</a>
+                                <ul>
+                                    <li>
+                                    <a href="elements.html">Travel</a>
+                                        <ul>
+                                            <li><a href="/apex/Bus">Bus</a></li>
+                                            <li><a href="/apex/welcome">Train</a></li>
+                                            <li><a href="/apex/Car">Car</a></li>
+                                            <li><a href="/apex/Flight">Flight</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                    <a href="columns.html">Shoping</a>
+                                     <ul>
+                                            <li><a href="/apex/Clothes">Clothes</a></li>
+                                            <li><a href="'/apex/Jewelery">Jewelery</a></li>
+                                            <li><a href="'/apex/Electronics">Electronics</a></li>
+                                            
+                                        </ul>
+                                    </li>
+                                    <li>
+                                    <a href="typography.html">Recharge</a>
+                                     <ul>
+                                            <li><a href="/apex/Bsnl">BSNL</a></li>
+                                            <li><a href="/apex/Vodafone">Vodafone</a></li>
+                                            <li><a href="/apex/Idea">Idea</a></li>
+                                            <li><a href="/apex/Airtel">Airtel</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                    <a href="pricing-tables.html">Movie-Tickets And Info</a>
+                                     <ul>
+                                            <li><a href="/apex/Hyderabad">Hyderbad</a></li>
+                                            <li><a href="/apex/Bangalore">Bangalore</a></li>
+                                            <li><a href="/apex/Chennai">Chennai</a></li>
+                                            <li><a href="/apex/Mumbai">Mumbai</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/apex/Gaming">Gaming</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                <apex:outputText value="Welcome:{!$User.FirstName}" style="color:white;"></apex:outputText>
+                <apex:outputText value=" | " style="color:white;"/>
+                <apex:outputLink value="/apex/MyProfilePage" style="color:white;">MyProfile</apex:outputLink>
+                <apex:outputText value=" | " style="color:white;"/>
+                <apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}" style="color:white;">{!$Label.site.logout}</apex:outputLink>
+                </apex:panelGroup>
+                </div>
+                
+                
+           </div>
+        </div>
+    </div> 
+    <!-- End Nav Bar -->
+ </header>
+  </body>
+</apex:form>
+</apex:page>

@@ -1,0 +1,55 @@
+<apex:page sidebar="false" showHeader="false" controller="TelicomDetails_ctrl" action="{!getData}">
+<style>
+th.tStyle{
+             border: 1px solid green;
+             background-color: green;
+             color: white;
+             text-align: center;
+        }
+       table.tStyle{
+       table-layout: fixed;
+          border: 1px solid green;
+          font-size:14px;
+        }
+        td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+</style>
+  <apex:form >
+  <div style="display:if(rData.size>0 ,'block','none');">
+  <table cellpadding="2" cellspacing="2" >
+  <caption>{!con}&nbsp;&nbsp;{!area}</caption>
+  <tr class="tStyle">
+  <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Rs.</th>
+  <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Talktime</th>
+  <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Valid</th>
+  <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Description</th>
+  <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Description</th>
+  <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Description</th>
+  <th style="border: 1px solid green;background-color: green;color: white;text-align: center;">Master</th>
+  
+  </tr>
+  <apex:repeat value="{!rData}" var="r">
+  <tr class="tStyle">
+  <td class="tStyle">{!r.rValue}</td>
+  <td class="tStyle">{!r.rTalktime}</td>
+  <td class="tStyle">{!r.rValidity}</td>
+  <td class="tStyle">{!r.rDescriptionShort}</td>
+  <td class="tStyle">{!r.rDescription}</td>
+  <td class="tStyle">{!r.rDescriptionMore}</td>
+  <td class="tStyle">{!r.rMaster}</td>
+  
+  </tr>
+  </apex:repeat>
+  </table>
+  </div>
+  <div style="display:if(rData.size>0 ,'block','none');">
+  <table cellpadding="2" cellspacing="2" >
+  <caption>{!con}&nbsp;&nbsp;{!area}</caption>
+  <tr><td>Data is not Available</td></tr>
+  </table>
+  </div>
+  </apex:form>
+</apex:page>

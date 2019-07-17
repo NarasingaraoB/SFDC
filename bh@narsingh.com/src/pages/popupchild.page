@@ -1,0 +1,29 @@
+<apex:page sidebar="false" showHeader="false">
+
+<head>
+ 
+<script langauge="javascript">
+function post_value(){
+//opener.document.f1.p_name.value = document.frm.c_name.value;
+//opener.document.f1.p_name.value={!$CurrentPage.parameters.code}
+//opener.window.location.href= "https://scjmn-dev-ed--c.ap6.visual.force.com/apex/GetCustomerInfoFromRemoteSystemsTest?code={!$CurrentPage.parameters.code}";
+opener.window.location.href= "https://scjmn-dev-ed--c.ap6.visual.force.com/apex/GetCustomerInfoFromRemoteSystems?code={!$CurrentPage.parameters.code}";
+   // opener.window.location.reload();
+self.close();
+}
+</script>
+ 
+<title>(Type a title for your page here)</title>
+</head>
+ 
+
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#ff0000"/>
+ 
+<form name="frm">
+<table >
+ 
+
+<tr><td align="center"> Your name<input type="text" name="c_name" size="12" value="test"/> <input type="button" value="Submit" onclick="post_value();"/>
+</td></tr>
+</table></form>
+</apex:page>

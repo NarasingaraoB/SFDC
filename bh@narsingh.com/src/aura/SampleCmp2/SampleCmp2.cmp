@@ -1,0 +1,17 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" access="global">
+    <!--Aura Method-->
+    <aura:method name="welcomeMsgMethod" action="{!c.doAction}" access="global"> 
+        <aura:attribute name="message" type="Object" /> 
+        <aura:attribute name="name" type="String"/> 
+    </aura:method>
+     
+    <!--Declare Attributes-->
+    <aura:attribute name="msg" type="String"/>
+     
+    <!--Component Start-->
+    <div class="slds-m-around_xx-large">
+        <!--Print Welcome Message-->
+        {!v.msg}
+    </div>
+    <!--Component End-->
+</aura:component>

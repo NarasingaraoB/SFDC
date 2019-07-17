@@ -1,0 +1,5 @@
+<apex:page sidebar="false" showHeader="false" controller="flipkart_deserialize" action="{!data}">
+<apex:outputText value="..............{!jsonOut}..............."></apex:outputText>-->
+ <apex:outputText value="{!wrapperList}"></apex:outputText>
+  <div data-WRID="WRID-144784023607888309" data-widgetType="featuredDeals" data-responsive="yes" data-class="affiliateAdsByFlipkart" height="250" width="300"></div><script  src="//affiliate.flipkart.com/affiliate/widgets/FKAffiliateWidgets.js"></script>
+</apex:page>

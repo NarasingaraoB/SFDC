@@ -1,0 +1,3 @@
+<aura:component>  
+    <lightning:formattedUrl value="https://www.google.com" tooltip="Google" label="Click to Open" target="_blank" />
+</aura:component>

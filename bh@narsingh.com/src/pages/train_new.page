@@ -1,0 +1,386 @@
+<apex:page sidebar="false" showHeader="false" controller="train_new_ctrl">
+<apex:includeScript value="{!URLFOR($Resource.find, '/JQueryUI/js/jquery-1.7.1.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.find, '/JQueryUI/js/jquery-ui-1.8.17.custom.min.js')}"/>
+<style>
+.Contentbox {
+    margin-left: 40px ;
+    width: 95%;
+    height: 464px;
+    margin-right:40px;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+    
+}
+.content_div {
+  width: 95%;
+  margin: 0px auto;
+  border-radius: 10px;
+  border: solid 3px #fff;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
+              }
+  
+th.tStyle{
+         border: 1px solid green;
+         background-color: green;
+         color: white;
+         text-align: center;
+         }
+table.tStyle{
+            table-layout: fixed;
+            border: 1px solid green;
+            font-size:10px;
+            }
+td.tStyle
+        {
+        border: 1px solid green;
+        text-align: center;
+        }
+.C1 {width:150px; text-align:center;background:lightgray;font-weight: bold;font-family: Verdana,Arial Narrow,helvetica,sans-serif;}
+.C2 {width:100px; text-align:center;font-weight: bold;font-family: Verdana,Arial Narrow,helvetica,sans-serif;}
+.C3 {width:150px; text-align:center;font-weight: bold;font-family: Verdana,Arial Narrow,helvetica,sans-serif;}
+
+.viewD
+        {
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            width: 700px;
+            margin-left: -250px;
+            top:50px;
+        }
+
+        .viewBg
+        {
+            background-color:black;
+           
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }   
+</style>
+<apex:form id="form">
+<apex:pageMessages id="showmsg"></apex:pageMessages>
+<apex:actionFunction action="{!GetCoachInfo}" name="getCoachInf" reRender="form">
+       
+</apex:actionFunction>
+ <div class="Contentbox">
+  <div id="main_div" style="background-color:blue;width:100%;height:700px">
+  <c:railway_nvgHeader_Menu ></c:railway_nvgHeader_Menu>
+              <div id="main_lvel1">
+              <div id="main_lvel11" style="float:left;">
+              <table>
+                                                <tr>
+                                                <td><apex:outputLabel value="Name" style="color:white;"/></td>
+                                                <td>
+                                                <apex:inputText value="{!trName}"/><c:toolTip helpText=""/>
+                                                </td>
+                                                </tr>
+                                                <tr>
+                                                <td><apex:outputLabel value="Number" style="color:white;"/></td>
+                                                <td>
+                                                <apex:inputText value="{!trNo}"/><c:toolTip helpText=""/>
+                                                </td>
+                                                </tr>
+              </table>
+              </div>
+              <div id="main_lvel12" style="float:left;">
+              <table>
+                                                    <tr class="tStyle"><th class="tStyle">Source</th><th class="tStyle">Destination</th></tr>
+                                                    <tr class="tStyle">
+                                                    <td class="tStyle"><apex:outputText value="{!src}" rendered="{!if(srcSet==null,true,false)}" style="color:white"/><apex:outputText value="{!srcSet}" rendered="{!if(srcSet!=null,true,false)}" style="color:white"/></td>
+                                                    <td class="tStyle"><apex:outputText value="{!dest}" rendered="{!if(destSet==null,true,false)}" style="color:white"/><apex:outputText value="{!destSet}" rendered="{!if(destSet!=null,true,false)}" style="color:white"/></td></tr>
+                                                    <tr>
+                                                    <td><apex:commandButton value="Set" action="{!SrcDestSet}" rendered="{!if(srcSet==null,true,false)}" reRender="form">
+                                                            <apex:param name="passVal" value="0" assignTo="{!setSrcVal}"/>
+                                                        </apex:commandButton>
+                                                        <apex:commandButton value="Edit" action="{!SrcDestEdit}" rendered="{!if(srcSet!=null,true,false)}" reRender="form">
+                                                        <apex:param name="passV" value="0" assignTo="{!editSrcVal}"/>
+                                                        </apex:commandButton>
+                                                    </td>
+                                                    <td>
+                                                    <apex:commandButton value="Set" action="{!SrcDestSet}" rendered="{!if(destSet==null,true,false)}" reRender="form">
+                                                    <apex:param name="pasVal" value="1" assignTo="{!setSrcVal1}"/>
+                                                        </apex:commandButton>
+                                                    <apex:commandButton value="Edit" action="{!SrcDestEdit}" rendered="{!if(destSet!=null,true,false)}" reRender="form">
+                                                    <apex:param name="paV" value="1" assignTo="{!editSrcVal1}"/>
+                                                        </apex:commandButton>
+                                                    </td>
+                                                    </tr>
+                                                    
+              </table>
+              </div>
+              <div id="main_lvel13">
+              <table>
+                                                    <tr class="tStyle"><th class="tStyle">Runs On</th></tr>
+                                                    <tr>
+                                                    <td>
+                                                                    <table>
+                                                                    <tr class="tStyle">
+                                                                    <apex:repeat value="{!dayNames}" var="w">
+                                                                    <td class="tStyle">
+                                                                    <table>
+                                                                    <tr><td><apex:outputLabel value="{!w}" style="color:white;"/></td></tr>
+                                                                    <tr><td><apex:inputCheckbox value="{!runsMap[w]}"/></td></tr>
+                                                                    </table>
+                                                                    </td></apex:repeat></tr>
+                                                                    </table>
+                                                    </td>
+                                                    </tr>
+              </table>
+              </div>
+              </div>
+              <div id="main_lvel2">
+              <table>
+                                        <tr>
+                                        <td>
+                                        <apex:outputLabel value="B/w States" style="color:white;"/>
+                                        <apex:inputText value="{!stateCnt}" size="1">
+                                        <apex:actionSupport event="onchange" action="{!GetStateBoxs}" reRender="form"/>
+                                        </apex:inputText>
+                                        </td>
+                                        <td>
+                                        <apex:repeat value="{!stateBoxes}" var="stBox">
+                                        <apex:inputText value="{!stateBoxMap[stBox]}" id="statT" html-placeholder="State">
+                                        <c:autopopForNewTrain autocomplete_textbox="{!$Component.statT}" objectname="State__c" ></c:autopopForNewTrain>
+                                        </apex:inputText>
+                                        </apex:repeat>
+                                        </td>
+                                        <td>
+                                        <apex:commandButton value="GetCities" action="{!GetCityFromStates}" reRender="form" rendered="{!if(stateCnt!=0,true,false)}"/>
+                                        </td>
+                                        </tr>
+              </table>
+              </div>
+              <div id="main_lvel3">
+              <apex:panelGrid columns="1" id="stations" title="Stations alot" width="300" cellpadding="0" cellspacing="0" columnClasses="C1">
+              <apex:panelGrid columns="7" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1,C2.C3">
+                            
+                            <apex:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1">
+                            <apex:outputText value="Cities"/>
+                            <apex:selectList id="stList1" style="height:300px;width:150px;" value="{!availList}" multiselect="true">
+                                                            <apex:selectOptions value="{!AvailSelValues}"></apex:selectOptions>
+                                                          </apex:selectList>
+                            </apex:panelGrid>
+                            <apex:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1,C2,C3">
+                            <apex:outputText value=""/>
+                            <apex:panelGroup layout="block" style="width:30%;">
+                                                                <br/>
+                                                                <apex:image value="{!$Resource.multiselected}">
+                                                                <apex:actionSupport event="onclick" action="{!stclick}" reRender="form"/>    
+                                                                </apex:image>
+                                                                <br/><br/>
+                                                                <apex:image value="{!$Resource.multiunselected}">
+                                                                <apex:actionSupport event="onclick" action="{!unstclick}" reRender="form"/> 
+                                                                </apex:image>
+                                                          </apex:panelGroup>
+                            </apex:panelGrid>
+                            <apex:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1,C2,C3">
+                            <apex:outputText value="Stations"/>
+                            <apex:selectList id="stList2" style="height:300px;width:150px;" value="{!chooseList}" multiselect="true">
+                                                            <apex:selectOptions value="{!ChooseSelValues}"></apex:selectOptions>
+                                                            <apex:actionSupport action="{!SetStationDetails}" event="onclick" reRender="form"/>
+                                                          </apex:selectList>
+                            </apex:panelGrid>
+                            <apex:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1,C2,C3">
+                            <apex:outputText value=""/>
+                            <apex:panelGroup layout="block" style="width:30%;">
+                                                                <br/>
+                                                                <apex:image value="{!$Resource.upSelect}">
+                                                                <apex:actionSupport event="onclick" action="{!upStationName}" reRender="form"/>    
+                                                                </apex:image>
+                                                                <br/><br/>
+                                                                <apex:image value="{!$Resource.downSelect}">
+                                                                <apex:actionSupport event="onclick" action="{!downStationName}" reRender="form"/>    
+                                                                </apex:image>
+                                                          </apex:panelGroup>
+                            </apex:panelGrid>
+                            <apex:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1,C2,C3">
+                            <apex:outputText value="Station Timings"/>
+                            <apex:outputPanel style="height:300px;width:400px;border:1px solid green;" layout="block">
+                                                          
+                                                          <table class="tStyle">
+                                                          <tr class="tStyle"><th class="tStyle">Arrival</th><th class="tStyle">Departure</th><th class="tStyle">Distance</th><th class="tStyle">Station No</th><th><apex:commandButton value="set" action="{!SetTimeDetails}" reRender="form" rendered="{!setView}"/></th><th class="tStyle">Route No</th><th class="tStyle">No Of Coaches</th></tr> 
+                                                          <tr><td>
+                                                          <table>
+                                                          <tr><td>Hrs</td><td><apex:inputText size="1" value="{!hrA}" style="width:20px;" maxlength="2"/>
+                                                          
+                                                          </td></tr>
+                                                          
+                                                          <tr><td>Mins</td><td><apex:inputText size="1" value="{!minA}" style="width:20px;" maxlength="2"/>
+                                                          
+                                                          </td></tr>
+                                                          </table>
+                                                          </td>
+                                                          <td>
+                                                          <table><tr><td>Hrs</td><td><apex:inputText size="1" value="{!hrD}" style="width:20px;" maxlength="2"/>
+                                                          
+                                                          </td></tr>
+                                                          <tr><td>Mins</td><td><apex:inputText size="1" value="{!minD}" style="width:20px;" maxlength="2"/>
+                                                          </td></tr>
+                                                          </table>
+                                                          </td>
+                                                          
+                                                          <td>
+                                                          <apex:inputText size="1" value="{!dist}" style="width:20px;"/>
+                                                          </td>
+                                                          <td>
+                                                          <apex:inputText size="1" value="{!stationNo}" style="width:20px;"/>
+                                                          </td>
+                                                          <td><apex:commandButton value="Edit" action="{!EditTimeDetails}"  reRender="form" rendered="{!editView}"/></td>
+                                                          <td>
+                                                          <apex:inputText size="1" value="{!routeNo}" style="width:20px;" maxlength="2"/>
+                                                          </td>
+                                                          <td>
+                                                          <apex:inputText size="1" value="{!coachCount}" style="width:20px;" maxlength="3">
+                                                          <apex:actionSupport action="{!GetCoachCnt}" event="onchange" rerender="form"/>
+                                                          </apex:inputText>
+                                                          </td>
+                                                          
+                                                          </tr>
+                                                          </table>
+                                                          
+                                                          <div style="border:1px solid olive;border-collapse:collapse; width:290px;">
+                                                          <div style="width:290px;height:30px;background:green;border-bottom:1px solid white;">
+                                                          <div style="width:50px;height:30px;border-right:1px solid white;float:left;text-align: center;color:white;">S.No</div>
+                                                          <div style="width:60px;height:30px;border-right:1px solid white;float:left;text-align: center;color:white;">Name</div>
+                                                          <div style="width:80px;height:30px;border-right:1px solid white;float:left;text-align: center;color:white;">Category</div>
+                                                          <div style="width:65px;height:30px;border-right:1px solid white;float:left;text-align: center;color:white;">Seats</div>
+                                                         
+                                                          <apex:commandButton value="[+]" action="{!addCoach}" reRender="form" style="width:25px;height:30px;float:left;text-align: center;background:green;color:white">
+                                                          
+                                                          </apex:commandButton>
+                                                         
+                                                          </div>
+                                                          <div style="width:290px;height:175px;background:green;overflow-y:auto;border-bottom:1px solid white;">
+                                                          <apex:variable value="{!1}" var="sno"/>
+                                                          <apex:repeat value="{!coachCountList}" var="chs">
+                                                          <div style="width:50px;height:30px;border-right:1px solid white;float:left;text-align: center;"><apex:outputText value="{!sno}"/>
+                                                          <apex:commandButton value="[-]" action="{!removeCoach}" reRender="form" style="background:green;color:white">
+                                                          <apex:param name="rCoach" value="{!chs}" assignTo="{!coachVal}"/>
+                                                          </apex:commandButton>
+                                                          </div>
+                                                          <div style="width:60px;height:30px;border-right:1px solid white;float:left;text-align: center;"><apex:inputText value="{!M[chs]}" size="4"/></div>
+                                                          <div style="width:80px;height:30px;border-right:1px solid white;float:left;text-align: center;">
+                                                          <apex:selectList Size="1" value="{!N[chs]}">
+                                                                      <apex:selectOption itemLabel="1AC" itemvalue="1AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="2AC" itemvalue="2AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="3AC" itemvalue="3AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SL" itemvalue="SL"></apex:selectOption>
+                                                                       <apex:selectOption itemLabel="2S" itemvalue="2S"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="CC" itemvalue="CC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="GNL" itemvalue="GNL"></apex:selectOption>
+                                                                      <apex:actionSupport action="{!getCoachesOnFare}" event="onchange" reRender="form"/>
+                                                          </apex:selectList>
+                                                          </div>
+                                                          <div style="width:65px;height:30px;border-right:1px solid white;float:left;text-align: center;"><apex:inputText value="{!L[chs]}" size="3"/></div>
+                                                          <apex:variable value="{!sno+1}" var="sno"/>
+                                                          </apex:repeat>
+                                                          </div>
+                                                          </div>
+                                                          <!--<div style="background-color:green;color:white">
+                                                          <apex:outputLabel value="Reservation Charges"/><apex:inputText value="{!rCharges}" size="2"/>
+                                                          <apex:outputLabel value="Superfast Charges"/><apex:inputText value="{!sCharges}" size="2"/>
+                                                          <apex:outputLabel value="Other Charges"/><apex:inputText value="{!oCharges}" size="2"/>
+                                                          </div>-->
+                            </apex:outputPanel>
+                            </apex:panelGrid>
+                            <apex:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1,C2,C3">
+                            <apex:outputText value="Train Fare Details"/>
+                            <apex:outputPanel style="height:300px;width:388px;border:1px solid green;" layout="block">
+                            
+                            <apex:outputLabel value="Coach:*"/>
+                            <apex:selectList Size="1" value="{!CoachAlot}" onchange="getCoachInf();return false;">
+                            
+                                                                      <apex:selectOption itemLabel="None" itemvalue="none"></apex:selectOption>
+                                                                      <!--<apex:selectOption itemLabel="1AC" itemvalue="1AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="2AC" itemvalue="2AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="3AC" itemvalue="3AC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="SL" itemvalue="SL"></apex:selectOption>
+                                                                       <apex:selectOption itemLabel="2S" itemvalue="2S"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="CC" itemvalue="CC"></apex:selectOption>
+                                                                      <apex:selectOption itemLabel="GNL" itemvalue="GNL"></apex:selectOption>
+                                                                      -->
+                                                                      
+                                                                      <apex:selectOptions value="{!cType}"></apex:selectOptions>
+                                                                     
+                                                                      
+                                                                      
+                                                          </apex:selectList>
+                            <apex:commandButton value="Set" action="{!SetFareValues}" reRender="form"  rendered="{!setfareBtnView}"/>
+                            <apex:commandButton value="Edit" action="{!EditFareValues}" reRender="form"  rendered="{!editfareBtnView}"/>
+                            <table>
+                            <tr><td align="left"><apex:outputLabel value="Base Fare*"/></td><td><apex:inputText value="{!BaseFare}" disabled="{!fareTxtView}"/></td></tr>
+                            <tr><td align="left"><apex:outputLabel value="Reservation Charges*"/></td><td><apex:inputText value="{!ReservationCharges}" disabled="{!fareTxtView}"/></td></tr>
+                            <tr><td align="left"><apex:outputLabel value="Superfast Charges*"/></td><td><apex:inputText value="{!superfastCharges}" disabled="{!fareTxtView}"/></td></tr>
+                            <tr><td align="left"><apex:outputLabel value="Other Charges*"/></td><td><apex:inputText value="{!OtherCharges}" disabled="{!fareTxtView}"/></td></tr>
+                            <tr><td align="left"><apex:outputLabel value="Service Tax Charges*"/></td><td><apex:inputText value="{!ServiceTax}" disabled="{!fareTxtView}"/></td></tr>
+                            </table>
+                            <apex:outputLabel value="Train Distance(KM)*"/><apex:inputText value="{!TrainDistance}" disabled="{!fareTxtView}" size="5"/>
+                            </apex:outputPanel>
+                            </apex:panelGrid>
+                            <apex:panelGrid columns="1" width="100%" cellpadding="0" cellspacing="0" columnClasses="C1,C2,C3">
+                            <apex:outputText value="Remaining"/>
+                            <apex:outputPanel style="height:300px;width:300px;border:1px solid green;" layout="block">
+                            </apex:outputPanel>
+                            </apex:panelGrid>
+                            </apex:panelGrid>
+              </apex:panelGrid>
+              </div>
+              <div id="main_lvel4">
+<apex:commandButton value="Check" action="{!checkEntryDetails}" reRender="form"/>
+<apex:outputPanel id="viewDetails">
+<apex:outputPanel styleClass="viewBg" rendered="{!displayView}">
+<apex:outputPanel styleClass="viewD"  rendered="{!displayView}">
+<table class="tStyle">
+<tr class="tStyle"><th class="tStyle">Train No</th><th class="tStyle">Train Name</th><th class="tStyle">Runs from Source</th><th class="tStyle">Runs On</th></tr>
+<tr class="tStyle"><td class="tStyle">{!trNo}</td><td class="tStyle">{!trName}</td><td class="tStyle">{!srcSet}</td>
+<td class="tStyle">
+<table class="tStyle">
+<tr class="tStyle"><apex:repeat value="{!dayNames}" var="w"><td class="tStyle"><apex:outputText value="{!w}" rendered="{!if(runsMap[w]=='true',true,false)}"/></td></apex:repeat></tr>
+</table>
+</td></tr>
+</table>
+<table class="tStyle">
+<tr class="tStyle"><th class="tStyle">S.No</th><th class="tStyle">Station Code</th><th class="tStyle">Station Name</th><th class="tStyle">Route No</th><th class="tStyle">Arr.Time</th><th class="tStyle">Dep.Time</th><th class="tStyle">Halt.Time</th><th class="tStyle">Distance</th><th class="tStyle">Day</th><th class="tStyle">Remark</th></tr>
+<apex:variable value="{!1}" var="sNo"/>
+<apex:repeat value="{!chooseValues}" var="stM">
+<tr class="tStyle">
+<td class="tStyle">{!sNo}</td>
+<td class="tStyle">{!checkDetails[stM].stCode}</td>
+<td class="tStyle">{!checkDetails[stM].stName}</td>
+<td class="tStyle">{!checkDetails[stM].rtNo}</td>
+<td class="tStyle">{!checkDetails[stM].arrTime}</td>
+<td class="tStyle">{!checkDetails[stM].depTime}</td>
+<td class="tStyle">{!checkDetails[stM].haltTime}</td>
+<td class="tStyle">{!checkDetails[stM].distance}</td>
+
+<td class="tStyle"></td><td class="tStyle"></td>
+</tr>
+<apex:variable value="{!sNo+1}" var="sNo"/>
+</apex:repeat>
+</table>
+<apex:commandButton value="Cancel" action="{!closeCheckDetails}" reRender="form"/>
+
+</apex:outputPanel>
+</apex:outputPanel>        
+</apex:outputPanel>
+<apex:commandButton value="Save" action="{!saveEntryDetails}" reRender="form"/>
+              </div>
+  
+  </div>
+  </div>
+</apex:form> 
+</apex:page>

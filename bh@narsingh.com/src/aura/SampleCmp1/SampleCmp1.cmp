@@ -1,0 +1,5 @@
+<aura:component >
+	 <aura:attribute name="JsMethod" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+</aura:component>

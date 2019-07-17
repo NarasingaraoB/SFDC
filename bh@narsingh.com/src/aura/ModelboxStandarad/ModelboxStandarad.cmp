@@ -1,0 +1,16 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" access="global">
+     <!--Declare Attribute-->
+    <aura:attribute name="FirstName" type="String"/> 
+    <aura:attribute name="LastName" type="String"/> 
+     
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+     
+    <!--Component Start-->   
+    <div class="slds-m-around--xx-large">
+        <lightning:input name="fname" label="First Name" value="{!v.FirstName}" />
+        <lightning:input name="lname" label="Last Name" value="{!v.LastName}" />
+        <br/>
+        <lightning:button variant="brand" label="Show Modal" onclick="{!c.handleShowModal}"/>
+    </div>
+    <!--Component End-->
+</aura:component>

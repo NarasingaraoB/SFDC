@@ -1,0 +1,5 @@
+<apex:page sidebar="false" showHeader="false" docType="html-5.0" controller="IndianRailway_ctrl">
+<div id="main_div" style="background-color:blue;width:100%;height:100%">
+<c:railway_nvgHeader_Menu ></c:railway_nvgHeader_Menu>
+</div>
+</apex:page>

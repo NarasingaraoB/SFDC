@@ -1,0 +1,30 @@
+<apex:page sidebar="false" showHeader="false" standardStyleSheets="false">
+ 
+         <script type="text/javascript" src="{!URLFOR($Resource.bootstrapTimePickerjs)}"></script>
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrapTimePickercss)}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrapMinCss)}"/>
+         <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>
+         <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"/>
+   <html>
+      <head></head>
+       <body>
+<div class="input-append bootstrap-timepicker">
+<input id="timepicker2" type="text" class="input-small"/>
+<span class="add-on">
+<i class="icon-time"></i>
+</span>
+</div>
+ 
+<script type="text/javascript">
+$('#timepicker2').timepicker({
+minuteStep: 1,
+template: 'modal',
+appendWidgetTo: 'body',
+showSeconds: true,
+showMeridian: false,
+defaultTime: false
+});
+</script>
+</body>
+   </html>
+</apex:page>

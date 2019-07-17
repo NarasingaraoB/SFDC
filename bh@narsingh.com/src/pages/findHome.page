@@ -1,0 +1,181 @@
+<apex:page sidebar="false" showHeader="false" controller="find_home_ctrl">
+<apex:includeScript value="{!$Resource.jquery}"/>
+<apex:includeScript value="{!$Resource.slideScript}"/>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"/>
+<style>
+body {
+    line-height: 1;
+    color: #444444;
+    background: url({!$Resource.findBody}) repeat-x;
+    font: 16px/18px Helvetica Neue,Arial,Helvetica,Geneva,sans-serif;
+}
+#header {
+    position: relative;
+    display: block;
+    width: 940px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 110px;
+    margin-bottom: 40px;
+    border-bottom: 0px solid fuchsia;
+    float: left;
+}
+.logo {
+    height: 83px;
+    width: 84px;
+    position: absolute;
+    top: 10px;
+    float: right;
+}
+.Advbox {
+    margin: 20px auto;
+    width: 843px;
+    height: 464px;
+    float: left;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow {
+    width: 843px;
+    height: 464px;
+    margin: 0px auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 8px/7px;
+    -moz-border-radius: 8px/7px;
+    border-radius: 8px/7px;
+    background-color: #ebebeb;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    border: solid 1px #cbc9c9;
+}
+#slideshow #slideshowWindow .slide {
+    margin: 0;
+    padding: 0;
+    width: 843px;
+    height: 464px;
+    float: left;
+    position: relative;
+}
+#icon {
+    display: inline-block;
+    width: 30px;
+    background-color: #3a57af;
+    padding: 6px 0px 6px 15px;
+    margin-left: 15px;
+    -webkit-border-radius: 4px 0px 0px 4px;
+    -moz-border-radius: 4px 0px 0px 4px;
+    border-radius: 4px 0px 0px 4px;
+    color: white;
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    border: solid 0px #cbc9c9;
+}
+a.button {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 6px 25px 0px 20px;
+    margin: 10px 8px 20px 0px;
+    display: inline-block;
+    float: right;
+    text-decoration: none;
+    width: 50px;
+    height: 27px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3a57af;
+    -webkit-box-shadow: 0 3px rgba(58,87,175,.75);
+    -moz-box-shadow: 0 3px rgba(58,87,175,.75);
+    box-shadow: 0 3px rgba(58,87,175,.75);
+    transition: all 0.1s linear 0s;
+    top: 0px;
+    position: relative;
+}
+a.button:hover {
+    top: 3px;
+    background-color: #2e458b;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+p {
+    font-size: 12px;
+    width: 150px;
+    display: inline-block;
+    margin-left: 18px;
+}
+</style>
+  
+  <div id="header">
+  <apex:form id="form">
+    <div>
+    <apex:image value="{!$Resource.find_logo}" styleClass="logo"/>
+    </div>
+    </apex:form>
+    <div style="float:left;width:425px;margin-left:80%;">
+    <c:SiteLogin id="siteLogin"/>
+    </div>
+  </div>
+  <div id="content">
+  <div style="width:64.0%;float:left;">
+<div class="Advbox" id="slideshow">
+<div id="slideshowWindow">
+
+<div class="slide" id="s1">
+<img src="http://placehold.it/843x464/e90101&text=Slide+1" />
+</div>
+<div class="slide">
+<img src="http://placehold.it/843x464/e9be3e&text=Slide+2" />
+</div>
+<div class="slide">
+<img src="http://placehold.it/843x464/4890b9&text=Slide+3" />
+</div>
+</div>
+</div>
+</div>
+<div style="width:25.0%;float:left;margin-right:50px;">
+<apex:form id="theForm" forceSSL="true">
+<apex:pageMessages id="error"/>
+<div style="width:250px;margin:30px;">
+
+<label id="icon" for="name"><i class="fa fa-user fa-fw"></i></label><apex:inputText required="true" id="username" value="{!username}" html-placeholder="Firstname" style="width: 150px;padding: 6px 0px 6px 15px;"/> 
+<label id="icon" for="name"><i class="fa fa-user fa-fw"></i></label><apex:inputText required="true" id="communityNickname" value="{!communityNickname}" html-placeholder="Lastname" style="width: 150px;padding: 6px 0px 6px 15px;"/><br/>
+<label id="icon" for="name"><i class="fa fa-envelope fa-fw"></i></label><apex:inputText required="true" id="email" value="{!email}" html-placeholder="Email" style="width: 150px;padding: 6px 0px 6px 15px;"/><br/>
+<label id="icon" for="name"><i class="fa fa-mobile fa-fw"></i></label><apex:inputSecret id="password" value="{!password}" style="width: 150px;padding: 6px 0px 6px 15px;"/>
+<label id="icon" for="name"><i class="fa fa-mobile fa-fw"></i></label><apex:inputSecret id="confirmPassword" value="{!confirmPassword}" style="width: 150px;padding: 6px 0px 6px 15px;"/>
+<apex:outputText value=""/>
+                      
+                       <p>By clicking Register, you agree on our <a href="#">terms and condition</a>.</p>
+<apex:commandLink value="Register" styleClass="button" action="{!registerUser}"/>
+</div>
+ <!--
+                    <apex:pageMessages id="error"/>
+                    
+                      <apex:outputLabel value="{!$Label.site.username}" for="username"/>
+                      <apex:inputText required="true" id="username" value="{!username}"/>
+                      <apex:outputLabel value="{!$Label.site.community_nickname}" for="communityNickname"/>
+                      <apex:inputText required="true" id="communityNickname" value="{!communityNickname}"/>
+                      <apex:outputLabel value="{!$Label.site.email}" for="email"/>
+                      <apex:inputText required="true" id="email" value="{!email}"/>
+                      <apex:outputLabel value="{!$Label.site.password}" for="password"/>
+                      <apex:inputSecret id="password" value="{!password}"/>
+                      <apex:outputLabel value="{!$Label.site.confirm_password}" for="confirmPassword"/>
+                      <apex:inputSecret id="confirmPassword" value="{!confirmPassword}"/>
+                      <apex:outputText value=""/>
+                      <apex:commandButton action="{!registerUser}" value="{!$Label.site.submit}" id="submit"/>
+                    -->
+                    </apex:form>     
+</div>
+  </div>
+</apex:page>

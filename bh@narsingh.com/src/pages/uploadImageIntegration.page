@@ -1,0 +1,7 @@
+<apex:page sidebar="false" showHeader="false" controller="uploadImageIntegration_ctrl">
+ <apex:form >
+ 
+ <apex:inputText value="{!urlImage}"/>
+ <apex:commandButton value="Get" action="{!GETImage}"/>
+ </apex:form>
+</apex:page>

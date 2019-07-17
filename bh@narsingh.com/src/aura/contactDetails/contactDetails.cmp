@@ -1,0 +1,9 @@
+<aura:component controller="fetchRecordDetails">
+    <aura:attribute name="conList" type="contact[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:iteration items="{!v.conList}" var="item">
+       contactName="{!item.Name}" accountName="{!item.Account.Name}" email="{!item.Email}
+
+         <br/>
+    </aura:iteration>
+</aura:component>
